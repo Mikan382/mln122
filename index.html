@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thương Trường Xuyên Thế Kỷ: Từ 1986 đến 4.0 | Nhóm 7</title>
+    <meta name="description" content="Sàn giao dịch Đổi Mới - Trò chơi mô phỏng Công nghiệp hóa Hiện đại hóa Việt Nam">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* ==================== DESIGN SYSTEM ==================== */
+        :root {
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #111827;
+            --bg-card: rgba(17, 24, 39, 0.7);
+            --bg-glass: rgba(255, 255, 255, 0.05);
+            --border-glass: rgba(255, 255, 255, 0.1);
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-gold: #f59e0b;
+            --accent-gold-light: #fbbf24;
+            --accent-red: #ef4444;
+            --accent-red-dark: #dc2626;
+            --accent-green: #10b981;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --accent-cyan: #06b6d4;
+            --accent-pink: #ec4899;
+            --vn-red: #da251d;
+            --vn-yellow: #ffcd00;
+            --shadow-glow-gold: 0 0 20px rgba(245, 158, 11, 0.3);
+            --shadow-glow-red: 0 0 30px rgba(239, 68, 68, 0.4);
+            --shadow-glow-green: 0 0 20px rgba(16, 185, 129, 0.3);
+            --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 16px; scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0a0e1a 0%, #1a1a2e 50%, #0a1628 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background 1s ease;
+        }
+
+        h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif; }
+
+        /* ==================== ANIMATED BACKGROUND ==================== */
+        .bg-particles {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0; overflow: hidden;
+        }
+        .bg-particles .particle {
+            position: absolute; border-radius: 50%; opacity: 0.15;
+            animation: floatParticle 20s infinite linear;
+        }
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.15; }
+            90% { opacity: 0.15; }
+            100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* ==================== SCREENS ==================== */
+        .screen {
+            display: none; position: relative; z-index: 1;
+            min-height: 100vh; animation: fadeIn 0.5s ease;
+        }
+        .screen.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ==================== LANDING SCREEN (PHONE) ==================== */
+        .landing-container {
+            max-width: 500px; margin: 0 auto; padding: 32px 20px;
+            min-height: 100vh; display: flex; flex-direction: column;
+        }
+        .landing-hero {
+            text-align: center; padding: 40px 0 32px;
+        }
+        .landing-hero .flag-big { font-size: 64px; display: block; margin-bottom: 16px; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+        .landing-hero h1 {
+            font-size: 1.8rem; font-weight: 900; line-height: 1.2;
+            background: linear-gradient(135deg, var(--vn-yellow), var(--accent-gold), var(--vn-red));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .landing-hero .subtitle { font-size: 0.95rem; color: var(--text-secondary); margin-top: 8px; }
+        .landing-hero .group-badge {
+            display: inline-block; margin-top: 16px; padding: 6px 20px;
+            background: linear-gradient(135deg, var(--vn-red), #b91c1c);
+            border-radius: 999px; font-size: 0.8rem; font-weight: 600; color: white; letter-spacing: 1px;
+        }
+
+        .landing-card {
+            background: var(--bg-card); backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass); border-radius: var(--radius-xl);
+            padding: 24px; margin-bottom: 16px;
+        }
+        .landing-card h2 {
+            font-size: 1.1rem; font-weight: 700; margin-bottom: 14px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .landing-card .rules-text {
+            color: var(--text-secondary); line-height: 1.8; font-size: 0.88rem;
+        }
+        .landing-card .rules-text strong.phase1 { color: var(--accent-gold-light); }
+        .landing-card .rules-text strong.phase2 { color: var(--accent-red); }
+        .landing-card .rules-text strong.phase3 { color: var(--accent-purple); }
+
+        .card-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+        .card-table th {
+            text-align: left; font-size: 0.75rem; text-transform: uppercase;
+            color: var(--text-muted); padding: 6px 8px; letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border-glass);
+        }
+        .card-table td {
+            padding: 8px; font-size: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+        .card-table .card-name { display: flex; align-items: center; gap: 6px; font-weight: 500; }
+        .card-table .price { font-family: 'JetBrains Mono', monospace; color: var(--accent-gold-light); font-weight: 600; }
+        .card-table .points { font-family: 'JetBrains Mono', monospace; color: var(--accent-green); font-weight: 600; }
+        .card-table .locked { opacity: 0.4; }
+        .card-table .locked td::after { content: ' 🔒'; font-size: 0.7rem; }
+
+        .phase-badge {
+            display: inline-block; padding: 3px 10px; border-radius: 999px;
+            font-size: 0.7rem; font-weight: 600; letter-spacing: 0.3px;
+        }
+        .phase-badge.pb-1 { background: rgba(245, 158, 11, 0.15); color: var(--accent-gold-light); border: 1px solid rgba(245, 158, 11, 0.3); }
+        .phase-badge.pb-2 { background: rgba(239, 68, 68, 0.15); color: var(--accent-red); border: 1px solid rgba(239, 68, 68, 0.3); }
+
+        .combo-info {
+            margin-top: 12px; padding: 12px; background: rgba(245, 158, 11, 0.05);
+            border: 1px solid rgba(245, 158, 11, 0.15); border-radius: var(--radius-md);
+        }
+        .combo-info h4 {
+            font-size: 0.85rem; color: var(--accent-gold-light); margin-bottom: 8px;
+        }
+        .combo-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 4px 0; font-size: 0.8rem; color: var(--text-secondary);
+        }
+        .combo-row .combo-bonus {
+            font-family: 'JetBrains Mono', monospace; color: var(--accent-green); font-weight: 600;
+        }
+
+        .ai-disclosure {
+            background: var(--bg-card); backdrop-filter: blur(20px);
+            border: 1px solid rgba(139, 92, 246, 0.2); border-radius: var(--radius-xl);
+            padding: 20px; margin-bottom: 16px;
+        }
+        .ai-disclosure h3 {
+            font-size: 0.95rem; font-weight: 700; color: var(--accent-purple);
+            margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+        }
+        .ai-disclosure p {
+            font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 6px;
+        }
+        .ai-disclosure .ai-tag {
+            display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 0.7rem;
+            background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.3);
+            color: var(--accent-purple); font-weight: 600; margin-right: 4px;
+        }
+
+        .landing-footer {
+            text-align: center; padding: 24px 0; margin-top: auto;
+            font-size: 0.8rem; color: var(--text-muted);
+        }
+
+        /* ==================== SETUP SCREEN (ADMIN) ==================== */
+        .setup-container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        .setup-logo { text-align: center; margin-bottom: 48px; }
+        .setup-logo .flag-icon { font-size: 48px; margin-bottom: 16px; display: block; animation: pulse 2s infinite; }
+        .setup-logo h1 {
+            font-size: 2.2rem; font-weight: 900;
+            background: linear-gradient(135deg, var(--vn-yellow), var(--accent-gold), var(--vn-red));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            letter-spacing: -0.5px; line-height: 1.2;
+        }
+        .setup-logo .subtitle { font-size: 1rem; color: var(--text-secondary); margin-top: 8px; font-weight: 300; }
+        .setup-logo .group-badge {
+            display: inline-block; margin-top: 16px; padding: 6px 20px;
+            background: linear-gradient(135deg, var(--vn-red), #b91c1c);
+            border-radius: 999px; font-size: 0.85rem; font-weight: 600; color: white; letter-spacing: 1px;
+        }
+
+        .setup-card {
+            background: var(--bg-card); backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass); border-radius: var(--radius-xl);
+            padding: 32px; margin-bottom: 24px;
+        }
+        .setup-card h2 {
+            font-size: 1.3rem; font-weight: 700; margin-bottom: 20px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .setup-card h2 .icon { font-size: 1.5rem; }
+
+        .input-group { margin-bottom: 16px; }
+        .input-group label { display: block; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 6px; font-weight: 500; }
+        .input-group input, .input-group select {
+            width: 100%; padding: 12px 16px; background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glass); border-radius: var(--radius-md);
+            color: var(--text-primary); font-family: 'Inter', sans-serif; font-size: 1rem;
+            transition: var(--transition-fast); outline: none;
+        }
+        .input-group input:focus, .input-group select:focus { border-color: var(--accent-gold); box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15); }
+        .input-group select option { background: var(--bg-secondary); color: var(--text-primary); }
+
+        .team-name-inputs { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin-top: 16px; }
+        .team-name-input {
+            display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md); transition: var(--transition-fast);
+        }
+        .team-name-input:hover { border-color: var(--accent-gold); background: rgba(245, 158, 11, 0.05); }
+        .team-name-input .team-num {
+            width: 30px; height: 30px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.85rem; flex-shrink: 0;
+        }
+        .team-name-input input {
+            flex: 1; background: none; border: none; color: var(--text-primary);
+            font-family: 'Inter', sans-serif; font-size: 0.9rem; outline: none;
+        }
+
+        /* ==================== BUTTONS ==================== */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 12px 28px; border: none; border-radius: var(--radius-md);
+            font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 600;
+            cursor: pointer; transition: var(--transition-normal); position: relative; overflow: hidden;
+        }
+        .btn::after { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0); transition: var(--transition-fast); }
+        .btn:hover::after { background: rgba(255,255,255,0.1); }
+        .btn:active { transform: scale(0.97); }
+        .btn-primary { background: linear-gradient(135deg, var(--accent-gold), #d97706); color: #000; box-shadow: var(--shadow-glow-gold); }
+        .btn-danger { background: linear-gradient(135deg, var(--accent-red), var(--accent-red-dark)); color: white; box-shadow: var(--shadow-glow-red); }
+        .btn-success { background: linear-gradient(135deg, var(--accent-green), #059669); color: white; box-shadow: var(--shadow-glow-green); }
+        .btn-outline { background: transparent; border: 1px solid var(--border-glass); color: var(--text-primary); }
+        .btn-outline:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
+        .btn-lg { padding: 16px 40px; font-size: 1.15rem; }
+        .btn-block { width: 100%; }
+        .btn-icon { width: 40px; height: 40px; padding: 0; border-radius: var(--radius-sm); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+
+        /* ==================== GAME SCREEN ==================== */
+        .game-container { padding: 12px 16px; max-width: 1600px; margin: 0 auto; }
+
+        .game-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 20px; background: var(--bg-card); backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass); border-radius: var(--radius-lg); margin-bottom: 16px;
+        }
+        .game-header .logo-section { display: flex; align-items: center; gap: 12px; }
+        .game-header .game-title {
+            font-size: 1.1rem; font-weight: 800;
+            background: linear-gradient(135deg, var(--vn-yellow), var(--accent-gold));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+
+        .phase-indicator {
+            display: flex; align-items: center; gap: 8px; padding: 8px 16px;
+            background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: var(--radius-md); font-family: 'Outfit', sans-serif;
+            font-weight: 600; font-size: 0.95rem; color: var(--accent-gold-light);
+            transition: all 0.5s ease;
+        }
+        .phase-indicator.phase-2 {
+            background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.4);
+            color: var(--accent-red); animation: pulseRed 1.5s infinite;
+        }
+        .phase-indicator.phase-3 {
+            background: rgba(139, 92, 246, 0.15); border-color: rgba(139, 92, 246, 0.4);
+            color: var(--accent-purple);
+        }
+        @keyframes pulseRed {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.3); }
+            50% { box-shadow: 0 0 20px 5px rgba(239, 68, 68, 0.2); }
+        }
+
+        .timer-section { display: flex; align-items: center; gap: 12px; }
+        .timer-display {
+            font-family: 'JetBrains Mono', monospace; font-size: 2rem; font-weight: 600;
+            color: var(--accent-gold-light); min-width: 90px; text-align: center; transition: color 0.3s;
+        }
+        .timer-display.urgent { color: var(--accent-red); animation: timerPulse 0.5s infinite; }
+        @keyframes timerPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+        .game-main { display: grid; grid-template-columns: 1fr 340px; gap: 16px; }
+
+        /* Teams Grid */
+        .teams-section h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .teams-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+
+        .team-card {
+            background: var(--bg-card); backdrop-filter: blur(20px); border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg); padding: 18px; transition: all var(--transition-normal);
+            position: relative; overflow: hidden;
+        }
+        .team-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: var(--team-color, var(--accent-gold));
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+        }
+        .team-card:hover { border-color: var(--team-color, var(--accent-gold)); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+        .team-card.bankrupt { opacity: 0.5; border-color: var(--accent-red) !important; }
+        .team-card.bankrupt::after {
+            content: '💀 PHÁ SẢN'; position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%) rotate(-15deg); font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem; font-weight: 900; color: var(--accent-red);
+            text-shadow: 0 0 20px rgba(239, 68, 68, 0.5); z-index: 5; pointer-events: none;
+        }
+
+        .team-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+        .team-card-header .team-name {
+            font-family: 'Outfit', sans-serif; font-size: 1.05rem; font-weight: 700;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .team-card-header .team-rank {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; padding: 3px 10px;
+            border-radius: 999px; background: rgba(255,255,255,0.05); color: var(--text-secondary); font-weight: 600;
+        }
+        .team-card-header .team-rank.rank-1 { background: linear-gradient(135deg, rgba(245,158,11,0.2), rgba(234,179,8,0.2)); color: var(--accent-gold-light); border: 1px solid rgba(245,158,11,0.3); }
+        .team-card-header .team-rank.rank-2 { background: rgba(148,163,184,0.15); color: #c0c0c0; border: 1px solid rgba(148,163,184,0.2); }
+        .team-card-header .team-rank.rank-3 { background: rgba(180,120,60,0.15); color: #cd7f32; border: 1px solid rgba(180,120,60,0.2); }
+
+        .team-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+        .team-stat { padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: var(--radius-sm); text-align: center; }
+        .team-stat .stat-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
+        .team-stat .stat-value { font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; font-weight: 600; }
+        .team-stat .stat-value.money { color: var(--accent-gold-light); }
+        .team-stat .stat-value.points { color: var(--accent-green); }
+
+        .team-cards-list { display: flex; flex-wrap: wrap; gap: 6px; }
+        .card-badge {
+            display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px;
+            border-radius: 999px; font-size: 0.75rem; font-weight: 600;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+            transition: var(--transition-fast);
+        }
+        .card-badge.labor { border-color: rgba(234,179,8,0.3); color: #fbbf24; }
+        .card-badge.mech1 { border-color: rgba(148,163,184,0.3); color: #94a3b8; }
+        .card-badge.mech2 { border-color: rgba(59,130,246,0.3); color: #60a5fa; }
+        .card-badge.hr { border-color: rgba(16,185,129,0.3); color: #34d399; }
+        .card-badge.ai { border-color: rgba(139,92,246,0.3); color: #a78bfa; }
+        .card-badge.bigdata { border-color: rgba(6,182,212,0.3); color: #22d3ee; }
+        .card-badge.print3d { border-color: rgba(236,72,153,0.3); color: #f472b6; }
+        .card-badge .devalued { text-decoration: line-through; opacity: 0.5; font-size: 0.65rem; margin-left: 2px; }
+
+        .team-actions { display: flex; gap: 6px; margin-top: 12px; }
+        .team-actions .btn { flex: 1; padding: 8px 12px; font-size: 0.8rem; }
+
+        .combo-badge {
+            display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px;
+            border-radius: 999px; font-size: 0.7rem; font-weight: 700;
+            background: linear-gradient(135deg, rgba(245,158,11,0.15), rgba(234,179,8,0.15));
+            border: 1px solid rgba(245,158,11,0.4); color: var(--accent-gold-light);
+            margin-top: 8px; animation: comboPulse 2s infinite;
+        }
+        @keyframes comboPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(245,158,11,0.2); } 50% { box-shadow: 0 0 12px 3px rgba(245,158,11,0.15); } }
+
+        /* Sidebar */
+        .sidebar { display: flex; flex-direction: column; gap: 14px; }
+        .sidebar-card {
+            background: var(--bg-card); backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass); border-radius: var(--radius-lg); padding: 18px;
+        }
+        .sidebar-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+
+        .controls-grid { display: flex; flex-direction: column; gap: 8px; }
+
+        /* Shop */
+        .shop-item {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 10px 12px; background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-glass); border-radius: var(--radius-md);
+            margin-bottom: 8px; transition: var(--transition-fast); cursor: pointer;
+        }
+        .shop-item:hover { border-color: var(--accent-gold); background: rgba(245,158,11,0.05); }
+        .shop-item.locked { opacity: 0.4; pointer-events: none; cursor: not-allowed; }
+        .shop-item .item-info { display: flex; align-items: center; gap: 8px; }
+        .shop-item .item-emoji { font-size: 1.3rem; }
+        .shop-item .item-name { font-size: 0.85rem; font-weight: 600; }
+        .shop-item .item-meta { font-size: 0.7rem; color: var(--text-muted); }
+        .shop-item .item-price { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; font-weight: 600; color: var(--accent-gold-light); }
+        .shop-item .item-price .old-price { text-decoration: line-through; color: var(--accent-red); font-size: 0.7rem; margin-right: 4px; }
+
+        .buyer-selector { margin-bottom: 14px; }
+        .buyer-selector label { display: block; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 6px; }
+        .buyer-selector select {
+            width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-glass); border-radius: var(--radius-sm);
+            color: var(--text-primary); font-family: 'Inter', sans-serif; font-size: 0.9rem;
+            outline: none; cursor: pointer;
+        }
+        .buyer-selector select:focus { border-color: var(--accent-gold); }
+        .buyer-selector select option { background: var(--bg-secondary); }
+
+        /* Leaderboard */
+        .leaderboard-item {
+            display: flex; align-items: center; gap: 10px; padding: 10px 12px;
+            background: rgba(255,255,255,0.03); border-radius: var(--radius-sm);
+            margin-bottom: 6px; transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        .leaderboard-item .lb-rank {
+            width: 28px; height: 28px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.8rem; background: rgba(255,255,255,0.05); flex-shrink: 0;
+        }
+        .leaderboard-item:nth-child(1) .lb-rank { background: linear-gradient(135deg, #f59e0b, #d97706); color: #000; }
+        .leaderboard-item:nth-child(2) .lb-rank { background: linear-gradient(135deg, #94a3b8, #64748b); color: #000; }
+        .leaderboard-item:nth-child(3) .lb-rank { background: linear-gradient(135deg, #cd7f32, #a0622e); color: #000; }
+        .leaderboard-item .lb-name { flex: 1; font-size: 0.85rem; font-weight: 600; }
+        .leaderboard-item .lb-score { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; font-weight: 600; color: var(--accent-green); }
+
+        /* Activity Log */
+        .activity-log { max-height: 180px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.1) transparent; }
+        .activity-log::-webkit-scrollbar { width: 4px; }
+        .activity-log::-webkit-scrollbar-track { background: transparent; }
+        .activity-log::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+        .log-entry {
+            padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.03);
+            font-size: 0.78rem; color: var(--text-secondary); animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+        .log-entry .log-time { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; margin-right: 6px; }
+        .log-entry.buy { color: var(--accent-green); }
+        .log-entry.event { color: var(--accent-red); }
+        .log-entry.bonus { color: var(--accent-gold-light); }
+
+        /* ==================== OVERLAYS / MODALS ==================== */
+        .overlay { display: none; position: fixed; inset: 0; z-index: 1000; align-items: center; justify-content: center; }
+        .overlay.active { display: flex; }
+        .overlay-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); }
+        .modal {
+            position: relative; z-index: 1; background: var(--bg-secondary);
+            border: 1px solid var(--border-glass); border-radius: var(--radius-xl);
+            padding: 36px; max-width: 600px; width: 90%; max-height: 85vh; overflow-y: auto;
+            animation: modalIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @keyframes modalIn { from { opacity: 0; transform: scale(0.9) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+        .modal h2 { font-size: 1.5rem; font-weight: 800; margin-bottom: 16px; }
+        .modal p { color: var(--text-secondary); line-height: 1.7; margin-bottom: 12px; font-size: 0.95rem; }
+        .modal .highlight { color: var(--accent-gold-light); font-weight: 600; }
+        .modal .theory-quote {
+            padding: 16px 20px; background: rgba(245,158,11,0.08);
+            border-left: 3px solid var(--accent-gold);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            margin: 16px 0; font-style: italic; color: var(--text-secondary); line-height: 1.7;
+        }
+        .modal-actions { display: flex; gap: 10px; margin-top: 24px; }
+
+        /* ==================== GLOBALIZATION OVERLAY ==================== */
+        .globalization-overlay {
+            display: none; position: fixed; inset: 0; z-index: 2000;
+            align-items: center; justify-content: center; background: rgba(0,0,0,0.85);
+        }
+        .globalization-overlay.active { display: flex; animation: shakeScreen 0.5s ease; }
+        @keyframes shakeScreen {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        .globalization-content { text-align: center; animation: globeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+        @keyframes globeIn { from { opacity: 0; transform: scale(0.3) rotate(-10deg); } to { opacity: 1; transform: scale(1) rotate(0); } }
+        .globalization-content .alert-icon { font-size: 6rem; display: block; margin-bottom: 20px; animation: alertPulse 0.8s infinite; }
+        @keyframes alertPulse { 0%, 100% { transform: scale(1); filter: brightness(1); } 50% { transform: scale(1.15); filter: brightness(1.3); } }
+        .globalization-content h1 {
+            font-size: 3rem; font-weight: 900; color: var(--accent-red);
+            text-transform: uppercase; letter-spacing: 3px;
+            text-shadow: 0 0 40px rgba(239,68,68,0.5); margin-bottom: 12px;
+        }
+        .globalization-content .sub-text { font-size: 1.3rem; color: var(--text-secondary); margin-bottom: 8px; }
+        .globalization-content .impact-text { font-size: 1.1rem; color: var(--accent-red); font-weight: 600; margin-bottom: 30px; }
+        .globalization-content .impact-list { text-align: left; max-width: 500px; margin: 0 auto 30px; }
+        .globalization-content .impact-list li {
+            list-style: none; padding: 8px 0; font-size: 1rem; color: var(--text-secondary);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .globalization-content .impact-list li::before { content: '⚠️ '; }
+        .warning-stripe-top, .warning-stripe-bottom {
+            position: fixed; left: 0; right: 0; height: 8px; z-index: 2001;
+            background: repeating-linear-gradient(45deg, var(--accent-red), var(--accent-red) 20px, #000 20px, #000 40px);
+            animation: stripeScroll 1s linear infinite;
+        }
+        .warning-stripe-top { top: 0; }
+        .warning-stripe-bottom { bottom: 0; }
+        @keyframes stripeScroll { 0% { background-position: 0 0; } 100% { background-position: 56px 0; } }
+
+        /* ==================== RESULTS SCREEN ==================== */
+        .results-container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        .results-header { text-align: center; margin-bottom: 40px; }
+        .results-header .trophy { font-size: 5rem; display: block; margin-bottom: 16px; animation: trophyBounce 1s ease infinite; }
+        @keyframes trophyBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .results-header h1 {
+            font-size: 2.5rem; font-weight: 900;
+            background: linear-gradient(135deg, var(--vn-yellow), var(--accent-gold), var(--vn-red));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .winner-card {
+            background: var(--bg-card); backdrop-filter: blur(20px);
+            border: 2px solid var(--accent-gold); border-radius: var(--radius-xl);
+            padding: 32px; text-align: center; margin-bottom: 24px;
+            position: relative; overflow: hidden; box-shadow: var(--shadow-glow-gold);
+        }
+        .winner-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(245,158,11,0.05), rgba(234,179,8,0.1)); pointer-events: none; }
+        .winner-card h2 { font-size: 1.8rem; font-weight: 900; color: var(--accent-gold-light); margin-bottom: 8px; }
+        .winner-card .winner-score { font-family: 'JetBrains Mono', monospace; font-size: 2.5rem; font-weight: 700; color: var(--accent-green); }
+
+        .final-standings {
+            background: var(--bg-card); backdrop-filter: blur(20px); border: 1px solid var(--border-glass);
+            border-radius: var(--radius-xl); padding: 24px; margin-bottom: 24px;
+        }
+        .final-standings h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 16px; }
+        .standing-row {
+            display: flex; align-items: center; gap: 14px; padding: 12px 16px;
+            background: rgba(255,255,255,0.03); border-radius: var(--radius-md);
+            margin-bottom: 8px; transition: var(--transition-fast);
+        }
+        .standing-row:hover { background: rgba(255,255,255,0.06); }
+        .standing-row .sr-rank {
+            width: 36px; height: 36px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 1rem; background: rgba(255,255,255,0.05); flex-shrink: 0;
+        }
+        .standing-row:nth-child(2) .sr-rank { background: linear-gradient(135deg, #f59e0b, #d97706); color: #000; font-size: 1.1rem; }
+        .standing-row:nth-child(3) .sr-rank { background: linear-gradient(135deg, #94a3b8, #64748b); color: #000; }
+        .standing-row:nth-child(4) .sr-rank { background: linear-gradient(135deg, #cd7f32, #a0622e); color: #000; }
+        .standing-row .sr-name { flex: 1; font-weight: 600; font-size: 1rem; }
+        .standing-row .sr-details { text-align: right; }
+        .standing-row .sr-score { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 1.1rem; color: var(--accent-green); }
+        .standing-row .sr-money { font-size: 0.75rem; color: var(--text-muted); }
+
+        .theory-summary {
+            background: var(--bg-card); backdrop-filter: blur(20px); border: 1px solid var(--border-glass);
+            border-radius: var(--radius-xl); padding: 28px; margin-bottom: 24px;
+        }
+        .theory-summary h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+        .theory-point { padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .theory-point:last-child { border-bottom: none; }
+        .theory-point .tp-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 4px; color: var(--accent-gold-light); }
+        .theory-point .tp-desc { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; }
+
+        /* ==================== CONFETTI ==================== */
+        .confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 3000; overflow: hidden; }
+        .confetti-piece {
+            position: absolute; width: 10px; height: 10px; top: -10px;
+            animation: confettiFall linear forwards;
+        }
+        @keyframes confettiFall { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
+
+        /* ==================== TOAST ==================== */
+        .toast-container { position: fixed; top: 20px; right: 20px; z-index: 5000; display: flex; flex-direction: column; gap: 8px; }
+        .toast {
+            padding: 12px 20px; background: var(--bg-secondary); border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md); font-size: 0.9rem;
+            animation: toastIn 0.3s ease, toastOut 0.3s ease 2.7s forwards;
+            max-width: 350px; backdrop-filter: blur(20px); box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+        .toast.success { border-left: 3px solid var(--accent-green); }
+        .toast.error { border-left: 3px solid var(--accent-red); }
+        .toast.info { border-left: 3px solid var(--accent-blue); }
+        .toast.warning { border-left: 3px solid var(--accent-gold); }
+        @keyframes toastIn { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes toastOut { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(50px); } }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 1100px) {
+            .game-main { grid-template-columns: 1fr; }
+            .sidebar { flex-direction: row; flex-wrap: wrap; }
+            .sidebar-card { flex: 1; min-width: 280px; }
+        }
+        @media (max-width: 768px) {
+            .game-header { flex-direction: column; gap: 10px; text-align: center; }
+            .teams-grid { grid-template-columns: 1fr; }
+            .setup-logo h1 { font-size: 1.6rem; }
+            .globalization-content h1 { font-size: 2rem; }
+            .results-header h1 { font-size: 1.8rem; }
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <!-- Background Particles -->
+    <div class="bg-particles" id="bgParticles"></div>
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+    <!-- Confetti Container -->
+    <div class="confetti-container" id="confettiContainer"></div>
+
+    <!-- ==================== LANDING SCREEN (PHONE / VIEWER) ==================== -->
+    <div class="screen" id="landingScreen">
+        <div class="landing-container">
+            <div class="landing-hero">
+                <span class="flag-big">🇻🇳</span>
+                <h1>THƯƠNG TRƯỜNG XUYÊN THẾ KỶ</h1>
+                <div class="subtitle">Từ 1986 đến Cách mạng Công nghiệp 4.0</div>
+                <div class="group-badge">NHÓM 7 • MLN122 • KINH TẾ CHÍNH TRỊ MÁC-LÊNIN</div>
+            </div>
+
+            <!-- Rules Card -->
+            <div class="landing-card">
+                <h2>📜 Luật chơi</h2>
+                <div class="rules-text">
+                    <p><strong class="phase1">🏭 Giai đoạn 1 — Kỷ nguyên Truyền thống (10 phút)</strong><br>
+                    Dùng Vốn mua "Lao động thủ công" & "Máy móc cơ khí". Gom đủ bộ → thưởng Combo.</p>
+                    <br>
+                    <p><strong class="phase2">⚡ Giai đoạn 2 — Cú sốc Hội nhập 4.0 (8 phút)</strong><br>
+                    Sự kiện "Toàn cầu hóa" → Thẻ cũ mất 50% giá trị! Mua "Nhân lực CLC" & "Công nghệ 4.0" để sống sót.</p>
+                    <br>
+                    <p><strong class="phase3">🏆 Giai đoạn 3 — Tổng kết (7 phút)</strong><br>
+                    Chấm điểm, xếp hạng, rút ra bài học CNH-HĐH Việt Nam.</p>
+                </div>
+            </div>
+
+            <!-- Card Price Table -->
+            <div class="landing-card">
+                <h2>🃏 Bảng giá thẻ bài</h2>
+                <table class="card-table">
+                    <thead>
+                        <tr><th>Thẻ bài</th><th>Giá</th><th>Điểm</th><th>GĐ</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><span class="card-name">👷 Lao động thủ công</span></td><td class="price">100💰</td><td class="points">50⭐</td><td><span class="phase-badge pb-1">GĐ1</span></td></tr>
+                        <tr><td><span class="card-name">⚙️ Máy móc cơ khí 1.0</span></td><td class="price">150💰</td><td class="points">80⭐</td><td><span class="phase-badge pb-1">GĐ1</span></td></tr>
+                        <tr><td><span class="card-name">🔧 Máy móc cơ khí 2.0</span></td><td class="price">250💰</td><td class="points">120⭐</td><td><span class="phase-badge pb-1">GĐ1</span></td></tr>
+                        <tr class="locked"><td><span class="card-name">🎓 Nhân lực chất lượng cao</span></td><td class="price">300💰</td><td class="points">200⭐</td><td><span class="phase-badge pb-2">GĐ2</span></td></tr>
+                        <tr class="locked"><td><span class="card-name">🤖 Công nghệ AI</span></td><td class="price">500💰</td><td class="points">350⭐</td><td><span class="phase-badge pb-2">GĐ2</span></td></tr>
+                        <tr class="locked"><td><span class="card-name">📊 Big Data</span></td><td class="price">450💰</td><td class="points">300⭐</td><td><span class="phase-badge pb-2">GĐ2</span></td></tr>
+                        <tr class="locked"><td><span class="card-name">🖨️ In 3D</span></td><td class="price">400💰</td><td class="points">280⭐</td><td><span class="phase-badge pb-2">GĐ2</span></td></tr>
+                    </tbody>
+                </table>
+                <div class="combo-info">
+                    <h4>✨ Combo thưởng</h4>
+                    <div class="combo-row"><span>🏭 CNH Truyền thống (≥2 LĐ + ≥1 Máy móc)</span><span class="combo-bonus">+200💰</span></div>
+                    <div class="combo-row"><span>🚀 CNH Hiện đại (≥1 NLCLC + ≥1 CN 4.0)</span><span class="combo-bonus">+500💰</span></div>
+                    <div class="combo-row"><span>🌟 Chuyển đổi số (≥1 NLCLC + ≥2 CN 4.0 khác)</span><span class="combo-bonus">+800💰</span></div>
+                </div>
+            </div>
+
+            <!-- AI Usage Disclosure -->
+            <div class="ai-disclosure">
+                <h3>🤖 PHỤ LỤC AI USAGE — NHÓM 7</h3>
+                <p><span class="ai-tag">Minh bạch</span> Sử dụng ChatGPT để cân bằng thông số Vốn/Giá trị thẻ bài; Canva AI để thiết kế giao diện web dashboard.</p>
+                <p><span class="ai-tag">Kiểm chứng</span> Toàn bộ khái niệm (tự động hóa cục bộ, toàn cầu hóa, CNH-HĐH...) đã được đối chiếu chính xác với Giáo trình KTCT Mác-Lênin.</p>
+                <p><span class="ai-tag">Liêm chính</span> AI chỉ đóng vai trò "Họa sĩ" & "Trợ lý cân bằng game". Cấu trúc game, lý thuyết CNH-HĐH do sinh viên Nhóm 7 tự biên soạn và điều phối trực tiếp.</p>
+            </div>
+
+            <div class="landing-footer">
+                <p>Chương 6: Công nghiệp hóa, Hiện đại hóa và Hội nhập KTQT của Việt Nam</p>
+                <p style="margin-top: 4px; opacity: 0.6;">© Nhóm 7 • MLN122 • Summer 2026</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SETUP SCREEN (ADMIN) ==================== -->
+    <div class="screen" id="setupScreen">
+        <div class="setup-container">
+            <div class="setup-logo">
+                <span class="flag-icon">🇻🇳</span>
+                <h1>THƯƠNG TRƯỜNG XUYÊN THẾ KỶ</h1>
+                <div class="subtitle">Từ 1986 đến Cách mạng Công nghiệp 4.0</div>
+                <div class="group-badge">NHÓM 7 • QUẢN TRÒ</div>
+            </div>
+
+            <div class="setup-card">
+                <h2><span class="icon">⚙️</span> Thiết lập trò chơi</h2>
+                <div class="input-group">
+                    <label>Số lượng nhóm tham gia (không tính Nhóm 7)</label>
+                    <select id="teamCount" onchange="renderTeamInputs()">
+                        <option value="3">3 nhóm</option>
+                        <option value="4">4 nhóm</option>
+                        <option value="5">5 nhóm</option>
+                        <option value="6" selected>6 nhóm (Nhóm 1-6)</option>
+                        <option value="7">7 nhóm</option>
+                        <option value="8">8 nhóm</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Vốn khởi đầu mỗi nhóm</label>
+                    <select id="startMoney">
+                        <option value="800">800 vốn</option>
+                        <option value="1000" selected>1,000 vốn</option>
+                        <option value="1200">1,200 vốn</option>
+                        <option value="1500">1,500 vốn</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="setup-card">
+                <h2><span class="icon">🏴</span> Đặt tên các nhóm</h2>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 12px;">
+                    Mỗi nhóm cử 1 đại diện tham gia. Quản trò (Nhóm 7) sẽ thao tác trên dashboard.
+                </p>
+                <div class="team-name-inputs" id="teamNameInputs"></div>
+            </div>
+
+            <div class="setup-card">
+                <h2><span class="icon">📜</span> Luật chơi tóm tắt</h2>
+                <div style="color: var(--text-secondary); line-height: 1.8; font-size: 0.92rem;">
+                    <p><strong style="color: var(--accent-gold-light);">🏭 Giai đoạn 1 — Kỷ nguyên Truyền thống (10 phút):</strong><br>
+                    Đại diện các nhóm giơ tay yêu cầu mua thẻ → Quản trò thao tác mua trên dashboard. Gom đủ bộ → thưởng Combo.</p>
+                    <br>
+                    <p><strong style="color: var(--accent-red);">⚡ Giai đoạn 2 — Cú sốc Hội nhập 4.0 (8 phút):</strong><br>
+                    Sự kiện "Toàn cầu hóa" kích hoạt → Thẻ cũ mất 50% giá trị! Phải nhanh chóng mua "Nhân lực CLC" & "Công nghệ 4.0" để sống sót.</p>
+                    <br>
+                    <p><strong style="color: var(--accent-purple);">🏆 Giai đoạn 3 — Tổng kết (7 phút):</strong><br>
+                    Chấm điểm, xếp hạng và rút ra bài học về CNH-HĐH Việt Nam.</p>
+                </div>
+            </div>
+
+            <button class="btn btn-primary btn-lg btn-block" onclick="startGame()" style="margin-top: 8px;">
+                🚀 BẮT ĐẦU TRÒ CHƠI
+            </button>
+        </div>
+    </div>
+
+    <!-- ==================== GAME SCREEN ==================== -->
+    <div class="screen" id="gameScreen">
+        <div class="game-container">
+            <div class="game-header">
+                <div class="logo-section">
+                    <span style="font-size: 1.4rem;">🇻🇳</span>
+                    <span class="game-title">THƯƠNG TRƯỜNG XUYÊN THẾ KỶ</span>
+                </div>
+                <div class="phase-indicator" id="phaseIndicator">
+                    <span id="phaseIcon">🏭</span>
+                    <span id="phaseText">Giai đoạn 1: Kỷ nguyên Truyền thống</span>
+                </div>
+                <div class="timer-section">
+                    <div class="timer-display" id="timerDisplay">10:00</div>
+                    <button class="btn btn-outline btn-icon" id="timerToggle" onclick="toggleTimer()" title="Bắt đầu/Dừng">▶</button>
+                    <button class="btn btn-outline btn-icon" onclick="resetPhaseTimer()" title="Reset">🔄</button>
+                </div>
+            </div>
+
+            <div class="game-main">
+                <div class="teams-section">
+                    <h2><span>📊</span> Các nhóm tham gia</h2>
+                    <div class="teams-grid" id="teamsGrid"></div>
+                </div>
+
+                <div class="sidebar">
+                    <div class="sidebar-card">
+                        <h3><span>🎮</span> Bảng điều khiển</h3>
+                        <div class="controls-grid">
+                            <button class="btn btn-primary btn-block" id="btnPhase1" onclick="setPhase(1)" disabled>
+                                🏭 GĐ 1: Truyền thống
+                            </button>
+                            <button class="btn btn-danger btn-block" id="btnGlobalize" onclick="triggerGlobalization()">
+                                ⚡ KÍCH HOẠT TOÀN CẦU HÓA
+                            </button>
+                            <button class="btn btn-outline btn-block" id="btnPhase3" onclick="setPhase(3)">
+                                🏆 GĐ 3: Tổng kết
+                            </button>
+                            <button class="btn btn-outline btn-block" onclick="showTheoryModal()">
+                                📖 Xem lý thuyết
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-card">
+                        <h3><span>🛒</span> Cửa hàng thẻ bài</h3>
+                        <div class="buyer-selector">
+                            <label>Mua cho nhóm:</label>
+                            <select id="buyerSelect"></select>
+                        </div>
+                        <div id="shopItems"></div>
+                    </div>
+
+                    <div class="sidebar-card">
+                        <h3><span>🏆</span> Bảng xếp hạng</h3>
+                        <div id="leaderboard"></div>
+                    </div>
+
+                    <div class="sidebar-card">
+                        <h3><span>📝</span> Nhật ký giao dịch</h3>
+                        <div class="activity-log" id="activityLog">
+                            <div class="log-entry info">
+                                <span class="log-time">--:--</span>
+                                Trò chơi đang chờ bắt đầu...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== RESULTS SCREEN ==================== -->
+    <div class="screen" id="resultsScreen">
+        <div class="results-container">
+            <div class="results-header">
+                <span class="trophy">🏆</span>
+                <h1>KẾT QUẢ THƯƠNG TRƯỜNG</h1>
+                <p style="color: var(--text-secondary); font-size: 1.1rem;">Hành trình CNH-HĐH đã kết thúc!</p>
+            </div>
+
+            <div class="winner-card" id="winnerCard"></div>
+            <div class="final-standings" id="finalStandings"></div>
+
+            <div class="theory-summary">
+                <h3><span>📚</span> Bài học cốt lõi từ trò chơi</h3>
+                <div class="theory-point">
+                    <div class="tp-title">1. Công nghiệp hóa truyền thống vs. hiện đại</div>
+                    <div class="tp-desc">Mô hình CNH cổ điển dựa vào lao động thủ công & máy móc cơ khí mất 60-80 năm. Trong khi đó, CNH kiểu rút ngắn dựa vào kinh tế tri thức và CMCN 4.0 giúp các nước đi sau vươn lên nhanh chóng.</div>
+                </div>
+                <div class="theory-point">
+                    <div class="tp-title">2. Tác động hai mặt của hội nhập kinh tế quốc tế</div>
+                    <div class="tp-desc">Hội nhập mang lại cơ hội mở rộng thị trường, thu hút đầu tư và tiếp cận công nghệ. Nhưng đồng thời tạo ra cạnh tranh gay gắt, rủi ro chuyển dịch cơ cấu kinh tế và phân phối lợi ích không đều.</div>
+                </div>
+                <div class="theory-point">
+                    <div class="tp-title">3. Xây dựng nền kinh tế độc lập, tự chủ</div>
+                    <div class="tp-desc">Dù hội nhập sâu rộng, Việt Nam vẫn phải kiên định xây dựng nền kinh tế độc lập, tự chủ — không bị lệ thuộc hay khống chế bởi các tổ chức bên ngoài để bảo vệ lợi ích dân tộc.</div>
+                </div>
+                <div class="theory-point">
+                    <div class="tp-title">4. Lộ trình CNH-HĐH Việt Nam từ 1986 đến nay</div>
+                    <div class="tp-desc">Từ Đổi mới 1986 → Gia nhập ASEAN (1995) → WTO (2007) → CPTPP, EVFTA → Chuyển đổi số và CMCN 4.0. Mỗi bước đều đòi hỏi sự thích ứng linh hoạt và nâng cao năng lực cạnh tranh quốc gia.</div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 24px;">
+                <button class="btn btn-primary btn-lg" onclick="restartGame()">🔄 CHƠI LẠI</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== THEORY MODAL ==================== -->
+    <div class="overlay" id="theoryModal">
+        <div class="overlay-backdrop" onclick="closeTheoryModal()"></div>
+        <div class="modal">
+            <h2 id="theoryTitle">📖 Chốt Lý thuyết</h2>
+            <div id="theoryContent"></div>
+            <div class="modal-actions">
+                <button class="btn btn-primary btn-block" onclick="closeTheoryModal()">Đã hiểu ✓</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== GLOBALIZATION OVERLAY ==================== -->
+    <div class="globalization-overlay" id="globalizationOverlay">
+        <div class="warning-stripe-top"></div>
+        <div class="warning-stripe-bottom"></div>
+        <div class="globalization-content">
+            <span class="alert-icon">🌐</span>
+            <h1>TOÀN CẦU HÓA</h1>
+            <div class="sub-text">Sự kiện bất ngờ đã xảy ra!</div>
+            <div class="impact-text">⚠️ Thị trường biến động mạnh ⚠️</div>
+            <ul class="impact-list">
+                <li>Thẻ "Lao động thủ công" giảm <strong>50%</strong> giá trị</li>
+                <li>Thẻ "Máy móc cơ khí" giảm <strong>50%</strong> giá trị</li>
+                <li>Mở khóa thẻ "Nhân lực chất lượng cao"</li>
+                <li>Mở khóa thẻ "Công nghệ lõi 4.0" (AI, Big Data, In 3D)</li>
+            </ul>
+            <button class="btn btn-danger btn-lg" onclick="confirmGlobalization()">
+                ⚡ XÁC NHẬN & TIẾP TỤC
+            </button>
+        </div>
+    </div>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+        // ==================== ROUTING ====================
+        // ?mode=admin → Show setup/game (for quản trò on laptop/projector)
+        // No param or anything else → Show landing page (for phone viewers via QR)
+        const urlParams = new URLSearchParams(window.location.search);
+        const MODE = urlParams.get('mode');
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            if (MODE === 'admin') {
+                showScreen('setupScreen');
+                renderTeamInputs();
+            } else {
+                // Default: show landing page for phone viewers
+                showScreen('landingScreen');
+            }
+        });
+
+        // ==================== GAME STATE ====================
+        const GameState = {
+            phase: 0,
+            teams: [],
+            timer: null,
+            timeLeft: 600,
+            timerRunning: false,
+            globalized: false,
+            logs: [],
+            startTime: null
+        };
+
+        const CARDS = {
+            labor: { id: 'labor', name: 'Lao động thủ công', emoji: '👷', cost: 100, points: 50, phase: 1, category: 'resource', devaluedPoints: 25 },
+            mech1: { id: 'mech1', name: 'Máy móc cơ khí 1.0', emoji: '⚙️', cost: 150, points: 80, phase: 1, category: 'tech', devaluedPoints: 40 },
+            mech2: { id: 'mech2', name: 'Máy móc cơ khí 2.0', emoji: '🔧', cost: 250, points: 120, phase: 1, category: 'tech', devaluedPoints: 60 },
+            hr: { id: 'hr', name: 'Nhân lực chất lượng cao', emoji: '🎓', cost: 300, points: 200, phase: 2, category: 'resource' },
+            ai: { id: 'ai', name: 'Công nghệ AI', emoji: '🤖', cost: 500, points: 350, phase: 2, category: 'tech4' },
+            bigdata: { id: 'bigdata', name: 'Big Data', emoji: '📊', cost: 450, points: 300, phase: 2, category: 'tech4' },
+            print3d: { id: 'print3d', name: 'In 3D', emoji: '🖨️', cost: 400, points: 280, phase: 2, category: 'tech4' }
+        };
+
+        const TEAM_COLORS = ['#ef4444', '#f59e0b', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899', '#06b6d4', '#f97316'];
+        const TEAM_DEFAULT_NAMES = ['Nhóm 1', 'Nhóm 2', 'Nhóm 3', 'Nhóm 4', 'Nhóm 5', 'Nhóm 6', 'Nhóm 7 (extra)', 'Nhóm 8 (extra)'];
+
+        const THEORY = {
+            1: {
+                title: '📖 Chốt lý thuyết — Giai đoạn 1: CNH Truyền thống',
+                content: `
+                    <p>Các bạn vừa trải qua mô hình <span class="highlight">Công nghiệp hóa cổ điển</span> và <span class="highlight">kiểu Liên Xô cũ</span>.</p>
+                    <div class="theory-quote">
+                        "Đặc trưng của CNH truyền thống là chuyển từ lao động thủ công sang sử dụng máy móc cơ khí, bắt đầu từ công nghiệp nhẹ (mô hình cổ điển) hoặc ưu tiên công nghiệp nặng (mô hình Liên Xô)."
+                    </div>
+                    <p><strong>Đặc điểm chính:</strong></p>
+                    <p>• Thời gian thực hiện rất dài: <span class="highlight">60-80 năm</span></p>
+                    <p>• Dựa nhiều vào khai thác tài nguyên thiên nhiên</p>
+                    <p>• Phát triển tuần tự: Nông nghiệp → Công nghiệp nhẹ → Công nghiệp nặng</p>
+                    <p>• Nguồn vốn chủ yếu từ tích lũy nội bộ</p>
+                    <div class="theory-quote">
+                        "Việt Nam bắt đầu CNH từ Đại hội III (1960), ưu tiên phát triển công nghiệp nặng. Sau Đổi mới 1986, chuyển sang mô hình kết hợp."
+                    </div>
+                `
+            },
+            2: {
+                title: '📖 Chốt lý thuyết — Giai đoạn 2: Hội nhập & CMCN 4.0',
+                content: `
+                    <p>Sự <span class="highlight">hoảng loạn</span> khi thẻ bài mất giá chính là mô phỏng <span class="highlight">tác động tiêu cực của hội nhập kinh tế quốc tế</span>.</p>
+                    <div class="theory-quote">
+                        "Hội nhập kinh tế quốc tế tạo ra: Gia tăng cạnh tranh gay gắt, nguy cơ chuyển dịch cơ cấu không kịp thời, rủi ro phân phối lợi ích không công bằng, và phụ thuộc vào bên ngoài."
+                    </div>
+                    <p><strong>Tác động tích cực:</strong></p>
+                    <p>• Mở rộng thị trường xuất khẩu</p>
+                    <p>• Thu hút FDI và chuyển giao công nghệ</p>
+                    <p>• Nâng cao năng lực cạnh tranh</p>
+                    <p style="margin-top: 12px;"><strong>Lộ trình CNH-HĐH hiện đại:</strong></p>
+                    <p>• Phải dựa trên <span class="highlight">kinh tế tri thức</span></p>
+                    <p>• Thích ứng với <span class="highlight">Cách mạng công nghiệp 4.0</span> (AI, Big Data, IoT...)</p>
+                    <p>• Phát triển nguồn nhân lực chất lượng cao</p>
+                    <p>• Rút ngắn thời gian CNH so với mô hình truyền thống</p>
+                    <div class="theory-quote">
+                        "Để sống sót và phát triển, Việt Nam phải thực hiện CNH-HĐH kiểu rút ngắn, kết hợp tuần tự với nhảy vọt, dựa trên tri thức và đổi mới sáng tạo."
+                    </div>
+                `
+            }
+        };
+
+        // ==================== AUDIO SYSTEM ====================
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) { try { audioCtx = new AudioCtx(); } catch(e) {} }
+        }
+
+        function playSound(type) {
+            initAudio();
+            if (!audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            const now = audioCtx.currentTime;
+
+            switch(type) {
+                case 'buy':
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(523, now);
+                    osc.frequency.setValueAtTime(659, now + 0.1);
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+                    osc.start(now); osc.stop(now + 0.25);
+                    break;
+                case 'alert':
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(440, now);
+                    osc.frequency.setValueAtTime(220, now + 0.2);
+                    osc.frequency.setValueAtTime(440, now + 0.4);
+                    gain.gain.setValueAtTime(0.12, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.6);
+                    osc.start(now); osc.stop(now + 0.6);
+                    break;
+                case 'bonus':
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(523, now);
+                    osc.frequency.setValueAtTime(659, now + 0.1);
+                    osc.frequency.setValueAtTime(784, now + 0.2);
+                    osc.frequency.setValueAtTime(1047, now + 0.3);
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+                    osc.start(now); osc.stop(now + 0.5);
+                    break;
+                case 'crisis':
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(200, now);
+                    osc.frequency.exponentialRampToValueAtTime(100, now + 1);
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 1.2);
+                    osc.start(now); osc.stop(now + 1.2);
+                    break;
+                case 'victory':
+                    osc.type = 'sine';
+                    [523, 659, 784, 1047, 784, 1047].forEach((freq, i) => {
+                        osc.frequency.setValueAtTime(freq, now + i * 0.15);
+                    });
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 1);
+                    osc.start(now); osc.stop(now + 1);
+                    break;
+            }
+        }
+
+        // ==================== PARTICLES ====================
+        function createParticles() {
+            const container = document.getElementById('bgParticles');
+            container.innerHTML = '';
+            for (let i = 0; i < 20; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                const size = Math.random() * 6 + 2;
+                p.style.width = size + 'px'; p.style.height = size + 'px';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.background = TEAM_COLORS[Math.floor(Math.random() * TEAM_COLORS.length)];
+                p.style.animationDuration = (Math.random() * 15 + 10) + 's';
+                p.style.animationDelay = (Math.random() * 15) + 's';
+                container.appendChild(p);
+            }
+        }
+
+        // ==================== CONFETTI ====================
+        function launchConfetti() {
+            const container = document.getElementById('confettiContainer');
+            const colors = ['#f59e0b', '#ef4444', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899', '#ffcd00', '#da251d'];
+            for (let i = 0; i < 120; i++) {
+                setTimeout(() => {
+                    const piece = document.createElement('div');
+                    piece.className = 'confetti-piece';
+                    piece.style.left = Math.random() * 100 + '%';
+                    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    piece.style.width = (Math.random() * 10 + 5) + 'px';
+                    piece.style.height = (Math.random() * 10 + 5) + 'px';
+                    piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                    piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    container.appendChild(piece);
+                    setTimeout(() => piece.remove(), 4000);
+                }, i * 30);
+            }
+        }
+
+        // ==================== TOAST ====================
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // ==================== SCREEN MANAGEMENT ====================
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        // ==================== SETUP ====================
+        function renderTeamInputs() {
+            const count = parseInt(document.getElementById('teamCount').value);
+            const container = document.getElementById('teamNameInputs');
+            container.innerHTML = '';
+            for (let i = 0; i < count; i++) {
+                const div = document.createElement('div');
+                div.className = 'team-name-input';
+                div.innerHTML = `
+                    <div class="team-num" style="background: ${TEAM_COLORS[i]}20; color: ${TEAM_COLORS[i]}; border: 1px solid ${TEAM_COLORS[i]}50;">${i + 1}</div>
+                    <input type="text" id="teamName${i}" placeholder="${TEAM_DEFAULT_NAMES[i]}" value="${TEAM_DEFAULT_NAMES[i]}">
+                `;
+                container.appendChild(div);
+            }
+        }
+
+        // ==================== GAME START ====================
+        function startGame() {
+            initAudio();
+            const count = parseInt(document.getElementById('teamCount').value);
+            const startMoney = parseInt(document.getElementById('startMoney').value);
+
+            GameState.teams = [];
+            for (let i = 0; i < count; i++) {
+                const nameInput = document.getElementById(`teamName${i}`);
+                const name = nameInput.value.trim() || TEAM_DEFAULT_NAMES[i];
+                GameState.teams.push({
+                    id: i, name: name, color: TEAM_COLORS[i], money: startMoney,
+                    cards: { labor: 0, mech1: 0, mech2: 0, hr: 0, ai: 0, bigdata: 0, print3d: 0 },
+                    combos: [], bankrupt: false
+                });
+            }
+
+            GameState.startTime = Date.now();
+            GameState.logs = [];
+
+            showScreen('gameScreen');
+            setPhase(1);
+            renderAll();
+            addLog('🎮 Trò chơi bắt đầu! Quản trò Nhóm 7 điều phối.', 'info');
+            playSound('bonus');
+        }
+
+        // ==================== PHASE MANAGEMENT ====================
+        function setPhase(phase) {
+            GameState.phase = phase;
+            stopTimer();
+
+            const indicator = document.getElementById('phaseIndicator');
+            indicator.className = 'phase-indicator';
+
+            switch(phase) {
+                case 1:
+                    document.body.style.background = 'linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0d4a3a 100%)';
+                    document.getElementById('phaseIcon').textContent = '🏭';
+                    document.getElementById('phaseText').textContent = 'Giai đoạn 1: Kỷ nguyên Truyền thống';
+                    GameState.timeLeft = 600;
+                    document.getElementById('btnPhase1').disabled = true;
+                    document.getElementById('btnGlobalize').disabled = false;
+                    addLog('🏭 Giai đoạn 1 bắt đầu — Kỷ nguyên Truyền thống', 'event');
+                    break;
+                case 2:
+                    indicator.classList.add('phase-2');
+                    document.body.style.background = 'linear-gradient(135deg, #1a0a0a 0%, #4a1010 50%, #3d1a00 100%)';
+                    document.getElementById('phaseIcon').textContent = '⚡';
+                    document.getElementById('phaseText').textContent = 'Giai đoạn 2: Cú sốc Hội nhập 4.0';
+                    GameState.timeLeft = 480;
+                    document.getElementById('btnGlobalize').disabled = true;
+                    addLog('⚡ Giai đoạn 2 bắt đầu — TOÀN CẦU HÓA!', 'event');
+                    break;
+                case 3:
+                    indicator.classList.add('phase-3');
+                    document.body.style.background = 'linear-gradient(135deg, #1a0f2e 0%, #2d1b4e 50%, #1a2744 100%)';
+                    document.getElementById('phaseIcon').textContent = '🏆';
+                    document.getElementById('phaseText').textContent = 'Giai đoạn 3: Tổng kết & Chấm điểm';
+                    GameState.timeLeft = 420;
+                    document.getElementById('btnPhase3').disabled = true;
+                    addLog('🏆 Giai đoạn 3 — Tổng kết!', 'event');
+
+                    // Show results button
+                    setTimeout(() => {
+                        showToast('Nhấn "Xem kết quả" khi sẵn sàng!', 'info');
+                    }, 500);
+                    const controls = document.querySelector('.controls-grid');
+                    if (!document.getElementById('btnResults')) {
+                        const btn = document.createElement('button');
+                        btn.id = 'btnResults';
+                        btn.className = 'btn btn-success btn-block';
+                        btn.textContent = '🎉 XEM KẾT QUẢ CUỐI CÙNG';
+                        btn.onclick = showResults;
+                        controls.appendChild(btn);
+                    }
+                    break;
+            }
+
+            updateTimerDisplay();
+            renderShop();
+            renderTeams();
+        }
+
+        // ==================== GLOBALIZATION EVENT ====================
+        function triggerGlobalization() {
+            playSound('crisis');
+            document.getElementById('globalizationOverlay').classList.add('active');
+        }
+
+        function confirmGlobalization() {
+            document.getElementById('globalizationOverlay').classList.remove('active');
+            GameState.globalized = true;
+
+            GameState.teams.forEach(team => {
+                if (!team.bankrupt) {
+                    const oldPoints = calculatePoints(team, false);
+                    const newPoints = calculatePoints(team, true);
+                    if (newPoints < oldPoints) {
+                        addLog(`📉 ${team.name} mất ${oldPoints - newPoints} điểm do mất giá!`, 'event');
+                    }
+                }
+            });
+
+            checkBankruptcy();
+            setPhase(2);
+            playSound('alert');
+            showToast('⚠️ TOÀN CẦU HÓA đã kích hoạt! Thẻ cũ mất 50% giá trị!', 'error');
+            setTimeout(() => showTheoryForPhase(2), 1500);
+        }
+
+        function checkBankruptcy() {
+            GameState.teams.forEach(team => {
+                const totalValue = team.money + calculatePoints(team, true);
+                if (totalValue < 100 && !team.bankrupt) {
+                    team.bankrupt = true;
+                    addLog(`💀 ${team.name} đã PHÁ SẢN!`, 'event');
+                    showToast(`💀 ${team.name} phá sản!`, 'error');
+                }
+            });
+        }
+
+        // ==================== TIMER ====================
+        function toggleTimer() {
+            if (GameState.timerRunning) stopTimer(); else startTimer();
+        }
+
+        function startTimer() {
+            if (GameState.timeLeft <= 0) return;
+            GameState.timerRunning = true;
+            document.getElementById('timerToggle').textContent = '⏸';
+            GameState.timer = setInterval(() => {
+                GameState.timeLeft--;
+                updateTimerDisplay();
+                if (GameState.timeLeft <= 0) {
+                    stopTimer();
+                    playSound('alert');
+                    showToast('⏰ Hết giờ giai đoạn!', 'warning');
+                    if (GameState.phase === 1 && !GameState.globalized) showTheoryForPhase(1);
+                    else if (GameState.phase === 2) showTheoryForPhase(2);
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            GameState.timerRunning = false;
+            if (GameState.timer) { clearInterval(GameState.timer); GameState.timer = null; }
+            document.getElementById('timerToggle').textContent = '▶';
+        }
+
+        function resetPhaseTimer() {
+            stopTimer();
+            switch(GameState.phase) {
+                case 1: GameState.timeLeft = 600; break;
+                case 2: GameState.timeLeft = 480; break;
+                case 3: GameState.timeLeft = 420; break;
+            }
+            updateTimerDisplay();
+            showToast('🔄 Đã reset đồng hồ', 'info');
+        }
+
+        function updateTimerDisplay() {
+            const mins = Math.floor(GameState.timeLeft / 60);
+            const secs = GameState.timeLeft % 60;
+            const display = document.getElementById('timerDisplay');
+            display.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+            display.classList.toggle('urgent', GameState.timeLeft <= 30);
+        }
+
+        // ==================== SCORING ====================
+        function calculatePoints(team, useDevalued = null) {
+            const devalued = useDevalued !== null ? useDevalued : GameState.globalized;
+            let points = 0;
+            Object.keys(team.cards).forEach(cardId => {
+                const count = team.cards[cardId];
+                if (count <= 0) return;
+                const card = CARDS[cardId];
+                points += count * (devalued && card.devaluedPoints !== undefined ? card.devaluedPoints : card.points);
+            });
+            return points;
+        }
+
+        function calculateTotalScore(team) {
+            let points = calculatePoints(team);
+            let comboBonus = 0;
+            team.combos = [];
+
+            if (team.cards.labor >= 2 && (team.cards.mech1 >= 1 || team.cards.mech2 >= 1)) {
+                team.combos.push('cnh_traditional'); comboBonus += 200;
+            }
+            if (team.cards.hr >= 1 && (team.cards.ai >= 1 || team.cards.bigdata >= 1 || team.cards.print3d >= 1)) {
+                team.combos.push('cnh_modern'); comboBonus += 500;
+            }
+            const tech4Count = [team.cards.ai > 0, team.cards.bigdata > 0, team.cards.print3d > 0].filter(Boolean).length;
+            if (team.cards.hr >= 1 && tech4Count >= 2) {
+                team.combos.push('digital_transform'); comboBonus += 800;
+            }
+
+            return points + comboBonus;
+        }
+
+        // ==================== SHOP ====================
+        function buyCard(cardId) {
+            const buyerIdx = parseInt(document.getElementById('buyerSelect').value);
+            if (isNaN(buyerIdx)) { showToast('Vui lòng chọn nhóm mua!', 'error'); return; }
+
+            const team = GameState.teams[buyerIdx];
+            const card = CARDS[cardId];
+
+            if (team.bankrupt) { showToast(`${team.name} đã phá sản!`, 'error'); return; }
+            if (card.phase === 2 && !GameState.globalized) { showToast('Thẻ này chưa được mở khóa!', 'error'); return; }
+            if (team.money < card.cost) {
+                showToast(`${team.name} không đủ vốn! (Cần ${card.cost}, có ${team.money})`, 'error');
+                playSound('alert'); return;
+            }
+
+            team.money -= card.cost;
+            team.cards[cardId]++;
+
+            playSound('buy');
+            addLog(`🛒 ${team.name} mua ${card.emoji} ${card.name} (-${card.cost}💰)`, 'buy');
+            showToast(`${card.emoji} ${team.name} mua ${card.name}!`, 'success');
+
+            const prevCombos = [...team.combos];
+            calculateTotalScore(team);
+            team.combos.forEach(combo => {
+                if (!prevCombos.includes(combo)) {
+                    let bonus = 0, comboName = '';
+                    switch(combo) {
+                        case 'cnh_traditional': bonus = 200; comboName = 'CNH Truyền thống'; break;
+                        case 'cnh_modern': bonus = 500; comboName = 'CNH Hiện đại'; break;
+                        case 'digital_transform': bonus = 800; comboName = 'Chuyển đổi số toàn diện'; break;
+                    }
+                    team.money += bonus;
+                    playSound('bonus');
+                    addLog(`🎉 ${team.name} đạt Combo "${comboName}" (+${bonus}💰)!`, 'bonus');
+                    showToast(`🎉 COMBO! ${team.name}: ${comboName} (+${bonus}💰)`, 'warning');
+                }
+            });
+
+            renderAll();
+        }
+
+        function renderShop() {
+            const container = document.getElementById('shopItems');
+            container.innerHTML = '';
+            Object.values(CARDS).forEach(card => {
+                const locked = card.phase === 2 && !GameState.globalized;
+                const devalued = GameState.globalized && card.devaluedPoints !== undefined;
+                const div = document.createElement('div');
+                div.className = `shop-item ${locked ? 'locked' : ''}`;
+                if (!locked) div.onclick = () => buyCard(card.id);
+
+                let priceHTML = devalued
+                    ? `<span class="old-price">${card.points}đ</span>${card.devaluedPoints}đ | ${card.cost}💰`
+                    : `${card.points}đ | ${card.cost}💰`;
+
+                div.innerHTML = `
+                    <div class="item-info">
+                        <span class="item-emoji">${card.emoji}</span>
+                        <div>
+                            <div class="item-name">${card.name}</div>
+                            <div class="item-meta">${locked ? '🔒 Chưa mở khóa' : card.phase === 2 ? '🆕 Mới' : card.category === 'resource' ? 'Nguồn lực' : 'Công nghệ'}</div>
+                        </div>
+                    </div>
+                    <div class="item-price">${priceHTML}</div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // ==================== RENDERING ====================
+        function renderAll() { renderTeams(); renderLeaderboard(); renderBuyerSelect(); }
+
+        function renderBuyerSelect() {
+            const select = document.getElementById('buyerSelect');
+            const currentVal = select.value;
+            select.innerHTML = '<option value="">— Chọn nhóm —</option>';
+            GameState.teams.forEach((team, idx) => {
+                const opt = document.createElement('option');
+                opt.value = idx;
+                opt.textContent = `${team.name} (💰${team.money})`;
+                if (team.bankrupt) opt.disabled = true;
+                select.appendChild(opt);
+            });
+            if (currentVal) select.value = currentVal;
+        }
+
+        function renderTeams() {
+            const grid = document.getElementById('teamsGrid');
+            grid.innerHTML = '';
+
+            const sorted = [...GameState.teams].sort((a, b) => calculateTotalScore(b) - calculateTotalScore(a));
+            const rankings = {};
+            sorted.forEach((t, i) => rankings[t.id] = i + 1);
+
+            GameState.teams.forEach(team => {
+                const totalScore = calculateTotalScore(team);
+                const rank = rankings[team.id];
+                const card = document.createElement('div');
+                card.className = `team-card ${team.bankrupt ? 'bankrupt' : ''}`;
+                card.style.setProperty('--team-color', team.color);
+
+                let cardBadges = '';
+                Object.keys(team.cards).forEach(cardId => {
+                    const count = team.cards[cardId];
+                    if (count > 0) {
+                        const cd = CARDS[cardId];
+                        const devalued = GameState.globalized && cd.devaluedPoints !== undefined;
+                        cardBadges += `<span class="card-badge ${cardId}">${cd.emoji} ${cd.name.split(' ').slice(0, 2).join(' ')} ×${count}${devalued ? '<span class="devalued">(↓50%)</span>' : ''}</span>`;
+                    }
+                });
+                if (!cardBadges) cardBadges = '<span style="font-size: 0.8rem; color: var(--text-muted);">Chưa có thẻ bài</span>';
+
+                let comboBadges = '';
+                team.combos.forEach(combo => {
+                    let name = '';
+                    switch(combo) {
+                        case 'cnh_traditional': name = '🏭 CNH Truyền thống'; break;
+                        case 'cnh_modern': name = '🚀 CNH Hiện đại'; break;
+                        case 'digital_transform': name = '🌟 Chuyển đổi số'; break;
+                    }
+                    comboBadges += `<span class="combo-badge">✨ ${name}</span> `;
+                });
+
+                let rankClass = rank === 1 ? 'rank-1' : rank === 2 ? 'rank-2' : rank === 3 ? 'rank-3' : '';
+
+                card.innerHTML = `
+                    <div class="team-card-header">
+                        <div class="team-name"><span style="color: ${team.color};">●</span> ${team.name}</div>
+                        <span class="team-rank ${rankClass}">#${rank}</span>
+                    </div>
+                    <div class="team-stats">
+                        <div class="team-stat"><div class="stat-label">Vốn</div><div class="stat-value money">💰 ${team.money}</div></div>
+                        <div class="team-stat"><div class="stat-label">Tổng điểm</div><div class="stat-value points">⭐ ${totalScore}</div></div>
+                    </div>
+                    <div class="team-cards-list">${cardBadges}</div>
+                    ${comboBadges ? `<div style="margin-top: 8px;">${comboBadges}</div>` : ''}
+                    <div class="team-actions">
+                        <button class="btn btn-outline" onclick="grantMoney(${team.id}, 100)" title="Thưởng 100 vốn">+💰100</button>
+                        <button class="btn btn-outline" onclick="grantMoney(${team.id}, -100)" title="Phạt 100 vốn">-💰100</button>
+                        <button class="btn btn-outline" onclick="toggleBankrupt(${team.id})" title="Phá sản">💀</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function renderLeaderboard() {
+            const container = document.getElementById('leaderboard');
+            container.innerHTML = '';
+            const sorted = [...GameState.teams].sort((a, b) => calculateTotalScore(b) - calculateTotalScore(a));
+            sorted.forEach((team, i) => {
+                const score = calculateTotalScore(team);
+                const div = document.createElement('div');
+                div.className = 'leaderboard-item';
+                div.innerHTML = `
+                    <div class="lb-rank">${i + 1}</div>
+                    <span class="lb-name" style="color: ${team.color};">${team.name} ${team.bankrupt ? '💀' : ''}</span>
+                    <span class="lb-score">${score}</span>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // ==================== TEAM ACTIONS ====================
+        function grantMoney(teamId, amount) {
+            const team = GameState.teams[teamId];
+            team.money += amount;
+            if (team.money < 0) team.money = 0;
+            if (amount > 0) {
+                addLog(`💰 ${team.name} +${amount} vốn`, 'bonus');
+                showToast(`💰 ${team.name} +${amount} vốn`, 'success');
+                playSound('buy');
+            } else {
+                addLog(`💸 ${team.name} ${amount} vốn`, 'event');
+                showToast(`💸 ${team.name} ${amount} vốn`, 'error');
+            }
+            renderAll();
+        }
+
+        function toggleBankrupt(teamId) {
+            const team = GameState.teams[teamId];
+            team.bankrupt = !team.bankrupt;
+            if (team.bankrupt) {
+                addLog(`💀 ${team.name} PHÁ SẢN!`, 'event');
+                showToast(`💀 ${team.name} phá sản!`, 'error');
+                playSound('crisis');
+            } else {
+                addLog(`✅ ${team.name} hồi phục!`, 'buy');
+                showToast(`✅ ${team.name} hồi phục!`, 'success');
+            }
+            renderAll();
+        }
+
+        // ==================== ACTIVITY LOG ====================
+        function addLog(message, type = 'info') {
+            const now = new Date();
+            const time = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+            GameState.logs.unshift({ message, type, time });
+            const container = document.getElementById('activityLog');
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.innerHTML = `<span class="log-time">${time}</span> ${message}`;
+            container.prepend(entry);
+            while (container.children.length > 50) container.removeChild(container.lastChild);
+        }
+
+        // ==================== THEORY MODAL ====================
+        function showTheoryModal() { showTheoryForPhase(GameState.phase <= 1 ? 1 : 2); }
+        function showTheoryForPhase(phase) {
+            const theory = THEORY[phase];
+            if (!theory) return;
+            document.getElementById('theoryTitle').textContent = theory.title;
+            document.getElementById('theoryContent').innerHTML = theory.content;
+            document.getElementById('theoryModal').classList.add('active');
+        }
+        function closeTheoryModal() { document.getElementById('theoryModal').classList.remove('active'); }
+
+        // ==================== RESULTS ====================
+        function showResults() {
+            stopTimer();
+            showScreen('resultsScreen');
+            playSound('victory');
+
+            const sorted = [...GameState.teams].sort((a, b) => calculateTotalScore(b) - calculateTotalScore(a));
+            const winner = sorted[0];
+
+            document.getElementById('winnerCard').innerHTML = `
+                <div style="font-size: 3rem; margin-bottom: 12px;">👑</div>
+                <h2>${winner.name}</h2>
+                <div class="winner-score">⭐ ${calculateTotalScore(winner)} điểm</div>
+                <div style="color: var(--text-secondary); margin-top: 8px; font-size: 0.95rem;">
+                    Vốn còn lại: 💰${winner.money} | Combo: ${winner.combos.length}
+                </div>
+            `;
+
+            const standings = document.getElementById('finalStandings');
+            standings.innerHTML = '<h3>📊 Bảng xếp hạng cuối cùng</h3>';
+            sorted.forEach((team, i) => {
+                const score = calculateTotalScore(team);
+                const row = document.createElement('div');
+                row.className = 'standing-row';
+                row.innerHTML = `
+                    <div class="sr-rank">${i + 1}</div>
+                    <div class="sr-name" style="color: ${team.color};">
+                        ${team.name} ${team.bankrupt ? '💀' : ''} ${team.combos.includes('digital_transform') ? '🌟 Quốc gia 4.0' : ''}
+                    </div>
+                    <div class="sr-details">
+                        <div class="sr-score">⭐ ${score}</div>
+                        <div class="sr-money">💰 ${team.money} vốn</div>
+                    </div>
+                `;
+                standings.appendChild(row);
+            });
+
+            setTimeout(launchConfetti, 500);
+        }
+
+        function restartGame() {
+            GameState.phase = 0; GameState.teams = []; GameState.globalized = false; GameState.logs = [];
+            stopTimer();
+            document.body.style.background = '';
+            document.getElementById('btnPhase1').disabled = false;
+            document.getElementById('btnGlobalize').disabled = false;
+            document.getElementById('btnPhase3').disabled = false;
+            const btnResults = document.getElementById('btnResults');
+            if (btnResults) btnResults.remove();
+            showScreen('setupScreen');
+            renderTeamInputs();
+        }
+
+        // ==================== KEYBOARD SHORTCUTS ====================
+        document.addEventListener('keydown', (e) => {
+            if (GameState.phase === 0) return;
+            if (e.key === ' ') { e.preventDefault(); toggleTimer(); }
+            if (e.ctrlKey && e.key === '1') { e.preventDefault(); showTheoryForPhase(1); }
+            if (e.ctrlKey && e.key === '2') { e.preventDefault(); showTheoryForPhase(2); }
+        });
+    </script>
+</body>
+</html>
