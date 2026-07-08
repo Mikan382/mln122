@@ -2,1578 +2,963 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thương Trường Xuyên Thế Kỷ: Từ 1986 đến 4.0 | Nhóm 7</title>
-    <meta name="description" content="Sàn giao dịch Đổi Mới - Trò chơi mô phỏng Công nghiệp hóa Hiện đại hóa Việt Nam">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kiến Trúc Sư Quốc Gia | Nhóm 7 — MLN122</title>
+    <meta name="description" content="Game mô phỏng CNH-HĐH & Hội nhập KTQT Việt Nam — Chương 6 MLN122">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* ==================== DESIGN SYSTEM ==================== */
+        /* ===== ROOT & RESET ===== */
         :root {
-            --bg-primary: #0a0e1a;
-            --bg-secondary: #111827;
-            --bg-card: rgba(17, 24, 39, 0.7);
-            --bg-glass: rgba(255, 255, 255, 0.05);
-            --border-glass: rgba(255, 255, 255, 0.1);
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --text-muted: #64748b;
-            --accent-gold: #f59e0b;
-            --accent-gold-light: #fbbf24;
-            --accent-red: #ef4444;
-            --accent-red-dark: #dc2626;
-            --accent-green: #10b981;
-            --accent-blue: #3b82f6;
-            --accent-purple: #8b5cf6;
-            --accent-cyan: #06b6d4;
-            --accent-pink: #ec4899;
-            --vn-red: #da251d;
-            --vn-yellow: #ffcd00;
-            --shadow-glow-gold: 0 0 20px rgba(245, 158, 11, 0.3);
-            --shadow-glow-red: 0 0 30px rgba(239, 68, 68, 0.4);
-            --shadow-glow-green: 0 0 20px rgba(16, 185, 129, 0.3);
-            --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.3);
-            --radius-sm: 8px;
-            --radius-md: 12px;
-            --radius-lg: 16px;
-            --radius-xl: 24px;
-            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --bg-primary: #0a0e1a; --bg-secondary: #111827; --bg-tertiary: #1e293b;
+            --bg-card: rgba(17, 24, 39, 0.75); --border-glass: rgba(255,255,255,0.08);
+            --text-primary: #f1f5f9; --text-secondary: #94a3b8; --text-muted: #64748b;
+            --gold: #f59e0b; --gold-light: #fbbf24; --gold-dim: rgba(245,158,11,0.15);
+            --red: #ef4444; --red-dark: #dc2626; --red-dim: rgba(239,68,68,0.15);
+            --green: #10b981; --green-dim: rgba(16,185,129,0.15);
+            --blue: #3b82f6; --blue-dim: rgba(59,130,246,0.15);
+            --purple: #8b5cf6; --purple-dim: rgba(139,92,246,0.15);
+            --cyan: #06b6d4; --pink: #ec4899;
+            --vn-red: #da251d; --vn-yellow: #ffcd00;
+            --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px; --radius-xl: 24px;
+            --shadow-gold: 0 0 20px rgba(245,158,11,0.25);
+            --shadow-red: 0 0 25px rgba(239,68,68,0.3);
+            --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
         }
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        html{font-size:16px;scroll-behavior:smooth}
+        body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg-primary);color:var(--text-primary);min-height:100vh;overflow-x:hidden;transition:background 1.5s ease}
+        h1,h2,h3,h4{font-family:'Outfit',sans-serif}
 
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-        html { font-size: 16px; scroll-behavior: smooth; }
+        /* ===== PARTICLES ===== */
+        .particles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+        .particles .dot{position:absolute;border-radius:50%;opacity:.12;animation:floatUp 18s infinite linear}
+        @keyframes floatUp{0%{transform:translateY(100vh) rotate(0);opacity:0}10%{opacity:.12}90%{opacity:.12}100%{transform:translateY(-10vh) rotate(720deg);opacity:0}}
 
-        body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background: linear-gradient(135deg, #0a0e1a 0%, #1a1a2e 50%, #0a1628 100%);
-            color: var(--text-primary);
-            min-height: 100vh;
-            overflow-x: hidden;
-            transition: background 1s ease;
-        }
+        /* ===== SCREENS ===== */
+        .screen{display:none;position:relative;z-index:1;min-height:100vh;animation:fadeIn .6s ease}
+        .screen.active{display:flex;flex-direction:column}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+        .container{max-width:960px;margin:0 auto;padding:20px 16px;width:100%}
 
-        h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif; }
+        /* ===== BUTTONS ===== */
+        .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 28px;border:none;border-radius:var(--radius-md);font-family:'Outfit',sans-serif;font-size:1rem;font-weight:600;cursor:pointer;transition:var(--transition);position:relative;overflow:hidden}
+        .btn:active{transform:scale(.96)}
+        .btn-gold{background:linear-gradient(135deg,var(--gold),#d97706);color:#000;box-shadow:var(--shadow-gold)}
+        .btn-gold:hover{box-shadow:0 0 35px rgba(245,158,11,0.4);transform:translateY(-2px)}
+        .btn-red{background:linear-gradient(135deg,var(--red),var(--red-dark));color:#fff;box-shadow:var(--shadow-red)}
+        .btn-outline{background:transparent;border:1px solid var(--border-glass);color:var(--text-primary)}
+        .btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+        .btn-lg{padding:18px 44px;font-size:1.15rem}
+        .btn-block{width:100%}
+        .btn:disabled{opacity:.4;cursor:not-allowed;pointer-events:none}
 
-        /* ==================== ANIMATED BACKGROUND ==================== */
-        .bg-particles {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 0; overflow: hidden;
-        }
-        .bg-particles .particle {
-            position: absolute; border-radius: 50%; opacity: 0.15;
-            animation: floatParticle 20s infinite linear;
-        }
-        @keyframes floatParticle {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.15; }
-            90% { opacity: 0.15; }
-            100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
-        }
+        /* ===== CARD ===== */
+        .card{background:var(--bg-card);backdrop-filter:blur(20px);border:1px solid var(--border-glass);border-radius:var(--radius-xl);padding:24px;margin-bottom:16px}
 
-        /* ==================== SCREENS ==================== */
-        .screen {
-            display: none; position: relative; z-index: 1;
-            min-height: 100vh; animation: fadeIn 0.5s ease;
-        }
-        .screen.active { display: block; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        /* ===== TOAST ===== */
+        .toast-box{position:fixed;top:16px;right:16px;z-index:9000;display:flex;flex-direction:column;gap:6px}
+        .toast{padding:12px 18px;background:var(--bg-secondary);border:1px solid var(--border-glass);border-radius:var(--radius-md);font-size:.85rem;animation:toastIn .3s ease,toastOut .3s ease 2.7s forwards;max-width:340px;backdrop-filter:blur(20px);box-shadow:0 6px 24px rgba(0,0,0,.4)}
+        .toast.success{border-left:3px solid var(--green)}.toast.error{border-left:3px solid var(--red)}.toast.info{border-left:3px solid var(--blue)}.toast.warning{border-left:3px solid var(--gold)}
+        @keyframes toastIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+        @keyframes toastOut{from{opacity:1}to{opacity:0;transform:translateX(40px)}}
 
-        /* ==================== LANDING SCREEN (PHONE) ==================== */
-        .landing-container {
-            max-width: 500px; margin: 0 auto; padding: 32px 20px;
-            min-height: 100vh; display: flex; flex-direction: column;
-        }
-        .landing-hero {
-            text-align: center; padding: 40px 0 32px;
-        }
-        .landing-hero .flag-big { font-size: 64px; display: block; margin-bottom: 16px; animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
-        .landing-hero h1 {
-            font-size: 1.8rem; font-weight: 900; line-height: 1.2;
-            background: linear-gradient(135deg, var(--vn-yellow), var(--accent-gold), var(--vn-red));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-        }
-        .landing-hero .subtitle { font-size: 0.95rem; color: var(--text-secondary); margin-top: 8px; }
-        .landing-hero .group-badge {
-            display: inline-block; margin-top: 16px; padding: 6px 20px;
-            background: linear-gradient(135deg, var(--vn-red), #b91c1c);
-            border-radius: 999px; font-size: 0.8rem; font-weight: 600; color: white; letter-spacing: 1px;
-        }
+        /* ===== CONFETTI ===== */
+        .confetti-box{position:fixed;inset:0;pointer-events:none;z-index:8000;overflow:hidden}
+        .cf{position:absolute;width:10px;height:10px;top:-10px;animation:cfFall linear forwards}
+        @keyframes cfFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
 
-        .landing-card {
-            background: var(--bg-card); backdrop-filter: blur(20px);
-            border: 1px solid var(--border-glass); border-radius: var(--radius-xl);
-            padding: 24px; margin-bottom: 16px;
-        }
-        .landing-card h2 {
-            font-size: 1.1rem; font-weight: 700; margin-bottom: 14px;
-            display: flex; align-items: center; gap: 8px;
-        }
-        .landing-card .rules-text {
-            color: var(--text-secondary); line-height: 1.8; font-size: 0.88rem;
-        }
-        .landing-card .rules-text strong.phase1 { color: var(--accent-gold-light); }
-        .landing-card .rules-text strong.phase2 { color: var(--accent-red); }
-        .landing-card .rules-text strong.phase3 { color: var(--accent-purple); }
+        /* ===============================================
+           SCREEN 1: INTRO
+           =============================================== */
+        .intro-hero{text-align:center;padding:60px 0 30px}
+        .intro-hero .flag{font-size:72px;display:block;margin-bottom:16px;animation:pulse 2.5s infinite}
+        @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+        .intro-hero h1{font-size:2.2rem;font-weight:900;line-height:1.2;background:linear-gradient(135deg,var(--vn-yellow),var(--gold),var(--vn-red));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .intro-hero .sub{font-size:1rem;color:var(--text-secondary);margin-top:8px}
+        .intro-hero .badge{display:inline-block;margin-top:14px;padding:6px 20px;background:linear-gradient(135deg,var(--vn-red),#b91c1c);border-radius:999px;font-size:.82rem;font-weight:600;color:#fff;letter-spacing:.5px}
+        .intro-desc{text-align:center;color:var(--text-secondary);font-size:.92rem;line-height:1.7;margin:20px 0 30px;max-width:520px;margin-left:auto;margin-right:auto}
+        .intro-features{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:30px}
+        .intro-feat{padding:16px;background:rgba(255,255,255,.03);border:1px solid var(--border-glass);border-radius:var(--radius-lg);text-align:center;transition:var(--transition)}
+        .intro-feat:hover{border-color:var(--gold);transform:translateY(-2px)}
+        .intro-feat .if-icon{font-size:1.8rem;margin-bottom:8px}
+        .intro-feat .if-title{font-family:'Outfit',sans-serif;font-weight:700;font-size:.9rem;margin-bottom:4px}
+        .intro-feat .if-desc{font-size:.78rem;color:var(--text-muted)}
 
-        .card-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
-        .card-table th {
-            text-align: left; font-size: 0.75rem; text-transform: uppercase;
-            color: var(--text-muted); padding: 6px 8px; letter-spacing: 0.5px;
-            border-bottom: 1px solid var(--border-glass);
-        }
-        .card-table td {
-            padding: 8px; font-size: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.03);
-        }
-        .card-table .card-name { display: flex; align-items: center; gap: 6px; font-weight: 500; }
-        .card-table .price { font-family: 'JetBrains Mono', monospace; color: var(--accent-gold-light); font-weight: 600; }
-        .card-table .points { font-family: 'JetBrains Mono', monospace; color: var(--accent-green); font-weight: 600; }
-        .card-table .locked { opacity: 0.4; }
-        .card-table .locked td::after { content: ' 🔒'; font-size: 0.7rem; }
+        /* ===============================================
+           SCREEN 2: ERA TRANSITION
+           =============================================== */
+        .era-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;text-align:center}
+        .era-content{animation:eraIn 1s cubic-bezier(.4,0,.2,1)}
+        @keyframes eraIn{from{opacity:0;transform:scale(.85) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+        .era-icon{font-size:5rem;display:block;margin-bottom:16px;animation:pulse 2s infinite}
+        .era-period{font-family:'JetBrains Mono',monospace;font-size:1rem;color:var(--gold-light);letter-spacing:2px;margin-bottom:8px}
+        .era-title{font-size:2rem;font-weight:900;margin-bottom:12px}
+        .era-desc{color:var(--text-secondary);font-size:.95rem;line-height:1.7;max-width:500px;margin:0 auto 24px}
 
-        .phase-badge {
-            display: inline-block; padding: 3px 10px; border-radius: 999px;
-            font-size: 0.7rem; font-weight: 600; letter-spacing: 0.3px;
-        }
-        .phase-badge.pb-1 { background: rgba(245, 158, 11, 0.15); color: var(--accent-gold-light); border: 1px solid rgba(245, 158, 11, 0.3); }
-        .phase-badge.pb-2 { background: rgba(239, 68, 68, 0.15); color: var(--accent-red); border: 1px solid rgba(239, 68, 68, 0.3); }
+        /* ===============================================
+           SCREEN 3: MAIN GAME
+           =============================================== */
+        /* --- STATS BAR --- */
+        .stats-bar{display:flex;gap:12px;padding:14px 18px;background:var(--bg-card);backdrop-filter:blur(20px);border:1px solid var(--border-glass);border-radius:var(--radius-lg);margin-bottom:14px;flex-wrap:wrap;align-items:center}
+        .stat-item{flex:1;min-width:140px}
+        .stat-label{font-size:.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;display:flex;align-items:center;gap:4px;font-weight:600}
+        .stat-bar-bg{height:10px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden;position:relative}
+        .stat-bar-fill{height:100%;border-radius:99px;transition:width .8s cubic-bezier(.4,0,.2,1);position:relative}
+        .stat-bar-fill.economy{background:linear-gradient(90deg,#d97706,var(--gold-light))}
+        .stat-bar-fill.independence{background:linear-gradient(90deg,#059669,var(--green))}
+        .stat-bar-fill.tech{background:linear-gradient(90deg,#7c3aed,var(--purple))}
+        .stat-bar-fill.danger{animation:barPulse 1s infinite}
+        @keyframes barPulse{0%,100%{opacity:1}50%{opacity:.5}}
+        .stat-val{font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;margin-top:2px;text-align:right}
+        .stat-change{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:700;animation:popChange .6s ease;margin-left:6px}
+        .stat-change.up{color:var(--green)}.stat-change.down{color:var(--red)}
+        @keyframes popChange{0%{opacity:0;transform:translateY(8px) scale(.8)}50%{opacity:1;transform:translateY(-4px) scale(1.15)}100%{opacity:0;transform:translateY(-12px) scale(.9)}}
 
-        .combo-info {
-            margin-top: 12px; padding: 12px; background: rgba(245, 158, 11, 0.05);
-            border: 1px solid rgba(245, 158, 11, 0.15); border-radius: var(--radius-md);
-        }
-        .combo-info h4 {
-            font-size: 0.85rem; color: var(--accent-gold-light); margin-bottom: 8px;
-        }
-        .combo-row {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 4px 0; font-size: 0.8rem; color: var(--text-secondary);
-        }
-        .combo-row .combo-bonus {
-            font-family: 'JetBrains Mono', monospace; color: var(--accent-green); font-weight: 600;
-        }
+        /* --- ERA INDICATOR --- */
+        .era-indicator{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:var(--bg-card);border:1px solid var(--border-glass);border-radius:var(--radius-lg);margin-bottom:14px;flex-wrap:wrap;gap:8px}
+        .era-info{display:flex;align-items:center;gap:8px}
+        .era-badge{padding:5px 14px;border-radius:var(--radius-md);font-family:'Outfit',sans-serif;font-weight:700;font-size:.85rem}
+        .era-badge.e0{background:var(--gold-dim);color:var(--gold-light);border:1px solid rgba(245,158,11,.3)}
+        .era-badge.e1{background:var(--blue-dim);color:var(--blue);border:1px solid rgba(59,130,246,.3)}
+        .era-badge.e2{background:var(--red-dim);color:var(--red);border:1px solid rgba(239,68,68,.3)}
+        .era-badge.e3{background:var(--purple-dim);color:var(--purple);border:1px solid rgba(139,92,246,.3)}
+        .turn-info{font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--text-secondary)}
 
-        .ai-disclosure {
-            background: var(--bg-card); backdrop-filter: blur(20px);
-            border: 1px solid rgba(139, 92, 246, 0.2); border-radius: var(--radius-xl);
-            padding: 20px; margin-bottom: 16px;
-        }
-        .ai-disclosure h3 {
-            font-size: 0.95rem; font-weight: 700; color: var(--accent-purple);
-            margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
-        }
-        .ai-disclosure p {
-            font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 6px;
-        }
-        .ai-disclosure .ai-tag {
-            display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 0.7rem;
-            background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.3);
-            color: var(--accent-purple); font-weight: 600; margin-right: 4px;
-        }
+        /* --- GAME LAYOUT --- */
+        .game-layout{display:grid;grid-template-columns:1fr 320px;gap:14px}
+        @media(max-width:900px){.game-layout{grid-template-columns:1fr}}
 
-        .landing-footer {
-            text-align: center; padding: 24px 0; margin-top: auto;
-            font-size: 0.8rem; color: var(--text-muted);
-        }
+        /* --- MAP --- */
+        .map-title{font-size:.95rem;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+        .map-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+        @media(max-width:600px){.map-grid{grid-template-columns:repeat(2,1fr)}}
+        .zone{background:var(--bg-card);border:1px solid var(--border-glass);border-radius:var(--radius-lg);padding:16px;text-align:center;cursor:pointer;transition:all var(--transition);position:relative;overflow:hidden}
+        .zone::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;transition:background .5s ease}
+        .zone.lv0::before{background:linear-gradient(90deg,#16a34a,#22c55e)}
+        .zone.lv1::before{background:linear-gradient(90deg,#d97706,var(--gold-light))}
+        .zone.lv2::before{background:linear-gradient(90deg,#2563eb,var(--blue))}
+        .zone.lv3::before{background:linear-gradient(90deg,#7c3aed,var(--purple))}
+        .zone:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.3)}
+        .zone.selected{border-color:var(--gold);box-shadow:var(--shadow-gold);transform:translateY(-3px)}
+        .zone.pulse-up{animation:zonePulseUp .8s ease}
+        @keyframes zonePulseUp{0%{box-shadow:none}50%{box-shadow:0 0 25px rgba(16,185,129,.4)}100%{box-shadow:none}}
+        .zone-icon{font-size:2rem;margin-bottom:6px;display:block;transition:transform .5s ease}
+        .zone-name{font-family:'Outfit',sans-serif;font-size:.82rem;font-weight:700;margin-bottom:2px}
+        .zone-level{font-size:.7rem;color:var(--text-muted);font-weight:500}
+        .zone.lv0{background:rgba(22,163,74,.05)}.zone.lv1{background:rgba(217,119,6,.05)}.zone.lv2{background:rgba(37,99,235,.05)}.zone.lv3{background:rgba(124,58,237,.08)}
 
-        /* ==================== SETUP SCREEN (ADMIN) ==================== */
-        .setup-container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
-        .setup-logo { text-align: center; margin-bottom: 48px; }
-        .setup-logo .flag-icon { font-size: 48px; margin-bottom: 16px; display: block; animation: pulse 2s infinite; }
-        .setup-logo h1 {
-            font-size: 2.2rem; font-weight: 900;
-            background: linear-gradient(135deg, var(--vn-yellow), var(--accent-gold), var(--vn-red));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-            letter-spacing: -0.5px; line-height: 1.2;
-        }
-        .setup-logo .subtitle { font-size: 1rem; color: var(--text-secondary); margin-top: 8px; font-weight: 300; }
-        .setup-logo .group-badge {
-            display: inline-block; margin-top: 16px; padding: 6px 20px;
-            background: linear-gradient(135deg, var(--vn-red), #b91c1c);
-            border-radius: 999px; font-size: 0.85rem; font-weight: 600; color: white; letter-spacing: 1px;
-        }
+        /* --- SIDEBAR --- */
+        .sidebar{display:flex;flex-direction:column;gap:12px}
+        .sidebar .card{padding:18px}
+        .sidebar .card h3{font-size:.92rem;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:6px}
 
-        .setup-card {
-            background: var(--bg-card); backdrop-filter: blur(20px);
-            border: 1px solid var(--border-glass); border-radius: var(--radius-xl);
-            padding: 32px; margin-bottom: 24px;
-        }
-        .setup-card h2 {
-            font-size: 1.3rem; font-weight: 700; margin-bottom: 20px;
-            display: flex; align-items: center; gap: 10px;
-        }
-        .setup-card h2 .icon { font-size: 1.5rem; }
+        /* --- POLICY CARDS --- */
+        .policy-list{display:flex;flex-direction:column;gap:8px}
+        .policy{display:flex;align-items:center;gap:10px;padding:12px;background:rgba(255,255,255,.03);border:1px solid var(--border-glass);border-radius:var(--radius-md);cursor:pointer;transition:all var(--transition)}
+        .policy:hover{border-color:var(--gold);background:rgba(245,158,11,.04)}
+        .policy.selected{border-color:var(--gold);background:var(--gold-dim);box-shadow:0 0 12px rgba(245,158,11,.15)}
+        .policy.used{opacity:.35;pointer-events:none}
+        .policy .p-emoji{font-size:1.4rem;flex-shrink:0}
+        .policy .p-info{flex:1}
+        .policy .p-name{font-size:.82rem;font-weight:600;margin-bottom:2px}
+        .policy .p-effects{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text-muted);display:flex;gap:8px;flex-wrap:wrap}
+        .p-eff{padding:1px 5px;border-radius:4px;font-weight:600}
+        .p-eff.pos{color:var(--green);background:rgba(16,185,129,.08)}
+        .p-eff.neg{color:var(--red);background:rgba(239,68,68,.08)}
 
-        .input-group { margin-bottom: 16px; }
-        .input-group label { display: block; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 6px; font-weight: 500; }
-        .input-group input, .input-group select {
-            width: 100%; padding: 12px 16px; background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-glass); border-radius: var(--radius-md);
-            color: var(--text-primary); font-family: 'Inter', sans-serif; font-size: 1rem;
-            transition: var(--transition-fast); outline: none;
-        }
-        .input-group input:focus, .input-group select:focus { border-color: var(--accent-gold); box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15); }
-        .input-group select option { background: var(--bg-secondary); color: var(--text-primary); }
+        /* --- ACTION BUTTON --- */
+        .action-area{margin-top:12px}
+        .hint-text{font-size:.78rem;color:var(--text-muted);text-align:center;margin-top:8px;font-style:italic}
 
-        .team-name-inputs { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin-top: 16px; }
-        .team-name-input {
-            display: flex; align-items: center; gap: 10px; padding: 10px 14px;
-            background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-glass);
-            border-radius: var(--radius-md); transition: var(--transition-fast);
-        }
-        .team-name-input:hover { border-color: var(--accent-gold); background: rgba(245, 158, 11, 0.05); }
-        .team-name-input .team-num {
-            width: 30px; height: 30px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 700; font-size: 0.85rem; flex-shrink: 0;
-        }
-        .team-name-input input {
-            flex: 1; background: none; border: none; color: var(--text-primary);
-            font-family: 'Inter', sans-serif; font-size: 0.9rem; outline: none;
-        }
+        /* ===============================================
+           KNOWLEDGE POPUP
+           =============================================== */
+        .overlay{display:none;position:fixed;inset:0;z-index:5000;align-items:center;justify-content:center}
+        .overlay.active{display:flex}
+        .overlay-bg{position:absolute;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(6px)}
+        .modal{position:relative;z-index:1;background:var(--bg-secondary);border:1px solid var(--border-glass);border-radius:var(--radius-xl);padding:28px;max-width:520px;width:90%;max-height:85vh;overflow-y:auto;animation:modalIn .4s cubic-bezier(.4,0,.2,1)}
+        @keyframes modalIn{from{opacity:0;transform:scale(.9) translateY(12px)}to{opacity:1;transform:scale(1) translateY(0)}}
+        .modal h2{font-size:1.2rem;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+        .modal p,.modal .kn-text{color:var(--text-secondary);line-height:1.75;font-size:.9rem;margin-bottom:10px}
+        .kn-highlight{color:var(--gold-light);font-weight:600}
+        .kn-quote{padding:14px 18px;background:var(--gold-dim);border-left:3px solid var(--gold);border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:14px 0;font-style:italic;color:var(--text-secondary);line-height:1.7;font-size:.88rem}
+        .kn-effects{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0;padding:12px;background:rgba(255,255,255,.03);border-radius:var(--radius-md)}
+        .kn-eff{font-family:'JetBrains Mono',monospace;font-size:.82rem;font-weight:700;display:flex;align-items:center;gap:4px}
+        .kn-eff.pos{color:var(--green)}.kn-eff.neg{color:var(--red)}
 
-        /* ==================== BUTTONS ==================== */
-        .btn {
-            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-            padding: 12px 28px; border: none; border-radius: var(--radius-md);
-            font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 600;
-            cursor: pointer; transition: var(--transition-normal); position: relative; overflow: hidden;
-        }
-        .btn::after { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0); transition: var(--transition-fast); }
-        .btn:hover::after { background: rgba(255,255,255,0.1); }
-        .btn:active { transform: scale(0.97); }
-        .btn-primary { background: linear-gradient(135deg, var(--accent-gold), #d97706); color: #000; box-shadow: var(--shadow-glow-gold); }
-        .btn-danger { background: linear-gradient(135deg, var(--accent-red), var(--accent-red-dark)); color: white; box-shadow: var(--shadow-glow-red); }
-        .btn-success { background: linear-gradient(135deg, var(--accent-green), #059669); color: white; box-shadow: var(--shadow-glow-green); }
-        .btn-outline { background: transparent; border: 1px solid var(--border-glass); color: var(--text-primary); }
-        .btn-outline:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
-        .btn-lg { padding: 16px 40px; font-size: 1.15rem; }
-        .btn-block { width: 100%; }
-        .btn-icon { width: 40px; height: 40px; padding: 0; border-radius: var(--radius-sm); }
-        .btn:disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+        /* ===============================================
+           EVENT OVERLAY
+           =============================================== */
+        .event-overlay{display:none;position:fixed;inset:0;z-index:6000;align-items:center;justify-content:center;background:rgba(0,0,0,.88)}
+        .event-overlay.active{display:flex;animation:shake .5s ease}
+        @keyframes shake{0%,100%{transform:translateX(0)}10%,30%,50%,70%,90%{transform:translateX(-4px)}20%,40%,60%,80%{transform:translateX(4px)}}
+        .event-content{text-align:center;animation:eventIn .8s cubic-bezier(.4,0,.2,1);max-width:520px;padding:0 20px}
+        @keyframes eventIn{from{opacity:0;transform:scale(.3) rotate(-8deg)}to{opacity:1;transform:scale(1) rotate(0)}}
+        .event-icon{font-size:5rem;display:block;margin-bottom:16px;animation:pulse 1s infinite}
+        .event-title{font-size:2rem;font-weight:900;color:var(--red);text-transform:uppercase;letter-spacing:2px;text-shadow:0 0 30px rgba(239,68,68,.5);margin-bottom:8px}
+        .event-year{font-family:'JetBrains Mono',monospace;font-size:1rem;color:var(--gold-light);margin-bottom:16px}
+        .event-desc{color:var(--text-secondary);font-size:.95rem;line-height:1.7;margin-bottom:24px}
+        .event-effects{display:flex;justify-content:center;gap:16px;margin-bottom:24px}
+        .event-eff{font-family:'JetBrains Mono',monospace;font-size:1.1rem;font-weight:700;padding:6px 14px;border-radius:var(--radius-md)}
+        .event-eff.neg{color:var(--red);background:var(--red-dim);border:1px solid rgba(239,68,68,.3)}
+        .event-eff.pos{color:var(--green);background:var(--green-dim);border:1px solid rgba(16,185,129,.3)}
+        .ev-stripe-top,.ev-stripe-bot{position:fixed;left:0;right:0;height:5px;z-index:6001;background:repeating-linear-gradient(45deg,var(--red),var(--red) 18px,#000 18px,#000 36px);animation:stripeScroll 1s linear infinite}
+        .ev-stripe-top{top:0}.ev-stripe-bot{bottom:0}
+        @keyframes stripeScroll{0%{background-position:0 0}100%{background-position:50px 0}}
 
-        /* ==================== GAME SCREEN ==================== */
-        .game-container { padding: 12px 16px; max-width: 1600px; margin: 0 auto; }
+        /* ===============================================
+           ENDING SCREEN
+           =============================================== */
+        .ending-hero{text-align:center;margin-bottom:28px}
+        .ending-hero .trophy{font-size:4.5rem;display:block;margin-bottom:14px;animation:tBounce 1s ease infinite}
+        @keyframes tBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+        .ending-hero h1{font-size:2rem;font-weight:900;margin-bottom:6px}
+        .ending-hero .ending-sub{color:var(--text-secondary);font-size:.95rem}
+        .final-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+        .final-stat{padding:18px;background:var(--bg-card);border:1px solid var(--border-glass);border-radius:var(--radius-lg);text-align:center}
+        .final-stat .fs-icon{font-size:1.5rem;margin-bottom:4px}
+        .final-stat .fs-label{font-size:.72rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+        .final-stat .fs-val{font-family:'JetBrains Mono',monospace;font-size:1.8rem;font-weight:700}
+        .final-stat .fs-val.good{color:var(--green)}.final-stat .fs-val.mid{color:var(--gold-light)}.final-stat .fs-val.bad{color:var(--red)}
+        .theory-point{padding:12px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+        .theory-point:last-child{border-bottom:none}
+        .theory-point .tp-title{font-weight:700;font-size:.9rem;margin-bottom:4px;color:var(--gold-light)}
+        .theory-point .tp-desc{font-size:.85rem;color:var(--text-secondary);line-height:1.65}
+        .map-result{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+        .mr-zone{padding:10px;border-radius:var(--radius-md);text-align:center;font-size:.78rem;font-weight:600}
+        .mr-zone .mr-icon{font-size:1.3rem;display:block;margin-bottom:2px}
 
-        .game-header {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 12px 20px; background: var(--bg-card); backdrop-filter: blur(20px);
-            border: 1px solid var(--border-glass); border-radius: var(--radius-lg); margin-bottom: 16px;
+        /* ===== RESPONSIVE ===== */
+        @media(max-width:768px){
+            .intro-hero h1{font-size:1.6rem}
+            .era-title{font-size:1.5rem}
+            .stats-bar{gap:8px;padding:10px 14px}
+            .stat-item{min-width:100px}
+            .final-stats{grid-template-columns:1fr 1fr 1fr}
         }
-        .game-header .logo-section { display: flex; align-items: center; gap: 12px; }
-        .game-header .game-title {
-            font-size: 1.1rem; font-weight: 800;
-            background: linear-gradient(135deg, var(--vn-yellow), var(--accent-gold));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        @media(max-width:500px){
+            .map-grid{grid-template-columns:1fr 1fr}
+            .final-stats{grid-template-columns:1fr}
         }
-
-        .phase-indicator {
-            display: flex; align-items: center; gap: 8px; padding: 8px 16px;
-            background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3);
-            border-radius: var(--radius-md); font-family: 'Outfit', sans-serif;
-            font-weight: 600; font-size: 0.95rem; color: var(--accent-gold-light);
-            transition: all 0.5s ease;
-        }
-        .phase-indicator.phase-2 {
-            background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.4);
-            color: var(--accent-red); animation: pulseRed 1.5s infinite;
-        }
-        .phase-indicator.phase-3 {
-            background: rgba(139, 92, 246, 0.15); border-color: rgba(139, 92, 246, 0.4);
-            color: var(--accent-purple);
-        }
-        @keyframes pulseRed {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.3); }
-            50% { box-shadow: 0 0 20px 5px rgba(239, 68, 68, 0.2); }
-        }
-
-        .timer-section { display: flex; align-items: center; gap: 12px; }
-        .timer-display {
-            font-family: 'JetBrains Mono', monospace; font-size: 2rem; font-weight: 600;
-            color: var(--accent-gold-light); min-width: 90px; text-align: center; transition: color 0.3s;
-        }
-        .timer-display.urgent { color: var(--accent-red); animation: timerPulse 0.5s infinite; }
-        @keyframes timerPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-
-        .game-main { display: grid; grid-template-columns: 1fr 340px; gap: 16px; }
-
-        /* Teams Grid */
-        .teams-section h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-        .teams-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
-
-        .team-card {
-            background: var(--bg-card); backdrop-filter: blur(20px); border: 1px solid var(--border-glass);
-            border-radius: var(--radius-lg); padding: 18px; transition: all var(--transition-normal);
-            position: relative; overflow: hidden;
-        }
-        .team-card::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-            background: var(--team-color, var(--accent-gold));
-            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-        }
-        .team-card:hover { border-color: var(--team-color, var(--accent-gold)); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
-        .team-card.bankrupt { opacity: 0.5; border-color: var(--accent-red) !important; }
-        .team-card.bankrupt::after {
-            content: '💀 PHÁ SẢN'; position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%, -50%) rotate(-15deg); font-family: 'Outfit', sans-serif;
-            font-size: 1.5rem; font-weight: 900; color: var(--accent-red);
-            text-shadow: 0 0 20px rgba(239, 68, 68, 0.5); z-index: 5; pointer-events: none;
-        }
-
-        .team-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
-        .team-card-header .team-name {
-            font-family: 'Outfit', sans-serif; font-size: 1.05rem; font-weight: 700;
-            display: flex; align-items: center; gap: 8px;
-        }
-        .team-card-header .team-rank {
-            font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; padding: 3px 10px;
-            border-radius: 999px; background: rgba(255,255,255,0.05); color: var(--text-secondary); font-weight: 600;
-        }
-        .team-card-header .team-rank.rank-1 { background: linear-gradient(135deg, rgba(245,158,11,0.2), rgba(234,179,8,0.2)); color: var(--accent-gold-light); border: 1px solid rgba(245,158,11,0.3); }
-        .team-card-header .team-rank.rank-2 { background: rgba(148,163,184,0.15); color: #c0c0c0; border: 1px solid rgba(148,163,184,0.2); }
-        .team-card-header .team-rank.rank-3 { background: rgba(180,120,60,0.15); color: #cd7f32; border: 1px solid rgba(180,120,60,0.2); }
-
-        .team-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
-        .team-stat { padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: var(--radius-sm); text-align: center; }
-        .team-stat .stat-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
-        .team-stat .stat-value { font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; font-weight: 600; }
-        .team-stat .stat-value.money { color: var(--accent-gold-light); }
-        .team-stat .stat-value.points { color: var(--accent-green); }
-
-        .team-cards-list { display: flex; flex-wrap: wrap; gap: 6px; }
-        .card-badge {
-            display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px;
-            border-radius: 999px; font-size: 0.75rem; font-weight: 600;
-            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
-            transition: var(--transition-fast);
-        }
-        .card-badge.labor { border-color: rgba(234,179,8,0.3); color: #fbbf24; }
-        .card-badge.mech1 { border-color: rgba(148,163,184,0.3); color: #94a3b8; }
-        .card-badge.mech2 { border-color: rgba(59,130,246,0.3); color: #60a5fa; }
-        .card-badge.hr { border-color: rgba(16,185,129,0.3); color: #34d399; }
-        .card-badge.ai { border-color: rgba(139,92,246,0.3); color: #a78bfa; }
-        .card-badge.bigdata { border-color: rgba(6,182,212,0.3); color: #22d3ee; }
-        .card-badge.print3d { border-color: rgba(236,72,153,0.3); color: #f472b6; }
-        .card-badge .devalued { text-decoration: line-through; opacity: 0.5; font-size: 0.65rem; margin-left: 2px; }
-
-        .team-actions { display: flex; gap: 6px; margin-top: 12px; }
-        .team-actions .btn { flex: 1; padding: 8px 12px; font-size: 0.8rem; }
-
-        .combo-badge {
-            display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px;
-            border-radius: 999px; font-size: 0.7rem; font-weight: 700;
-            background: linear-gradient(135deg, rgba(245,158,11,0.15), rgba(234,179,8,0.15));
-            border: 1px solid rgba(245,158,11,0.4); color: var(--accent-gold-light);
-            margin-top: 8px; animation: comboPulse 2s infinite;
-        }
-        @keyframes comboPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(245,158,11,0.2); } 50% { box-shadow: 0 0 12px 3px rgba(245,158,11,0.15); } }
-
-        /* Sidebar */
-        .sidebar { display: flex; flex-direction: column; gap: 14px; }
-        .sidebar-card {
-            background: var(--bg-card); backdrop-filter: blur(20px);
-            border: 1px solid var(--border-glass); border-radius: var(--radius-lg); padding: 18px;
-        }
-        .sidebar-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
-
-        .controls-grid { display: flex; flex-direction: column; gap: 8px; }
-
-        /* Shop */
-        .shop-item {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 10px 12px; background: rgba(255,255,255,0.03);
-            border: 1px solid var(--border-glass); border-radius: var(--radius-md);
-            margin-bottom: 8px; transition: var(--transition-fast); cursor: pointer;
-        }
-        .shop-item:hover { border-color: var(--accent-gold); background: rgba(245,158,11,0.05); }
-        .shop-item.locked { opacity: 0.4; pointer-events: none; cursor: not-allowed; }
-        .shop-item .item-info { display: flex; align-items: center; gap: 8px; }
-        .shop-item .item-emoji { font-size: 1.3rem; }
-        .shop-item .item-name { font-size: 0.85rem; font-weight: 600; }
-        .shop-item .item-meta { font-size: 0.7rem; color: var(--text-muted); }
-        .shop-item .item-price { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; font-weight: 600; color: var(--accent-gold-light); }
-        .shop-item .item-price .old-price { text-decoration: line-through; color: var(--accent-red); font-size: 0.7rem; margin-right: 4px; }
-
-        .buyer-selector { margin-bottom: 14px; }
-        .buyer-selector label { display: block; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 6px; }
-        .buyer-selector select {
-            width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.05);
-            border: 1px solid var(--border-glass); border-radius: var(--radius-sm);
-            color: var(--text-primary); font-family: 'Inter', sans-serif; font-size: 0.9rem;
-            outline: none; cursor: pointer;
-        }
-        .buyer-selector select:focus { border-color: var(--accent-gold); }
-        .buyer-selector select option { background: var(--bg-secondary); }
-
-        /* Leaderboard */
-        .leaderboard-item {
-            display: flex; align-items: center; gap: 10px; padding: 10px 12px;
-            background: rgba(255,255,255,0.03); border-radius: var(--radius-sm);
-            margin-bottom: 6px; transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-        }
-        .leaderboard-item .lb-rank {
-            width: 28px; height: 28px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 700; font-size: 0.8rem; background: rgba(255,255,255,0.05); flex-shrink: 0;
-        }
-        .leaderboard-item:nth-child(1) .lb-rank { background: linear-gradient(135deg, #f59e0b, #d97706); color: #000; }
-        .leaderboard-item:nth-child(2) .lb-rank { background: linear-gradient(135deg, #94a3b8, #64748b); color: #000; }
-        .leaderboard-item:nth-child(3) .lb-rank { background: linear-gradient(135deg, #cd7f32, #a0622e); color: #000; }
-        .leaderboard-item .lb-name { flex: 1; font-size: 0.85rem; font-weight: 600; }
-        .leaderboard-item .lb-score { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; font-weight: 600; color: var(--accent-green); }
-
-        /* Activity Log */
-        .activity-log { max-height: 180px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.1) transparent; }
-        .activity-log::-webkit-scrollbar { width: 4px; }
-        .activity-log::-webkit-scrollbar-track { background: transparent; }
-        .activity-log::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
-        .log-entry {
-            padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.03);
-            font-size: 0.78rem; color: var(--text-secondary); animation: slideIn 0.3s ease;
-        }
-        @keyframes slideIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
-        .log-entry .log-time { color: var(--text-muted); font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; margin-right: 6px; }
-        .log-entry.buy { color: var(--accent-green); }
-        .log-entry.event { color: var(--accent-red); }
-        .log-entry.bonus { color: var(--accent-gold-light); }
-
-        /* ==================== OVERLAYS / MODALS ==================== */
-        .overlay { display: none; position: fixed; inset: 0; z-index: 1000; align-items: center; justify-content: center; }
-        .overlay.active { display: flex; }
-        .overlay-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); }
-        .modal {
-            position: relative; z-index: 1; background: var(--bg-secondary);
-            border: 1px solid var(--border-glass); border-radius: var(--radius-xl);
-            padding: 36px; max-width: 600px; width: 90%; max-height: 85vh; overflow-y: auto;
-            animation: modalIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        @keyframes modalIn { from { opacity: 0; transform: scale(0.9) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-        .modal h2 { font-size: 1.5rem; font-weight: 800; margin-bottom: 16px; }
-        .modal p { color: var(--text-secondary); line-height: 1.7; margin-bottom: 12px; font-size: 0.95rem; }
-        .modal .highlight { color: var(--accent-gold-light); font-weight: 600; }
-        .modal .theory-quote {
-            padding: 16px 20px; background: rgba(245,158,11,0.08);
-            border-left: 3px solid var(--accent-gold);
-            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-            margin: 16px 0; font-style: italic; color: var(--text-secondary); line-height: 1.7;
-        }
-        .modal-actions { display: flex; gap: 10px; margin-top: 24px; }
-
-        /* ==================== GLOBALIZATION OVERLAY ==================== */
-        .globalization-overlay {
-            display: none; position: fixed; inset: 0; z-index: 2000;
-            align-items: center; justify-content: center; background: rgba(0,0,0,0.85);
-        }
-        .globalization-overlay.active { display: flex; animation: shakeScreen 0.5s ease; }
-        @keyframes shakeScreen {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-            20%, 40%, 60%, 80% { transform: translateX(5px); }
-        }
-        .globalization-content { text-align: center; animation: globeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
-        @keyframes globeIn { from { opacity: 0; transform: scale(0.3) rotate(-10deg); } to { opacity: 1; transform: scale(1) rotate(0); } }
-        .globalization-content .alert-icon { font-size: 6rem; display: block; margin-bottom: 20px; animation: alertPulse 0.8s infinite; }
-        @keyframes alertPulse { 0%, 100% { transform: scale(1); filter: brightness(1); } 50% { transform: scale(1.15); filter: brightness(1.3); } }
-        .globalization-content h1 {
-            font-size: 3rem; font-weight: 900; color: var(--accent-red);
-            text-transform: uppercase; letter-spacing: 3px;
-            text-shadow: 0 0 40px rgba(239,68,68,0.5); margin-bottom: 12px;
-        }
-        .globalization-content .sub-text { font-size: 1.3rem; color: var(--text-secondary); margin-bottom: 8px; }
-        .globalization-content .impact-text { font-size: 1.1rem; color: var(--accent-red); font-weight: 600; margin-bottom: 30px; }
-        .globalization-content .impact-list { text-align: left; max-width: 500px; margin: 0 auto 30px; }
-        .globalization-content .impact-list li {
-            list-style: none; padding: 8px 0; font-size: 1rem; color: var(--text-secondary);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .globalization-content .impact-list li::before { content: '⚠️ '; }
-        .warning-stripe-top, .warning-stripe-bottom {
-            position: fixed; left: 0; right: 0; height: 8px; z-index: 2001;
-            background: repeating-linear-gradient(45deg, var(--accent-red), var(--accent-red) 20px, #000 20px, #000 40px);
-            animation: stripeScroll 1s linear infinite;
-        }
-        .warning-stripe-top { top: 0; }
-        .warning-stripe-bottom { bottom: 0; }
-        @keyframes stripeScroll { 0% { background-position: 0 0; } 100% { background-position: 56px 0; } }
-
-        /* ==================== RESULTS SCREEN ==================== */
-        .results-container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
-        .results-header { text-align: center; margin-bottom: 40px; }
-        .results-header .trophy { font-size: 5rem; display: block; margin-bottom: 16px; animation: trophyBounce 1s ease infinite; }
-        @keyframes trophyBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        .results-header h1 {
-            font-size: 2.5rem; font-weight: 900;
-            background: linear-gradient(135deg, var(--vn-yellow), var(--accent-gold), var(--vn-red));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-            margin-bottom: 8px;
-        }
-
-        .winner-card {
-            background: var(--bg-card); backdrop-filter: blur(20px);
-            border: 2px solid var(--accent-gold); border-radius: var(--radius-xl);
-            padding: 32px; text-align: center; margin-bottom: 24px;
-            position: relative; overflow: hidden; box-shadow: var(--shadow-glow-gold);
-        }
-        .winner-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(245,158,11,0.05), rgba(234,179,8,0.1)); pointer-events: none; }
-        .winner-card h2 { font-size: 1.8rem; font-weight: 900; color: var(--accent-gold-light); margin-bottom: 8px; }
-        .winner-card .winner-score { font-family: 'JetBrains Mono', monospace; font-size: 2.5rem; font-weight: 700; color: var(--accent-green); }
-
-        .final-standings {
-            background: var(--bg-card); backdrop-filter: blur(20px); border: 1px solid var(--border-glass);
-            border-radius: var(--radius-xl); padding: 24px; margin-bottom: 24px;
-        }
-        .final-standings h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 16px; }
-        .standing-row {
-            display: flex; align-items: center; gap: 14px; padding: 12px 16px;
-            background: rgba(255,255,255,0.03); border-radius: var(--radius-md);
-            margin-bottom: 8px; transition: var(--transition-fast);
-        }
-        .standing-row:hover { background: rgba(255,255,255,0.06); }
-        .standing-row .sr-rank {
-            width: 36px; height: 36px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 800; font-size: 1rem; background: rgba(255,255,255,0.05); flex-shrink: 0;
-        }
-        .standing-row:nth-child(2) .sr-rank { background: linear-gradient(135deg, #f59e0b, #d97706); color: #000; font-size: 1.1rem; }
-        .standing-row:nth-child(3) .sr-rank { background: linear-gradient(135deg, #94a3b8, #64748b); color: #000; }
-        .standing-row:nth-child(4) .sr-rank { background: linear-gradient(135deg, #cd7f32, #a0622e); color: #000; }
-        .standing-row .sr-name { flex: 1; font-weight: 600; font-size: 1rem; }
-        .standing-row .sr-details { text-align: right; }
-        .standing-row .sr-score { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 1.1rem; color: var(--accent-green); }
-        .standing-row .sr-money { font-size: 0.75rem; color: var(--text-muted); }
-
-        .theory-summary {
-            background: var(--bg-card); backdrop-filter: blur(20px); border: 1px solid var(--border-glass);
-            border-radius: var(--radius-xl); padding: 28px; margin-bottom: 24px;
-        }
-        .theory-summary h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
-        .theory-point { padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .theory-point:last-child { border-bottom: none; }
-        .theory-point .tp-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 4px; color: var(--accent-gold-light); }
-        .theory-point .tp-desc { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; }
-
-        /* ==================== CONFETTI ==================== */
-        .confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 3000; overflow: hidden; }
-        .confetti-piece {
-            position: absolute; width: 10px; height: 10px; top: -10px;
-            animation: confettiFall linear forwards;
-        }
-        @keyframes confettiFall { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
-
-        /* ==================== TOAST ==================== */
-        .toast-container { position: fixed; top: 20px; right: 20px; z-index: 5000; display: flex; flex-direction: column; gap: 8px; }
-        .toast {
-            padding: 12px 20px; background: var(--bg-secondary); border: 1px solid var(--border-glass);
-            border-radius: var(--radius-md); font-size: 0.9rem;
-            animation: toastIn 0.3s ease, toastOut 0.3s ease 2.7s forwards;
-            max-width: 350px; backdrop-filter: blur(20px); box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-        }
-        .toast.success { border-left: 3px solid var(--accent-green); }
-        .toast.error { border-left: 3px solid var(--accent-red); }
-        .toast.info { border-left: 3px solid var(--accent-blue); }
-        .toast.warning { border-left: 3px solid var(--accent-gold); }
-        @keyframes toastIn { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
-        @keyframes toastOut { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(50px); } }
-
-        /* ==================== RESPONSIVE ==================== */
-        @media (max-width: 1100px) {
-            .game-main { grid-template-columns: 1fr; }
-            .sidebar { flex-direction: row; flex-wrap: wrap; }
-            .sidebar-card { flex: 1; min-width: 280px; }
-        }
-        @media (max-width: 768px) {
-            .game-header { flex-direction: column; gap: 10px; text-align: center; }
-            .teams-grid { grid-template-columns: 1fr; }
-            .setup-logo h1 { font-size: 1.6rem; }
-            .globalization-content h1 { font-size: 2rem; }
-            .results-header h1 { font-size: 1.8rem; }
-        }
-
-        .hidden { display: none !important; }
+        .hidden{display:none!important}
     </style>
 </head>
 <body>
-    <!-- Background Particles -->
-    <div class="bg-particles" id="bgParticles"></div>
-    <!-- Toast Container -->
-    <div class="toast-container" id="toastContainer"></div>
-    <!-- Confetti Container -->
-    <div class="confetti-container" id="confettiContainer"></div>
+<div class="particles" id="particles"></div>
+<div class="toast-box" id="toastBox"></div>
+<div class="confetti-box" id="confettiBox"></div>
 
-    <!-- ==================== LANDING SCREEN (PHONE / VIEWER) ==================== -->
-    <div class="screen" id="landingScreen">
-        <div class="landing-container">
-            <div class="landing-hero">
-                <span class="flag-big">🇻🇳</span>
-                <h1>THƯƠNG TRƯỜNG XUYÊN THẾ KỶ</h1>
-                <div class="subtitle">Từ 1986 đến Cách mạng Công nghiệp 4.0</div>
-                <div class="group-badge">NHÓM 7 • MLN122 • KINH TẾ CHÍNH TRỊ MÁC-LÊNIN</div>
+<!-- ===== SCREEN 1: INTRO ===== -->
+<div class="screen active" id="introScreen">
+<div class="container" style="display:flex;flex-direction:column;justify-content:center;min-height:100vh">
+    <div class="intro-hero">
+        <span class="flag">🇻🇳</span>
+        <h1>KIẾN TRÚC SƯ QUỐC GIA</h1>
+        <div class="sub">Mô phỏng Công nghiệp hóa — Hiện đại hóa & Hội nhập KTQT</div>
+        <div class="badge">NHÓM 7 • MLN122 • CHƯƠNG 6</div>
+    </div>
+    <div class="intro-desc">
+        Bạn vừa được bổ nhiệm làm người hoạch định chiến lược phát triển kinh tế Việt Nam.<br>
+        Hãy đưa ra các quyết sách từ <strong>thời Bao cấp</strong> đến <strong>Cách mạng 4.0</strong>, biến Việt Nam từ nền nông nghiệp lạc hậu thành cường quốc kinh tế.
+    </div>
+    <div class="intro-features">
+        <div class="intro-feat">
+            <div class="if-icon">🗺️</div>
+            <div class="if-title">Bản đồ chiến lược</div>
+            <div class="if-desc">6 vùng kinh tế, biến đổi trực quan</div>
+        </div>
+        <div class="intro-feat">
+            <div class="if-icon">🃏</div>
+            <div class="if-title">Thẻ chính sách</div>
+            <div class="if-desc">Ra quyết định, thấy hậu quả</div>
+        </div>
+        <div class="intro-feat">
+            <div class="if-icon">⚡</div>
+            <div class="if-title">Sự kiện lịch sử</div>
+            <div class="if-desc">Khủng hoảng, cơ hội bất ngờ</div>
+        </div>
+    </div>
+    <div style="text-align:center">
+        <button class="btn btn-gold btn-lg" onclick="startGame()">🚀 BẮT ĐẦU HÀNH TRÌNH</button>
+    </div>
+</div>
+</div>
+
+<!-- ===== SCREEN 2: ERA TRANSITION ===== -->
+<div class="screen" id="eraScreen">
+<div class="era-screen">
+    <div class="era-content">
+        <span class="era-icon" id="eraIcon">📜</span>
+        <div class="era-period" id="eraPeriod">TRƯỚC 1986</div>
+        <h1 class="era-title" id="eraTitle">Thời kỳ Bao Cấp</h1>
+        <p class="era-desc" id="eraDesc">Nền kinh tế kế hoạch tập trung...</p>
+        <button class="btn btn-gold btn-lg" onclick="enterEra()">▶ TIẾP TỤC</button>
+    </div>
+</div>
+</div>
+
+<!-- ===== SCREEN 3: MAIN GAME ===== -->
+<div class="screen" id="gameScreen">
+<div class="container" style="max-width:1200px">
+    <!-- Stats Bar -->
+    <div class="stats-bar" id="statsBar">
+        <div class="stat-item">
+            <div class="stat-label">💰 Kinh tế</div>
+            <div class="stat-bar-bg"><div class="stat-bar-fill economy" id="barEcon" style="width:20%"></div></div>
+            <div class="stat-val" id="valEcon">20</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-label">🛡️ Tự chủ</div>
+            <div class="stat-bar-bg"><div class="stat-bar-fill independence" id="barIndep" style="width:90%"></div></div>
+            <div class="stat-val" id="valIndep">90</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-label">⚙️ Công nghệ</div>
+            <div class="stat-bar-bg"><div class="stat-bar-fill tech" id="barTech" style="width:10%"></div></div>
+            <div class="stat-val" id="valTech">10</div>
+        </div>
+    </div>
+    <!-- Era Indicator -->
+    <div class="era-indicator">
+        <div class="era-info">
+            <div class="era-badge e0" id="eraBadge">📜 Trước Đổi Mới</div>
+        </div>
+        <div class="turn-info" id="turnInfo">Lượt 1 / 3</div>
+    </div>
+    <!-- Game Layout -->
+    <div class="game-layout">
+        <div>
+            <div class="map-title">🗺️ Bản đồ Việt Nam</div>
+            <div class="map-grid" id="mapGrid"></div>
+        </div>
+        <div class="sidebar">
+            <div class="card">
+                <h3>🃏 Chính sách khả dụng</h3>
+                <div class="policy-list" id="policyList"></div>
             </div>
-
-            <!-- Rules Card -->
-            <div class="landing-card">
-                <h2>📜 Luật chơi</h2>
-                <div class="rules-text">
-                    <p><strong class="phase1">🏭 Giai đoạn 1 — Kỷ nguyên Truyền thống (10 phút)</strong><br>
-                    Dùng Vốn mua "Lao động thủ công" & "Máy móc cơ khí". Gom đủ bộ → thưởng Combo.</p>
-                    <br>
-                    <p><strong class="phase2">⚡ Giai đoạn 2 — Cú sốc Hội nhập 4.0 (8 phút)</strong><br>
-                    Sự kiện "Toàn cầu hóa" → Thẻ cũ mất 50% giá trị! Mua "Nhân lực CLC" & "Công nghệ 4.0" để sống sót.</p>
-                    <br>
-                    <p><strong class="phase3">🏆 Giai đoạn 3 — Tổng kết (7 phút)</strong><br>
-                    Chấm điểm, xếp hạng, rút ra bài học CNH-HĐH Việt Nam.</p>
-                </div>
-            </div>
-
-            <!-- Card Price Table -->
-            <div class="landing-card">
-                <h2>🃏 Bảng giá thẻ bài</h2>
-                <table class="card-table">
-                    <thead>
-                        <tr><th>Thẻ bài</th><th>Giá</th><th>Điểm</th><th>GĐ</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><span class="card-name">👷 Lao động thủ công</span></td><td class="price">100💰</td><td class="points">50⭐</td><td><span class="phase-badge pb-1">GĐ1</span></td></tr>
-                        <tr><td><span class="card-name">⚙️ Máy móc cơ khí 1.0</span></td><td class="price">150💰</td><td class="points">80⭐</td><td><span class="phase-badge pb-1">GĐ1</span></td></tr>
-                        <tr><td><span class="card-name">🔧 Máy móc cơ khí 2.0</span></td><td class="price">250💰</td><td class="points">120⭐</td><td><span class="phase-badge pb-1">GĐ1</span></td></tr>
-                        <tr class="locked"><td><span class="card-name">🎓 Nhân lực chất lượng cao</span></td><td class="price">300💰</td><td class="points">200⭐</td><td><span class="phase-badge pb-2">GĐ2</span></td></tr>
-                        <tr class="locked"><td><span class="card-name">🤖 Công nghệ AI</span></td><td class="price">500💰</td><td class="points">350⭐</td><td><span class="phase-badge pb-2">GĐ2</span></td></tr>
-                        <tr class="locked"><td><span class="card-name">📊 Big Data</span></td><td class="price">450💰</td><td class="points">300⭐</td><td><span class="phase-badge pb-2">GĐ2</span></td></tr>
-                        <tr class="locked"><td><span class="card-name">🖨️ In 3D</span></td><td class="price">400💰</td><td class="points">280⭐</td><td><span class="phase-badge pb-2">GĐ2</span></td></tr>
-                    </tbody>
-                </table>
-                <div class="combo-info">
-                    <h4>✨ Combo thưởng</h4>
-                    <div class="combo-row"><span>🏭 CNH Truyền thống (≥2 LĐ + ≥1 Máy móc)</span><span class="combo-bonus">+200💰</span></div>
-                    <div class="combo-row"><span>🚀 CNH Hiện đại (≥1 NLCLC + ≥1 CN 4.0)</span><span class="combo-bonus">+500💰</span></div>
-                    <div class="combo-row"><span>🌟 Chuyển đổi số (≥1 NLCLC + ≥2 CN 4.0 khác)</span><span class="combo-bonus">+800💰</span></div>
-                </div>
-            </div>
-
-            <!-- AI Usage Disclosure -->
-            <div class="ai-disclosure">
-                <h3>🤖 PHỤ LỤC AI USAGE — NHÓM 7</h3>
-                <p><span class="ai-tag">Minh bạch</span> Sử dụng ChatGPT để cân bằng thông số Vốn/Giá trị thẻ bài; Canva AI để thiết kế giao diện web dashboard.</p>
-                <p><span class="ai-tag">Kiểm chứng</span> Toàn bộ khái niệm (tự động hóa cục bộ, toàn cầu hóa, CNH-HĐH...) đã được đối chiếu chính xác với Giáo trình KTCT Mác-Lênin.</p>
-                <p><span class="ai-tag">Liêm chính</span> AI chỉ đóng vai trò "Họa sĩ" & "Trợ lý cân bằng game". Cấu trúc game, lý thuyết CNH-HĐH do sinh viên Nhóm 7 tự biên soạn và điều phối trực tiếp.</p>
-            </div>
-
-            <div class="landing-footer">
-                <p>Chương 6: Công nghiệp hóa, Hiện đại hóa và Hội nhập KTQT của Việt Nam</p>
-                <p style="margin-top: 4px; opacity: 0.6;">© Nhóm 7 • MLN122 • Summer 2026</p>
+            <div class="action-area">
+                <button class="btn btn-gold btn-block" id="applyBtn" onclick="applyPolicy()" disabled>
+                    📍 ÁP DỤNG CHÍNH SÁCH
+                </button>
+                <div class="hint-text" id="hintText">Chọn 1 chính sách → Chọn 1 vùng trên bản đồ</div>
             </div>
         </div>
     </div>
+</div>
+</div>
 
-    <!-- ==================== SETUP SCREEN (ADMIN) ==================== -->
-    <div class="screen" id="setupScreen">
-        <div class="setup-container">
-            <div class="setup-logo">
-                <span class="flag-icon">🇻🇳</span>
-                <h1>THƯƠNG TRƯỜNG XUYÊN THẾ KỶ</h1>
-                <div class="subtitle">Từ 1986 đến Cách mạng Công nghiệp 4.0</div>
-                <div class="group-badge">NHÓM 7 • QUẢN TRÒ</div>
-            </div>
+<!-- ===== SCREEN 4: ENDING ===== -->
+<div class="screen" id="endingScreen">
+<div class="container" style="display:flex;flex-direction:column;justify-content:center;min-height:100vh">
+    <div class="ending-hero">
+        <span class="trophy" id="endIcon">🏆</span>
+        <h1 id="endTitle">KẾT QUẢ</h1>
+        <p class="ending-sub" id="endSub">Hành trình CNH-HĐH đã kết thúc</p>
+    </div>
+    <div class="final-stats" id="finalStats"></div>
+    <div class="card" id="mapResultCard">
+        <h3 style="font-size:.92rem;font-weight:700;margin-bottom:10px">🗺️ Bản đồ Việt Nam</h3>
+        <div class="map-result" id="mapResult"></div>
+    </div>
+    <div class="card" id="endTheory"></div>
+    <div style="text-align:center;margin-top:16px">
+        <button class="btn btn-gold btn-lg" onclick="location.reload()">🔄 CHƠI LẠI</button>
+    </div>
+</div>
+</div>
 
-            <div class="setup-card">
-                <h2><span class="icon">⚙️</span> Thiết lập trò chơi</h2>
-                <div class="input-group">
-                    <label>Số lượng nhóm tham gia (không tính Nhóm 7)</label>
-                    <select id="teamCount" onchange="renderTeamInputs()">
-                        <option value="3">3 nhóm</option>
-                        <option value="4">4 nhóm</option>
-                        <option value="5">5 nhóm</option>
-                        <option value="6" selected>6 nhóm (Nhóm 1-6)</option>
-                        <option value="7">7 nhóm</option>
-                        <option value="8">8 nhóm</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label>Vốn khởi đầu mỗi nhóm</label>
-                    <select id="startMoney">
-                        <option value="800">800 vốn</option>
-                        <option value="1000" selected>1,000 vốn</option>
-                        <option value="1200">1,200 vốn</option>
-                        <option value="1500">1,500 vốn</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="setup-card">
-                <h2><span class="icon">🏴</span> Đặt tên các nhóm</h2>
-                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 12px;">
-                    Mỗi nhóm cử 1 đại diện tham gia. Quản trò (Nhóm 7) sẽ thao tác trên dashboard.
-                </p>
-                <div class="team-name-inputs" id="teamNameInputs"></div>
-            </div>
-
-            <div class="setup-card">
-                <h2><span class="icon">📜</span> Luật chơi tóm tắt</h2>
-                <div style="color: var(--text-secondary); line-height: 1.8; font-size: 0.92rem;">
-                    <p><strong style="color: var(--accent-gold-light);">🏭 Giai đoạn 1 — Kỷ nguyên Truyền thống (10 phút):</strong><br>
-                    Đại diện các nhóm giơ tay yêu cầu mua thẻ → Quản trò thao tác mua trên dashboard. Gom đủ bộ → thưởng Combo.</p>
-                    <br>
-                    <p><strong style="color: var(--accent-red);">⚡ Giai đoạn 2 — Cú sốc Hội nhập 4.0 (8 phút):</strong><br>
-                    Sự kiện "Toàn cầu hóa" kích hoạt → Thẻ cũ mất 50% giá trị! Phải nhanh chóng mua "Nhân lực CLC" & "Công nghệ 4.0" để sống sót.</p>
-                    <br>
-                    <p><strong style="color: var(--accent-purple);">🏆 Giai đoạn 3 — Tổng kết (7 phút):</strong><br>
-                    Chấm điểm, xếp hạng và rút ra bài học về CNH-HĐH Việt Nam.</p>
-                </div>
-            </div>
-
-            <button class="btn btn-primary btn-lg btn-block" onclick="startGame()" style="margin-top: 8px;">
-                🚀 BẮT ĐẦU TRÒ CHƠI
-            </button>
+<!-- ===== KNOWLEDGE POPUP ===== -->
+<div class="overlay" id="knowledgeModal">
+    <div class="overlay-bg" onclick="closeKnowledge()"></div>
+    <div class="modal">
+        <h2 id="knTitle">📖 Kiến thức</h2>
+        <div id="knBody"></div>
+        <div class="kn-effects" id="knEffects"></div>
+        <div style="margin-top:16px">
+            <button class="btn btn-gold btn-block" onclick="closeKnowledge()">Đã hiểu ✓</button>
         </div>
     </div>
+</div>
 
-    <!-- ==================== GAME SCREEN ==================== -->
-    <div class="screen" id="gameScreen">
-        <div class="game-container">
-            <div class="game-header">
-                <div class="logo-section">
-                    <span style="font-size: 1.4rem;">🇻🇳</span>
-                    <span class="game-title">THƯƠNG TRƯỜNG XUYÊN THẾ KỶ</span>
-                </div>
-                <div class="phase-indicator" id="phaseIndicator">
-                    <span id="phaseIcon">🏭</span>
-                    <span id="phaseText">Giai đoạn 1: Kỷ nguyên Truyền thống</span>
-                </div>
-                <div class="timer-section">
-                    <div class="timer-display" id="timerDisplay">10:00</div>
-                    <button class="btn btn-outline btn-icon" id="timerToggle" onclick="toggleTimer()" title="Bắt đầu/Dừng">▶</button>
-                    <button class="btn btn-outline btn-icon" onclick="resetPhaseTimer()" title="Reset">🔄</button>
-                </div>
-            </div>
-
-            <div class="game-main">
-                <div class="teams-section">
-                    <h2><span>📊</span> Các nhóm tham gia</h2>
-                    <div class="teams-grid" id="teamsGrid"></div>
-                </div>
-
-                <div class="sidebar">
-                    <div class="sidebar-card">
-                        <h3><span>🎮</span> Bảng điều khiển</h3>
-                        <div class="controls-grid">
-                            <button class="btn btn-primary btn-block" id="btnPhase1" onclick="setPhase(1)" disabled>
-                                🏭 GĐ 1: Truyền thống
-                            </button>
-                            <button class="btn btn-danger btn-block" id="btnGlobalize" onclick="triggerGlobalization()">
-                                ⚡ KÍCH HOẠT TOÀN CẦU HÓA
-                            </button>
-                            <button class="btn btn-outline btn-block" id="btnPhase3" onclick="setPhase(3)">
-                                🏆 GĐ 3: Tổng kết
-                            </button>
-                            <button class="btn btn-outline btn-block" onclick="showTheoryModal()">
-                                📖 Xem lý thuyết
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="sidebar-card">
-                        <h3><span>🛒</span> Cửa hàng thẻ bài</h3>
-                        <div class="buyer-selector">
-                            <label>Mua cho nhóm:</label>
-                            <select id="buyerSelect"></select>
-                        </div>
-                        <div id="shopItems"></div>
-                    </div>
-
-                    <div class="sidebar-card">
-                        <h3><span>🏆</span> Bảng xếp hạng</h3>
-                        <div id="leaderboard"></div>
-                    </div>
-
-                    <div class="sidebar-card">
-                        <h3><span>📝</span> Nhật ký giao dịch</h3>
-                        <div class="activity-log" id="activityLog">
-                            <div class="log-entry info">
-                                <span class="log-time">--:--</span>
-                                Trò chơi đang chờ bắt đầu...
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!-- ===== EVENT OVERLAY ===== -->
+<div class="event-overlay" id="eventOverlay">
+    <div class="ev-stripe-top"></div>
+    <div class="ev-stripe-bot"></div>
+    <div class="event-content">
+        <span class="event-icon" id="evIcon">⚠️</span>
+        <div class="event-year" id="evYear">1985</div>
+        <h1 class="event-title" id="evTitle">SỰ KIỆN</h1>
+        <p class="event-desc" id="evDesc">Mô tả sự kiện...</p>
+        <div class="event-effects" id="evEffects"></div>
+        <button class="btn btn-red btn-lg" onclick="confirmEvent()">⚡ XÁC NHẬN</button>
     </div>
+</div>
 
-    <!-- ==================== RESULTS SCREEN ==================== -->
-    <div class="screen" id="resultsScreen">
-        <div class="results-container">
-            <div class="results-header">
-                <span class="trophy">🏆</span>
-                <h1>KẾT QUẢ THƯƠNG TRƯỜNG</h1>
-                <p style="color: var(--text-secondary); font-size: 1.1rem;">Hành trình CNH-HĐH đã kết thúc!</p>
-            </div>
+<script>
+// ============================================================
+// GAME DATA
+// ============================================================
 
-            <div class="winner-card" id="winnerCard"></div>
-            <div class="final-standings" id="finalStandings"></div>
+const ZONES = [
+    {id:0, name:'ĐB Sông Hồng', shortName:'Bắc Bộ', level:0, emoji:'🌾'},
+    {id:1, name:'Bắc Trung Bộ', shortName:'Bắc Trung', level:0, emoji:'🌾'},
+    {id:2, name:'Duyên hải miền Trung', shortName:'Miền Trung', level:0, emoji:'🐟'},
+    {id:3, name:'Tây Nguyên', shortName:'Tây Nguyên', level:0, emoji:'🌿'},
+    {id:4, name:'Đông Nam Bộ', shortName:'Đông Nam', level:0, emoji:'🌾'},
+    {id:5, name:'ĐB Sông Cửu Long', shortName:'Cửu Long', level:0, emoji:'🌾'},
+];
 
-            <div class="theory-summary">
-                <h3><span>📚</span> Bài học cốt lõi từ trò chơi</h3>
-                <div class="theory-point">
-                    <div class="tp-title">1. Công nghiệp hóa truyền thống vs. hiện đại</div>
-                    <div class="tp-desc">Mô hình CNH cổ điển dựa vào lao động thủ công & máy móc cơ khí mất 60-80 năm. Trong khi đó, CNH kiểu rút ngắn dựa vào kinh tế tri thức và CMCN 4.0 giúp các nước đi sau vươn lên nhanh chóng.</div>
-                </div>
-                <div class="theory-point">
-                    <div class="tp-title">2. Tác động hai mặt của hội nhập kinh tế quốc tế</div>
-                    <div class="tp-desc">Hội nhập mang lại cơ hội mở rộng thị trường, thu hút đầu tư và tiếp cận công nghệ. Nhưng đồng thời tạo ra cạnh tranh gay gắt, rủi ro chuyển dịch cơ cấu kinh tế và phân phối lợi ích không đều.</div>
-                </div>
-                <div class="theory-point">
-                    <div class="tp-title">3. Xây dựng nền kinh tế độc lập, tự chủ</div>
-                    <div class="tp-desc">Dù hội nhập sâu rộng, Việt Nam vẫn phải kiên định xây dựng nền kinh tế độc lập, tự chủ — không bị lệ thuộc hay khống chế bởi các tổ chức bên ngoài để bảo vệ lợi ích dân tộc.</div>
-                </div>
-                <div class="theory-point">
-                    <div class="tp-title">4. Lộ trình CNH-HĐH Việt Nam từ 1986 đến nay</div>
-                    <div class="tp-desc">Từ Đổi mới 1986 → Gia nhập ASEAN (1995) → WTO (2007) → CPTPP, EVFTA → Chuyển đổi số và CMCN 4.0. Mỗi bước đều đòi hỏi sự thích ứng linh hoạt và nâng cao năng lực cạnh tranh quốc gia.</div>
-                </div>
-            </div>
+const ZONE_LEVELS = [
+    {name:'Nông nghiệp thủ công', emoji:'🌾', color:'#16a34a'},
+    {name:'Công nghiệp nhẹ', emoji:'🏭', color:'#d97706'},
+    {name:'Khu công nghiệp', emoji:'🏢', color:'#2563eb'},
+    {name:'TP Thông minh', emoji:'🏙️', color:'#7c3aed'},
+];
 
-            <div style="text-align: center; margin-top: 24px;">
-                <button class="btn btn-primary btn-lg" onclick="restartGame()">🔄 CHƠI LẠI</button>
-            </div>
-        </div>
-    </div>
+const ERAS = [
+    {
+        id:0, icon:'📜', period:'TRƯỚC 1986', name:'Thời kỳ Bao Cấp',
+        desc:'Nền kinh tế kế hoạch tập trung, quan liêu bao cấp. Tem phiếu, xếp hàng. GDP bình quân đầu người chỉ ~100 USD. Đất nước cần một cuộc đổi mới toàn diện.',
+        maxTurns:3, bgGrad:'linear-gradient(135deg,#0a0e1a,#1a2e1a,#0a1628)'
+    },
+    {
+        id:1, icon:'🔧', period:'1986 – 2000', name:'Đổi Mới & CNH Truyền Thống',
+        desc:'Đại hội VI (1986) mở ra kỷ nguyên Đổi Mới — chuyển sang kinh tế thị trường định hướng XHCN. Cho phép kinh tế tư nhân, bắt đầu xây dựng nhà máy, phát triển cơ sở hạ tầng.',
+        maxTurns:4, bgGrad:'linear-gradient(135deg,#0a0e1a,#1e3a5f,#0d4a3a)'
+    },
+    {
+        id:2, icon:'🌐', period:'2000 – 2015', name:'Hội nhập Kinh tế Quốc tế',
+        desc:'Việt Nam gia nhập WTO (2007), ký hàng loạt FTA (EVFTA, CPTPP). Dòng vốn FDI ồ ạt, thị trường mở rộng. Nhưng cạnh tranh gay gắt và nguy cơ lệ thuộc kinh tế bên ngoài.',
+        maxTurns:5, bgGrad:'linear-gradient(135deg,#1a0a0a,#3d1a00,#0a1628)'
+    },
+    {
+        id:3, icon:'🤖', period:'2015 – NAY', name:'Cách mạng Công nghiệp 4.0',
+        desc:'AI, Big Data, IoT, Blockchain thay đổi mọi lĩnh vực. Việt Nam có cơ hội thực hiện CNH-HĐH kiểu rút ngắn — "đi tắt đón đầu" bằng kinh tế tri thức và đổi mới sáng tạo.',
+        maxTurns:4, bgGrad:'linear-gradient(135deg,#1a0f2e,#2d1b4e,#1a2744)'
+    }
+];
 
-    <!-- ==================== THEORY MODAL ==================== -->
-    <div class="overlay" id="theoryModal">
-        <div class="overlay-backdrop" onclick="closeTheoryModal()"></div>
-        <div class="modal">
-            <h2 id="theoryTitle">📖 Chốt Lý thuyết</h2>
-            <div id="theoryContent"></div>
-            <div class="modal-actions">
-                <button class="btn btn-primary btn-block" onclick="closeTheoryModal()">Đã hiểu ✓</button>
-            </div>
-        </div>
-    </div>
+const POLICIES = {
+    0: [
+        {id:'coop', name:'Duy trì hợp tác xã', emoji:'🌾', effects:{economy:-5,independence:5,tech:0},
+         knowledge:'Mô hình hợp tác xã nông nghiệp trong nền kinh tế kế hoạch tập trung giúp duy trì tự chủ nhưng kìm hãm sản xuất do thiếu động lực cá nhân.',
+         quote:'"Cơ chế quản lý kế hoạch hóa tập trung, quan liêu, bao cấp đã bộc lộ nhiều nhược điểm: triệt tiêu động lực sản xuất, kìm hãm sự phát triển."'},
+        {id:'private_test', name:'Thử nghiệm tư nhân', emoji:'🏪', effects:{economy:10,independence:-5,tech:0},
+         knowledge:'Trước Đổi Mới, một số địa phương đã "xé rào" — cho phép khoán sản phẩm (Khoán 100 năm 1981, Khoán 10 năm 1988). Đây là tiền đề quan trọng cho Đổi Mới.',
+         quote:'"Khoán 10 (1988) đã trao quyền tự chủ cho hộ nông dân, giải phóng lực lượng sản xuất trong nông nghiệp."'},
+        {id:'explore_open', name:'Mở cửa thăm dò', emoji:'🚪', effects:{economy:5,independence:-10,tech:5},
+         knowledge:'Mở cửa thăm dò từng bước thận trọng — tiếp xúc ban đầu với kinh tế thị trường và đầu tư nước ngoài, nhưng cũng mang nguy cơ phụ thuộc từ bên ngoài.',
+         quote:'"Hội nhập kinh tế quốc tế phải trên cơ sở phát huy nội lực, giữ vững độc lập tự chủ."'},
+    ],
+    1: [
+        {id:'factory', name:'Xây nhà máy cơ khí', emoji:'🏭', effects:{economy:10,independence:0,tech:10},
+         knowledge:'CNH truyền thống: chuyển từ lao động thủ công sang sử dụng máy móc cơ khí. Đây là bước đầu tiên trong quá trình CNH-HĐH.',
+         quote:'"Công nghiệp hóa là quá trình chuyển đổi căn bản, toàn diện từ sản xuất nông nghiệp thủ công sang sản xuất công nghiệp bằng máy móc."'},
+        {id:'labor', name:'Phát triển lao động', emoji:'👷', effects:{economy:5,independence:5,tech:5},
+         knowledge:'Nguồn nhân lực là yếu tố quan trọng nhất trong CNH-HĐH. Lao động có tay nghề giúp nâng cao năng suất và giảm phụ thuộc vào nước ngoài.',
+         quote:'"Nguồn lực con người là yếu tố quyết định nhất của lực lượng sản xuất."'},
+        {id:'infra', name:'Đầu tư hạ tầng', emoji:'🏗️', effects:{economy:-10,independence:0,tech:15},
+         knowledge:'Xây dựng cơ sở hạ tầng (đường, điện, nước, viễn thông) là điều kiện tiên quyết của CNH-HĐH. Tốn kém ban đầu nhưng tạo nền tảng phát triển lâu dài.',
+         quote:'"Xây dựng kết cấu hạ tầng đồng bộ, hiện đại là một trong những nhiệm vụ trọng tâm của CNH-HĐH."'},
+        {id:'asean', name:'Gia nhập ASEAN (1995)', emoji:'🤝', effects:{economy:15,independence:-10,tech:5},
+         knowledge:'Việt Nam gia nhập ASEAN năm 1995 — đánh dấu bước hội nhập khu vực đầu tiên. Mở rộng thị trường xuất khẩu nhưng đối mặt cạnh tranh từ các nước trong khu vực.',
+         quote:'"Hội nhập khu vực tạo cơ hội mở rộng thị trường, thu hút đầu tư, nhưng cũng đòi hỏi nâng cao năng lực cạnh tranh."'},
+    ],
+    2: [
+        {id:'wto', name:'Gia nhập WTO (2007)', emoji:'🌐', effects:{economy:20,independence:-15,tech:10},
+         knowledge:'Gia nhập WTO năm 2007 là bước ngoặt lớn nhất trong hội nhập KTQT. Cơ hội: Mở rộng thị trường toàn cầu, thu hút FDI mạnh mẽ. Thách thức: Cạnh tranh khốc liệt từ hàng hóa nước ngoài.',
+         quote:'"Hội nhập kinh tế quốc tế tạo ra cả cơ hội lẫn thách thức. Gia tăng cạnh tranh, nguy cơ chuyển dịch cơ cấu không kịp, rủi ro phân phối lợi ích không công bằng."'},
+        {id:'fdi', name:'Thu hút FDI', emoji:'💼', effects:{economy:15,independence:-20,tech:15},
+         knowledge:'FDI mang theo vốn, công nghệ và kinh nghiệm quản lý. Tuy nhiên, nếu quá phụ thuộc FDI, nền kinh tế sẽ mất tự chủ, trở thành "công xưởng gia công" cho nước ngoài.',
+         quote:'"Thu hút FDI phải gắn với chuyển giao công nghệ và phát triển công nghiệp phụ trợ nội địa, tránh rơi vào bẫy gia công, lắp ráp."'},
+        {id:'protect', name:'Bảo hộ nội địa', emoji:'🛡️', effects:{economy:-5,independence:15,tech:0},
+         knowledge:'Chính sách bảo hộ giúp doanh nghiệp trong nước có thời gian nâng cao năng lực cạnh tranh. Tuy nhiên bảo hộ quá mức sẽ làm doanh nghiệp ỷ lại, thiếu động lực đổi mới.',
+         quote:'"Xây dựng nền kinh tế độc lập, tự chủ là nhiệm vụ xuyên suốt trong quá trình hội nhập."'},
+        {id:'fta', name:'Ký hiệp định FTA', emoji:'📋', effects:{economy:10,independence:-10,tech:5},
+         knowledge:'EVFTA (2020), CPTPP (2018) — các FTA thế hệ mới mở ra thị trường EU, Bắc Mỹ. Đổi lại, VN phải mở cửa nhiều lĩnh vực và tuân thủ tiêu chuẩn quốc tế.',
+         quote:'"Các hiệp định FTA thế hệ mới đòi hỏi cải cách thể chế, nâng cao năng lực cạnh tranh và chất lượng hàng hóa."'},
+        {id:'hr_train', name:'Đào tạo nhân lực CLC', emoji:'🎓', effects:{economy:-10,independence:5,tech:20},
+         knowledge:'Nhân lực chất lượng cao (CLC) là nền tảng của CNH-HĐH kiểu rút ngắn. Đào tạo tốn kém nhưng giúp VN làm chủ công nghệ, không phụ thuộc nước ngoài.',
+         quote:'"Phát triển nguồn nhân lực, nhất là nhân lực chất lượng cao, là một đột phá chiến lược."'},
+    ],
+    3: [
+        {id:'ai', name:'Đầu tư AI & Tự động hóa', emoji:'🤖', effects:{economy:10,independence:0,tech:25},
+         knowledge:'AI và tự động hóa là trụ cột của CMCN 4.0. Đầu tư vào AI giúp Việt Nam "đi tắt đón đầu" — thực hiện CNH-HĐH kiểu rút ngắn dựa trên kinh tế tri thức.',
+         quote:'"CNH-HĐH kiểu rút ngắn là kết hợp tuần tự với nhảy vọt, dựa trên tri thức và đổi mới sáng tạo, lấy khoa học công nghệ làm then chốt."'},
+        {id:'bigdata', name:'Phát triển Big Data', emoji:'📊', effects:{economy:5,independence:0,tech:20},
+         knowledge:'Big Data giúp ra quyết định kinh tế chính xác hơn, tối ưu hóa sản xuất và dự báo thị trường.',
+         quote:'"Ứng dụng dữ liệu lớn trong quản lý kinh tế là một trong những nội dung cốt lõi của chuyển đổi số quốc gia."'},
+        {id:'hr40', name:'Nhân lực 4.0', emoji:'🎓', effects:{economy:-15,independence:10,tech:20},
+         knowledge:'Nhân lực 4.0 cần kỹ năng số, tư duy phản biện và sáng tạo. Đào tạo lại lực lượng lao động giúp VN tự chủ công nghệ.',
+         quote:'"Đào tạo nhân lực số, nhân lực STEM là yêu cầu cấp thiết để Việt Nam tham gia hiệu quả vào CMCN 4.0."'},
+        {id:'smart_city', name:'Xây thành phố thông minh', emoji:'🏙️', effects:{economy:-10,independence:5,tech:15},
+         knowledge:'Đô thị hóa gắn với CNH-HĐH: thành phố thông minh sử dụng IoT, AI để quản lý giao thông, năng lượng, y tế hiệu quả.',
+         quote:'"Phát triển đô thị thông minh, bền vững gắn với công nghiệp hóa, hiện đại hóa."'},
+        {id:'self_reliant', name:'Kinh tế tự chủ', emoji:'🛡️', effects:{economy:-5,independence:20,tech:0},
+         knowledge:'Dù hội nhập sâu rộng, Việt Nam vẫn phải kiên định xây dựng nền kinh tế độc lập, tự chủ — không bị lệ thuộc bên ngoài để bảo vệ lợi ích dân tộc.',
+         quote:'"Xây dựng nền kinh tế độc lập, tự chủ trong bối cảnh hội nhập là yêu cầu tất yếu, khách quan."'},
+    ]
+};
 
-    <!-- ==================== GLOBALIZATION OVERLAY ==================== -->
-    <div class="globalization-overlay" id="globalizationOverlay">
-        <div class="warning-stripe-top"></div>
-        <div class="warning-stripe-bottom"></div>
-        <div class="globalization-content">
-            <span class="alert-icon">🌐</span>
-            <h1>TOÀN CẦU HÓA</h1>
-            <div class="sub-text">Sự kiện bất ngờ đã xảy ra!</div>
-            <div class="impact-text">⚠️ Thị trường biến động mạnh ⚠️</div>
-            <ul class="impact-list">
-                <li>Thẻ "Lao động thủ công" giảm <strong>50%</strong> giá trị</li>
-                <li>Thẻ "Máy móc cơ khí" giảm <strong>50%</strong> giá trị</li>
-                <li>Mở khóa thẻ "Nhân lực chất lượng cao"</li>
-                <li>Mở khóa thẻ "Công nghệ lõi 4.0" (AI, Big Data, In 3D)</li>
-            </ul>
-            <button class="btn btn-danger btn-lg" onclick="confirmGlobalization()">
-                ⚡ XÁC NHẬN & TIẾP TỤC
-            </button>
-        </div>
-    </div>
+const EVENTS = [
+    {era:0, afterTurn:3, icon:'💸', year:'1985', title:'LẠM PHÁT 700%',
+     desc:'Kinh tế bao cấp sụp đổ. Giá cả leo thang phi mã. Đời sống nhân dân cực kỳ khó khăn. Đất nước PHẢI đổi mới!',
+     effects:{economy:-15,independence:0,tech:0},
+     knowledge:'Cuộc khủng hoảng kinh tế 1985-1986 chứng minh tính tất yếu của công cuộc Đổi Mới. Không thể tiếp tục mô hình kinh tế kế hoạch hóa tập trung.'},
+    {era:1, afterTurn:3, icon:'📉', year:'1997', title:'KHỦNG HOẢNG TÀI CHÍNH ĐÔNG Á',
+     desc:'Cuộc khủng hoảng tài chính bùng nổ từ Thái Lan lan rộng khắp Đông Nam Á. Dòng vốn nước ngoài rút ồ ạt, đồng tiền mất giá.',
+     effects:{economy:-15,independence:0,tech:0},
+     knowledge:'Khủng hoảng ĐNA 1997 cho thấy rủi ro của hội nhập khi chưa chuẩn bị đủ năng lực. Các nước phụ thuộc quá nhiều vào vốn ngoại bị ảnh hưởng nặng nề nhất.'},
+    {era:2, afterTurn:4, icon:'📦', year:'2010', title:'HÀNG GIÁ RẺ TRÀN NGẬP',
+     desc:'Hàng hóa giá rẻ từ nước ngoài tràn ngập thị trường nội địa. Nhiều doanh nghiệp Việt Nam không cạnh tranh nổi, phải đóng cửa.',
+     effects:{economy:0,independence:-15,tech:0},
+     knowledge:'Đây là mặt trái của hội nhập kinh tế quốc tế: cạnh tranh gay gắt đe dọa doanh nghiệp nội địa, đặc biệt các DNNVV chưa kịp nâng cao năng lực.'},
+    {era:3, afterTurn:3, icon:'🦠', year:'2020', title:'ĐẠI DỊCH COVID-19',
+     desc:'Đại dịch toàn cầu làm đứt gãy chuỗi cung ứng, GDP sụt giảm. Tuy nhiên, nó cũng thúc đẩy mạnh mẽ chuyển đổi số và thương mại điện tử.',
+     effects:{economy:-10,independence:0,tech:10},
+     knowledge:'COVID-19 là "cú hích" cho chuyển đổi số: thương mại điện tử, thanh toán không tiền mặt, làm việc từ xa tăng vọt. Đây là minh chứng cho tính tất yếu của CMCN 4.0.'},
+];
 
-    <!-- ==================== JAVASCRIPT ==================== -->
-    <script>
-        // ==================== ROUTING ====================
-        // ?mode=admin → Show setup/game (for quản trò on laptop/projector)
-        // No param or anything else → Show landing page (for phone viewers via QR)
-        const urlParams = new URLSearchParams(window.location.search);
-        const MODE = urlParams.get('mode');
+const ENDINGS = {
+    superpower: {icon:'🌟', title:'CƯỜNG QUỐC MỚI NỔI', sub:'Việt Nam đã thành công CNH-HĐH kiểu rút ngắn!', color:'var(--gold-light)'},
+    stable:     {icon:'⚖️', title:'PHÁT TRIỂN ỔN ĐỊNH', sub:'Việt Nam phát triển bền vững, tuy chưa đột phá.', color:'var(--green)'},
+    dependent:  {icon:'🔗', title:'LỆ THUỘC KINH TẾ', sub:'Hội nhập quá sâu, mất tự chủ kinh tế.', color:'var(--red)'},
+    collapse:   {icon:'💀', title:'KHỦNG HOẢNG', sub:'Kinh tế sụp đổ hoặc tụt hậu quá xa.', color:'var(--red)'}
+};
 
-        document.addEventListener('DOMContentLoaded', () => {
-            createParticles();
-            if (MODE === 'admin') {
-                showScreen('setupScreen');
-                renderTeamInputs();
-            } else {
-                // Default: show landing page for phone viewers
-                showScreen('landingScreen');
-            }
+const THEORY_POINTS = [
+    {title:'1. CNH truyền thống vs. hiện đại', desc:'Mô hình CNH cổ điển dựa vào lao động thủ công & máy móc cơ khí mất 60-80 năm. CNH kiểu rút ngắn dựa vào kinh tế tri thức và CMCN 4.0 giúp các nước đi sau vươn lên nhanh chóng.'},
+    {title:'2. Tác động hai mặt của hội nhập KTQT', desc:'Hội nhập mang lại cơ hội mở rộng thị trường, thu hút FDI, chuyển giao công nghệ. Nhưng đồng thời tạo ra cạnh tranh gay gắt, rủi ro chuyển dịch cơ cấu và phân phối lợi ích không đều.'},
+    {title:'3. Nền kinh tế độc lập, tự chủ', desc:'Dù hội nhập sâu rộng, Việt Nam vẫn phải kiên định xây dựng nền kinh tế độc lập, tự chủ — không bị lệ thuộc bên ngoài để bảo vệ lợi ích dân tộc.'},
+    {title:'4. Lộ trình CNH-HĐH Việt Nam', desc:'Đổi mới 1986 → ASEAN (1995) → WTO (2007) → CPTPP, EVFTA → Chuyển đổi số & CMCN 4.0. Mỗi bước đều đòi hỏi thích ứng linh hoạt và nâng cao năng lực cạnh tranh.'},
+];
+
+// ============================================================
+// STATE
+// ============================================================
+let state = {
+    era: 0,
+    turn: 0,
+    turnsInEra: 0,
+    stats: {economy:20, independence:90, tech:10},
+    zones: JSON.parse(JSON.stringify(ZONES)),
+    selectedPolicy: null,
+    selectedZone: null,
+    usedPolicies: [],
+    gameOver: false,
+    pendingEvent: null,
+};
+
+// ============================================================
+// AUDIO
+// ============================================================
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let actx = null;
+function initAudio(){if(!actx)try{actx=new AudioCtx()}catch(e){}}
+function playSound(type){
+    initAudio(); if(!actx) return;
+    const o=actx.createOscillator(), g=actx.createGain();
+    o.connect(g); g.connect(actx.destination);
+    const n=actx.currentTime;
+    if(type==='place'){o.type='sine';o.frequency.setValueAtTime(440,n);o.frequency.setValueAtTime(660,n+.08);o.frequency.setValueAtTime(880,n+.16);g.gain.setValueAtTime(.1,n);g.gain.exponentialRampToValueAtTime(.01,n+.3);o.start(n);o.stop(n+.3)}
+    else if(type==='event'){o.type='sawtooth';o.frequency.setValueAtTime(200,n);o.frequency.exponentialRampToValueAtTime(100,n+.8);g.gain.setValueAtTime(.1,n);g.gain.exponentialRampToValueAtTime(.01,n+1);o.start(n);o.stop(n+1)}
+    else if(type==='era'){o.type='sine';[523,659,784,1047].forEach((f,i)=>o.frequency.setValueAtTime(f,n+i*.12));g.gain.setValueAtTime(.1,n);g.gain.exponentialRampToValueAtTime(.01,n+.6);o.start(n);o.stop(n+.6)}
+    else if(type==='victory'){o.type='sine';[523,659,784,1047,784,1047].forEach((f,i)=>o.frequency.setValueAtTime(f,n+i*.15));g.gain.setValueAtTime(.12,n);g.gain.exponentialRampToValueAtTime(.01,n+1);o.start(n);o.stop(n+1)}
+    else if(type==='fail'){o.type='sawtooth';o.frequency.setValueAtTime(300,n);o.frequency.exponentialRampToValueAtTime(80,n+1);g.gain.setValueAtTime(.08,n);g.gain.exponentialRampToValueAtTime(.01,n+1.2);o.start(n);o.stop(n+1.2)}
+}
+
+// ============================================================
+// HELPERS
+// ============================================================
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active')}
+function toast(msg,type='info'){const b=document.getElementById('toastBox'),t=document.createElement('div');t.className=`toast ${type}`;t.textContent=msg;b.appendChild(t);setTimeout(()=>t.remove(),3000)}
+function clamp(v,min,max){return Math.max(min,Math.min(max,v))}
+function confetti(){const c=document.getElementById('confettiBox'),cols=['#f59e0b','#ef4444','#10b981','#3b82f6','#8b5cf6','#ec4899','#ffcd00','#da251d'];for(let i=0;i<80;i++)setTimeout(()=>{const p=document.createElement('div');p.className='cf';p.style.cssText=`left:${Math.random()*100}%;background:${cols[Math.floor(Math.random()*cols.length)]};width:${Math.random()*10+4}px;height:${Math.random()*10+4}px;border-radius:${Math.random()>.5?'50%':'0'};animation-duration:${Math.random()*2+2}s`;c.appendChild(p);setTimeout(()=>p.remove(),4000)},i*25)}
+
+function createParticles(){
+    const c=document.getElementById('particles');c.innerHTML='';
+    const cols=['#f59e0b','#ef4444','#10b981','#3b82f6','#8b5cf6','#06b6d4'];
+    for(let i=0;i<15;i++){const d=document.createElement('div');d.className='dot';const s=Math.random()*4+2;d.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;background:${cols[Math.floor(Math.random()*cols.length)]};animation-duration:${Math.random()*12+10}s;animation-delay:${Math.random()*12}s`;c.appendChild(d)}
+}
+
+// ============================================================
+// GAME FLOW
+// ============================================================
+function startGame(){
+    initAudio();
+    playSound('era');
+    showEraTransition(0);
+}
+
+function showEraTransition(eraIdx){
+    const era = ERAS[eraIdx];
+    state.era = eraIdx;
+    state.turnsInEra = 0;
+    state.selectedPolicy = null;
+    state.selectedZone = null;
+    state.usedPolicies = [];
+
+    document.getElementById('eraIcon').textContent = era.icon;
+    document.getElementById('eraPeriod').textContent = era.period;
+    document.getElementById('eraTitle').textContent = era.name;
+    document.getElementById('eraDesc').textContent = era.desc;
+    document.body.style.background = era.bgGrad;
+
+    showScreen('eraScreen');
+}
+
+function enterEra(){
+    playSound('place');
+    showScreen('gameScreen');
+    renderAll();
+}
+
+// ============================================================
+// RENDERING
+// ============================================================
+function renderAll(){
+    renderStats();
+    renderEraIndicator();
+    renderMap();
+    renderPolicies();
+    updateApplyBtn();
+}
+
+function renderStats(){
+    const s = state.stats;
+    ['economy','independence','tech'].forEach(key=>{
+        const barId = key==='economy'?'barEcon':key==='independence'?'barIndep':'barTech';
+        const valId = key==='economy'?'valEcon':key==='independence'?'valIndep':'valTech';
+        const bar = document.getElementById(barId);
+        const val = document.getElementById(valId);
+        bar.style.width = s[key]+'%';
+        val.textContent = s[key];
+        bar.classList.toggle('danger', s[key] <= 20);
+    });
+}
+
+function renderEraIndicator(){
+    const era = ERAS[state.era];
+    const badge = document.getElementById('eraBadge');
+    badge.className = `era-badge e${state.era}`;
+    badge.textContent = `${era.icon} ${era.name}`;
+    document.getElementById('turnInfo').textContent = `Lượt ${state.turnsInEra+1} / ${era.maxTurns}`;
+}
+
+function renderMap(){
+    const grid = document.getElementById('mapGrid');
+    grid.innerHTML = '';
+    state.zones.forEach((z,i)=>{
+        const lv = ZONE_LEVELS[z.level];
+        const div = document.createElement('div');
+        div.className = `zone lv${z.level} ${state.selectedZone===i?'selected':''}`;
+        div.innerHTML = `<span class="zone-icon">${lv.emoji}</span><div class="zone-name">${z.shortName}</div><div class="zone-level">${lv.name}</div>`;
+        div.onclick = () => selectZone(i);
+        grid.appendChild(div);
+    });
+}
+
+function renderPolicies(){
+    const list = document.getElementById('policyList');
+    list.innerHTML = '';
+    const policies = POLICIES[state.era] || [];
+    policies.forEach(p=>{
+        const used = state.usedPolicies.includes(p.id);
+        const div = document.createElement('div');
+        div.className = `policy ${state.selectedPolicy===p.id?'selected':''} ${used?'used':''}`;
+        let efHtml = '';
+        Object.entries(p.effects).forEach(([k,v])=>{
+            if(v===0) return;
+            const label = k==='economy'?'💰':k==='independence'?'🛡️':'⚙️';
+            efHtml += `<span class="p-eff ${v>0?'pos':'neg'}">${label}${v>0?'+':''}${v}</span>`;
         });
-
-        // ==================== GAME STATE ====================
-        const GameState = {
-            phase: 0,
-            teams: [],
-            timer: null,
-            timeLeft: 600,
-            timerRunning: false,
-            globalized: false,
-            logs: [],
-            startTime: null
-        };
-
-        const CARDS = {
-            labor: { id: 'labor', name: 'Lao động thủ công', emoji: '👷', cost: 100, points: 50, phase: 1, category: 'resource', devaluedPoints: 25 },
-            mech1: { id: 'mech1', name: 'Máy móc cơ khí 1.0', emoji: '⚙️', cost: 150, points: 80, phase: 1, category: 'tech', devaluedPoints: 40 },
-            mech2: { id: 'mech2', name: 'Máy móc cơ khí 2.0', emoji: '🔧', cost: 250, points: 120, phase: 1, category: 'tech', devaluedPoints: 60 },
-            hr: { id: 'hr', name: 'Nhân lực chất lượng cao', emoji: '🎓', cost: 300, points: 200, phase: 2, category: 'resource' },
-            ai: { id: 'ai', name: 'Công nghệ AI', emoji: '🤖', cost: 500, points: 350, phase: 2, category: 'tech4' },
-            bigdata: { id: 'bigdata', name: 'Big Data', emoji: '📊', cost: 450, points: 300, phase: 2, category: 'tech4' },
-            print3d: { id: 'print3d', name: 'In 3D', emoji: '🖨️', cost: 400, points: 280, phase: 2, category: 'tech4' }
-        };
-
-        const TEAM_COLORS = ['#ef4444', '#f59e0b', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899', '#06b6d4', '#f97316'];
-        const TEAM_DEFAULT_NAMES = ['Nhóm 1', 'Nhóm 2', 'Nhóm 3', 'Nhóm 4', 'Nhóm 5', 'Nhóm 6', 'Nhóm 7 (extra)', 'Nhóm 8 (extra)'];
-
-        const THEORY = {
-            1: {
-                title: '📖 Chốt lý thuyết — Giai đoạn 1: CNH Truyền thống',
-                content: `
-                    <p>Các bạn vừa trải qua mô hình <span class="highlight">Công nghiệp hóa cổ điển</span> và <span class="highlight">kiểu Liên Xô cũ</span>.</p>
-                    <div class="theory-quote">
-                        "Đặc trưng của CNH truyền thống là chuyển từ lao động thủ công sang sử dụng máy móc cơ khí, bắt đầu từ công nghiệp nhẹ (mô hình cổ điển) hoặc ưu tiên công nghiệp nặng (mô hình Liên Xô)."
-                    </div>
-                    <p><strong>Đặc điểm chính:</strong></p>
-                    <p>• Thời gian thực hiện rất dài: <span class="highlight">60-80 năm</span></p>
-                    <p>• Dựa nhiều vào khai thác tài nguyên thiên nhiên</p>
-                    <p>• Phát triển tuần tự: Nông nghiệp → Công nghiệp nhẹ → Công nghiệp nặng</p>
-                    <p>• Nguồn vốn chủ yếu từ tích lũy nội bộ</p>
-                    <div class="theory-quote">
-                        "Việt Nam bắt đầu CNH từ Đại hội III (1960), ưu tiên phát triển công nghiệp nặng. Sau Đổi mới 1986, chuyển sang mô hình kết hợp."
-                    </div>
-                `
-            },
-            2: {
-                title: '📖 Chốt lý thuyết — Giai đoạn 2: Hội nhập & CMCN 4.0',
-                content: `
-                    <p>Sự <span class="highlight">hoảng loạn</span> khi thẻ bài mất giá chính là mô phỏng <span class="highlight">tác động tiêu cực của hội nhập kinh tế quốc tế</span>.</p>
-                    <div class="theory-quote">
-                        "Hội nhập kinh tế quốc tế tạo ra: Gia tăng cạnh tranh gay gắt, nguy cơ chuyển dịch cơ cấu không kịp thời, rủi ro phân phối lợi ích không công bằng, và phụ thuộc vào bên ngoài."
-                    </div>
-                    <p><strong>Tác động tích cực:</strong></p>
-                    <p>• Mở rộng thị trường xuất khẩu</p>
-                    <p>• Thu hút FDI và chuyển giao công nghệ</p>
-                    <p>• Nâng cao năng lực cạnh tranh</p>
-                    <p style="margin-top: 12px;"><strong>Lộ trình CNH-HĐH hiện đại:</strong></p>
-                    <p>• Phải dựa trên <span class="highlight">kinh tế tri thức</span></p>
-                    <p>• Thích ứng với <span class="highlight">Cách mạng công nghiệp 4.0</span> (AI, Big Data, IoT...)</p>
-                    <p>• Phát triển nguồn nhân lực chất lượng cao</p>
-                    <p>• Rút ngắn thời gian CNH so với mô hình truyền thống</p>
-                    <div class="theory-quote">
-                        "Để sống sót và phát triển, Việt Nam phải thực hiện CNH-HĐH kiểu rút ngắn, kết hợp tuần tự với nhảy vọt, dựa trên tri thức và đổi mới sáng tạo."
-                    </div>
-                `
-            }
-        };
-
-        // ==================== AUDIO SYSTEM ====================
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        let audioCtx = null;
-
-        function initAudio() {
-            if (!audioCtx) { try { audioCtx = new AudioCtx(); } catch(e) {} }
-        }
-
-        function playSound(type) {
-            initAudio();
-            if (!audioCtx) return;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain); gain.connect(audioCtx.destination);
-            const now = audioCtx.currentTime;
-
-            switch(type) {
-                case 'buy':
-                    osc.type = 'sine';
-                    osc.frequency.setValueAtTime(523, now);
-                    osc.frequency.setValueAtTime(659, now + 0.1);
-                    gain.gain.setValueAtTime(0.15, now);
-                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
-                    osc.start(now); osc.stop(now + 0.25);
-                    break;
-                case 'alert':
-                    osc.type = 'sawtooth';
-                    osc.frequency.setValueAtTime(440, now);
-                    osc.frequency.setValueAtTime(220, now + 0.2);
-                    osc.frequency.setValueAtTime(440, now + 0.4);
-                    gain.gain.setValueAtTime(0.12, now);
-                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.6);
-                    osc.start(now); osc.stop(now + 0.6);
-                    break;
-                case 'bonus':
-                    osc.type = 'sine';
-                    osc.frequency.setValueAtTime(523, now);
-                    osc.frequency.setValueAtTime(659, now + 0.1);
-                    osc.frequency.setValueAtTime(784, now + 0.2);
-                    osc.frequency.setValueAtTime(1047, now + 0.3);
-                    gain.gain.setValueAtTime(0.15, now);
-                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
-                    osc.start(now); osc.stop(now + 0.5);
-                    break;
-                case 'crisis':
-                    osc.type = 'sawtooth';
-                    osc.frequency.setValueAtTime(200, now);
-                    osc.frequency.exponentialRampToValueAtTime(100, now + 1);
-                    gain.gain.setValueAtTime(0.15, now);
-                    gain.gain.exponentialRampToValueAtTime(0.01, now + 1.2);
-                    osc.start(now); osc.stop(now + 1.2);
-                    break;
-                case 'victory':
-                    osc.type = 'sine';
-                    [523, 659, 784, 1047, 784, 1047].forEach((freq, i) => {
-                        osc.frequency.setValueAtTime(freq, now + i * 0.15);
-                    });
-                    gain.gain.setValueAtTime(0.15, now);
-                    gain.gain.exponentialRampToValueAtTime(0.01, now + 1);
-                    osc.start(now); osc.stop(now + 1);
-                    break;
-            }
-        }
-
-        // ==================== PARTICLES ====================
-        function createParticles() {
-            const container = document.getElementById('bgParticles');
-            container.innerHTML = '';
-            for (let i = 0; i < 20; i++) {
-                const p = document.createElement('div');
-                p.className = 'particle';
-                const size = Math.random() * 6 + 2;
-                p.style.width = size + 'px'; p.style.height = size + 'px';
-                p.style.left = Math.random() * 100 + '%';
-                p.style.background = TEAM_COLORS[Math.floor(Math.random() * TEAM_COLORS.length)];
-                p.style.animationDuration = (Math.random() * 15 + 10) + 's';
-                p.style.animationDelay = (Math.random() * 15) + 's';
-                container.appendChild(p);
-            }
-        }
-
-        // ==================== CONFETTI ====================
-        function launchConfetti() {
-            const container = document.getElementById('confettiContainer');
-            const colors = ['#f59e0b', '#ef4444', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899', '#ffcd00', '#da251d'];
-            for (let i = 0; i < 120; i++) {
-                setTimeout(() => {
-                    const piece = document.createElement('div');
-                    piece.className = 'confetti-piece';
-                    piece.style.left = Math.random() * 100 + '%';
-                    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-                    piece.style.width = (Math.random() * 10 + 5) + 'px';
-                    piece.style.height = (Math.random() * 10 + 5) + 'px';
-                    piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
-                    piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                    container.appendChild(piece);
-                    setTimeout(() => piece.remove(), 4000);
-                }, i * 30);
-            }
-        }
-
-        // ==================== TOAST ====================
-        function showToast(message, type = 'info') {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.textContent = message;
-            container.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
-        }
-
-        // ==================== SCREEN MANAGEMENT ====================
-        function showScreen(screenId) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
-        }
-
-        // ==================== SETUP ====================
-        function renderTeamInputs() {
-            const count = parseInt(document.getElementById('teamCount').value);
-            const container = document.getElementById('teamNameInputs');
-            container.innerHTML = '';
-            for (let i = 0; i < count; i++) {
-                const div = document.createElement('div');
-                div.className = 'team-name-input';
-                div.innerHTML = `
-                    <div class="team-num" style="background: ${TEAM_COLORS[i]}20; color: ${TEAM_COLORS[i]}; border: 1px solid ${TEAM_COLORS[i]}50;">${i + 1}</div>
-                    <input type="text" id="teamName${i}" placeholder="${TEAM_DEFAULT_NAMES[i]}" value="${TEAM_DEFAULT_NAMES[i]}">
-                `;
-                container.appendChild(div);
-            }
-        }
-
-        // ==================== GAME START ====================
-        function startGame() {
-            initAudio();
-            const count = parseInt(document.getElementById('teamCount').value);
-            const startMoney = parseInt(document.getElementById('startMoney').value);
-
-            GameState.teams = [];
-            for (let i = 0; i < count; i++) {
-                const nameInput = document.getElementById(`teamName${i}`);
-                const name = nameInput.value.trim() || TEAM_DEFAULT_NAMES[i];
-                GameState.teams.push({
-                    id: i, name: name, color: TEAM_COLORS[i], money: startMoney,
-                    cards: { labor: 0, mech1: 0, mech2: 0, hr: 0, ai: 0, bigdata: 0, print3d: 0 },
-                    combos: [], bankrupt: false
-                });
-            }
-
-            GameState.startTime = Date.now();
-            GameState.logs = [];
-
-            showScreen('gameScreen');
-            setPhase(1);
-            renderAll();
-            addLog('🎮 Trò chơi bắt đầu! Quản trò Nhóm 7 điều phối.', 'info');
-            playSound('bonus');
-        }
-
-        // ==================== PHASE MANAGEMENT ====================
-        function setPhase(phase) {
-            GameState.phase = phase;
-            stopTimer();
-
-            const indicator = document.getElementById('phaseIndicator');
-            indicator.className = 'phase-indicator';
-
-            switch(phase) {
-                case 1:
-                    document.body.style.background = 'linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0d4a3a 100%)';
-                    document.getElementById('phaseIcon').textContent = '🏭';
-                    document.getElementById('phaseText').textContent = 'Giai đoạn 1: Kỷ nguyên Truyền thống';
-                    GameState.timeLeft = 600;
-                    document.getElementById('btnPhase1').disabled = true;
-                    document.getElementById('btnGlobalize').disabled = false;
-                    addLog('🏭 Giai đoạn 1 bắt đầu — Kỷ nguyên Truyền thống', 'event');
-                    break;
-                case 2:
-                    indicator.classList.add('phase-2');
-                    document.body.style.background = 'linear-gradient(135deg, #1a0a0a 0%, #4a1010 50%, #3d1a00 100%)';
-                    document.getElementById('phaseIcon').textContent = '⚡';
-                    document.getElementById('phaseText').textContent = 'Giai đoạn 2: Cú sốc Hội nhập 4.0';
-                    GameState.timeLeft = 480;
-                    document.getElementById('btnGlobalize').disabled = true;
-                    addLog('⚡ Giai đoạn 2 bắt đầu — TOÀN CẦU HÓA!', 'event');
-                    break;
-                case 3:
-                    indicator.classList.add('phase-3');
-                    document.body.style.background = 'linear-gradient(135deg, #1a0f2e 0%, #2d1b4e 50%, #1a2744 100%)';
-                    document.getElementById('phaseIcon').textContent = '🏆';
-                    document.getElementById('phaseText').textContent = 'Giai đoạn 3: Tổng kết & Chấm điểm';
-                    GameState.timeLeft = 420;
-                    document.getElementById('btnPhase3').disabled = true;
-                    addLog('🏆 Giai đoạn 3 — Tổng kết!', 'event');
-
-                    // Show results button
-                    setTimeout(() => {
-                        showToast('Nhấn "Xem kết quả" khi sẵn sàng!', 'info');
-                    }, 500);
-                    const controls = document.querySelector('.controls-grid');
-                    if (!document.getElementById('btnResults')) {
-                        const btn = document.createElement('button');
-                        btn.id = 'btnResults';
-                        btn.className = 'btn btn-success btn-block';
-                        btn.textContent = '🎉 XEM KẾT QUẢ CUỐI CÙNG';
-                        btn.onclick = showResults;
-                        controls.appendChild(btn);
-                    }
-                    break;
-            }
-
-            updateTimerDisplay();
-            renderShop();
-            renderTeams();
-        }
-
-        // ==================== GLOBALIZATION EVENT ====================
-        function triggerGlobalization() {
-            playSound('crisis');
-            document.getElementById('globalizationOverlay').classList.add('active');
-        }
-
-        function confirmGlobalization() {
-            document.getElementById('globalizationOverlay').classList.remove('active');
-            GameState.globalized = true;
-
-            GameState.teams.forEach(team => {
-                if (!team.bankrupt) {
-                    const oldPoints = calculatePoints(team, false);
-                    const newPoints = calculatePoints(team, true);
-                    if (newPoints < oldPoints) {
-                        addLog(`📉 ${team.name} mất ${oldPoints - newPoints} điểm do mất giá!`, 'event');
-                    }
-                }
-            });
-
-            checkBankruptcy();
-            setPhase(2);
-            playSound('alert');
-            showToast('⚠️ TOÀN CẦU HÓA đã kích hoạt! Thẻ cũ mất 50% giá trị!', 'error');
-            setTimeout(() => showTheoryForPhase(2), 1500);
-        }
-
-        function checkBankruptcy() {
-            GameState.teams.forEach(team => {
-                const totalValue = team.money + calculatePoints(team, true);
-                if (totalValue < 100 && !team.bankrupt) {
-                    team.bankrupt = true;
-                    addLog(`💀 ${team.name} đã PHÁ SẢN!`, 'event');
-                    showToast(`💀 ${team.name} phá sản!`, 'error');
-                }
-            });
-        }
-
-        // ==================== TIMER ====================
-        function toggleTimer() {
-            if (GameState.timerRunning) stopTimer(); else startTimer();
-        }
-
-        function startTimer() {
-            if (GameState.timeLeft <= 0) return;
-            GameState.timerRunning = true;
-            document.getElementById('timerToggle').textContent = '⏸';
-            GameState.timer = setInterval(() => {
-                GameState.timeLeft--;
-                updateTimerDisplay();
-                if (GameState.timeLeft <= 0) {
-                    stopTimer();
-                    playSound('alert');
-                    showToast('⏰ Hết giờ giai đoạn!', 'warning');
-                    if (GameState.phase === 1 && !GameState.globalized) showTheoryForPhase(1);
-                    else if (GameState.phase === 2) showTheoryForPhase(2);
-                }
-            }, 1000);
-        }
-
-        function stopTimer() {
-            GameState.timerRunning = false;
-            if (GameState.timer) { clearInterval(GameState.timer); GameState.timer = null; }
-            document.getElementById('timerToggle').textContent = '▶';
-        }
-
-        function resetPhaseTimer() {
-            stopTimer();
-            switch(GameState.phase) {
-                case 1: GameState.timeLeft = 600; break;
-                case 2: GameState.timeLeft = 480; break;
-                case 3: GameState.timeLeft = 420; break;
-            }
-            updateTimerDisplay();
-            showToast('🔄 Đã reset đồng hồ', 'info');
-        }
-
-        function updateTimerDisplay() {
-            const mins = Math.floor(GameState.timeLeft / 60);
-            const secs = GameState.timeLeft % 60;
-            const display = document.getElementById('timerDisplay');
-            display.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-            display.classList.toggle('urgent', GameState.timeLeft <= 30);
-        }
-
-        // ==================== SCORING ====================
-        function calculatePoints(team, useDevalued = null) {
-            const devalued = useDevalued !== null ? useDevalued : GameState.globalized;
-            let points = 0;
-            Object.keys(team.cards).forEach(cardId => {
-                const count = team.cards[cardId];
-                if (count <= 0) return;
-                const card = CARDS[cardId];
-                points += count * (devalued && card.devaluedPoints !== undefined ? card.devaluedPoints : card.points);
-            });
-            return points;
-        }
-
-        function calculateTotalScore(team) {
-            let points = calculatePoints(team);
-            let comboBonus = 0;
-            team.combos = [];
-
-            if (team.cards.labor >= 2 && (team.cards.mech1 >= 1 || team.cards.mech2 >= 1)) {
-                team.combos.push('cnh_traditional'); comboBonus += 200;
-            }
-            if (team.cards.hr >= 1 && (team.cards.ai >= 1 || team.cards.bigdata >= 1 || team.cards.print3d >= 1)) {
-                team.combos.push('cnh_modern'); comboBonus += 500;
-            }
-            const tech4Count = [team.cards.ai > 0, team.cards.bigdata > 0, team.cards.print3d > 0].filter(Boolean).length;
-            if (team.cards.hr >= 1 && tech4Count >= 2) {
-                team.combos.push('digital_transform'); comboBonus += 800;
-            }
-
-            return points + comboBonus;
-        }
-
-        // ==================== SHOP ====================
-        function buyCard(cardId) {
-            const buyerIdx = parseInt(document.getElementById('buyerSelect').value);
-            if (isNaN(buyerIdx)) { showToast('Vui lòng chọn nhóm mua!', 'error'); return; }
-
-            const team = GameState.teams[buyerIdx];
-            const card = CARDS[cardId];
-
-            if (team.bankrupt) { showToast(`${team.name} đã phá sản!`, 'error'); return; }
-            if (card.phase === 2 && !GameState.globalized) { showToast('Thẻ này chưa được mở khóa!', 'error'); return; }
-            if (team.money < card.cost) {
-                showToast(`${team.name} không đủ vốn! (Cần ${card.cost}, có ${team.money})`, 'error');
-                playSound('alert'); return;
-            }
-
-            team.money -= card.cost;
-            team.cards[cardId]++;
-
-            playSound('buy');
-            addLog(`🛒 ${team.name} mua ${card.emoji} ${card.name} (-${card.cost}💰)`, 'buy');
-            showToast(`${card.emoji} ${team.name} mua ${card.name}!`, 'success');
-
-            const prevCombos = [...team.combos];
-            calculateTotalScore(team);
-            team.combos.forEach(combo => {
-                if (!prevCombos.includes(combo)) {
-                    let bonus = 0, comboName = '';
-                    switch(combo) {
-                        case 'cnh_traditional': bonus = 200; comboName = 'CNH Truyền thống'; break;
-                        case 'cnh_modern': bonus = 500; comboName = 'CNH Hiện đại'; break;
-                        case 'digital_transform': bonus = 800; comboName = 'Chuyển đổi số toàn diện'; break;
-                    }
-                    team.money += bonus;
-                    playSound('bonus');
-                    addLog(`🎉 ${team.name} đạt Combo "${comboName}" (+${bonus}💰)!`, 'bonus');
-                    showToast(`🎉 COMBO! ${team.name}: ${comboName} (+${bonus}💰)`, 'warning');
-                }
-            });
-
-            renderAll();
-        }
-
-        function renderShop() {
-            const container = document.getElementById('shopItems');
-            container.innerHTML = '';
-            Object.values(CARDS).forEach(card => {
-                const locked = card.phase === 2 && !GameState.globalized;
-                const devalued = GameState.globalized && card.devaluedPoints !== undefined;
-                const div = document.createElement('div');
-                div.className = `shop-item ${locked ? 'locked' : ''}`;
-                if (!locked) div.onclick = () => buyCard(card.id);
-
-                let priceHTML = devalued
-                    ? `<span class="old-price">${card.points}đ</span>${card.devaluedPoints}đ | ${card.cost}💰`
-                    : `${card.points}đ | ${card.cost}💰`;
-
-                div.innerHTML = `
-                    <div class="item-info">
-                        <span class="item-emoji">${card.emoji}</span>
-                        <div>
-                            <div class="item-name">${card.name}</div>
-                            <div class="item-meta">${locked ? '🔒 Chưa mở khóa' : card.phase === 2 ? '🆕 Mới' : card.category === 'resource' ? 'Nguồn lực' : 'Công nghệ'}</div>
-                        </div>
-                    </div>
-                    <div class="item-price">${priceHTML}</div>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        // ==================== RENDERING ====================
-        function renderAll() { renderTeams(); renderLeaderboard(); renderBuyerSelect(); }
-
-        function renderBuyerSelect() {
-            const select = document.getElementById('buyerSelect');
-            const currentVal = select.value;
-            select.innerHTML = '<option value="">— Chọn nhóm —</option>';
-            GameState.teams.forEach((team, idx) => {
-                const opt = document.createElement('option');
-                opt.value = idx;
-                opt.textContent = `${team.name} (💰${team.money})`;
-                if (team.bankrupt) opt.disabled = true;
-                select.appendChild(opt);
-            });
-            if (currentVal) select.value = currentVal;
-        }
-
-        function renderTeams() {
-            const grid = document.getElementById('teamsGrid');
-            grid.innerHTML = '';
-
-            const sorted = [...GameState.teams].sort((a, b) => calculateTotalScore(b) - calculateTotalScore(a));
-            const rankings = {};
-            sorted.forEach((t, i) => rankings[t.id] = i + 1);
-
-            GameState.teams.forEach(team => {
-                const totalScore = calculateTotalScore(team);
-                const rank = rankings[team.id];
-                const card = document.createElement('div');
-                card.className = `team-card ${team.bankrupt ? 'bankrupt' : ''}`;
-                card.style.setProperty('--team-color', team.color);
-
-                let cardBadges = '';
-                Object.keys(team.cards).forEach(cardId => {
-                    const count = team.cards[cardId];
-                    if (count > 0) {
-                        const cd = CARDS[cardId];
-                        const devalued = GameState.globalized && cd.devaluedPoints !== undefined;
-                        cardBadges += `<span class="card-badge ${cardId}">${cd.emoji} ${cd.name.split(' ').slice(0, 2).join(' ')} ×${count}${devalued ? '<span class="devalued">(↓50%)</span>' : ''}</span>`;
-                    }
-                });
-                if (!cardBadges) cardBadges = '<span style="font-size: 0.8rem; color: var(--text-muted);">Chưa có thẻ bài</span>';
-
-                let comboBadges = '';
-                team.combos.forEach(combo => {
-                    let name = '';
-                    switch(combo) {
-                        case 'cnh_traditional': name = '🏭 CNH Truyền thống'; break;
-                        case 'cnh_modern': name = '🚀 CNH Hiện đại'; break;
-                        case 'digital_transform': name = '🌟 Chuyển đổi số'; break;
-                    }
-                    comboBadges += `<span class="combo-badge">✨ ${name}</span> `;
-                });
-
-                let rankClass = rank === 1 ? 'rank-1' : rank === 2 ? 'rank-2' : rank === 3 ? 'rank-3' : '';
-
-                card.innerHTML = `
-                    <div class="team-card-header">
-                        <div class="team-name"><span style="color: ${team.color};">●</span> ${team.name}</div>
-                        <span class="team-rank ${rankClass}">#${rank}</span>
-                    </div>
-                    <div class="team-stats">
-                        <div class="team-stat"><div class="stat-label">Vốn</div><div class="stat-value money">💰 ${team.money}</div></div>
-                        <div class="team-stat"><div class="stat-label">Tổng điểm</div><div class="stat-value points">⭐ ${totalScore}</div></div>
-                    </div>
-                    <div class="team-cards-list">${cardBadges}</div>
-                    ${comboBadges ? `<div style="margin-top: 8px;">${comboBadges}</div>` : ''}
-                    <div class="team-actions">
-                        <button class="btn btn-outline" onclick="grantMoney(${team.id}, 100)" title="Thưởng 100 vốn">+💰100</button>
-                        <button class="btn btn-outline" onclick="grantMoney(${team.id}, -100)" title="Phạt 100 vốn">-💰100</button>
-                        <button class="btn btn-outline" onclick="toggleBankrupt(${team.id})" title="Phá sản">💀</button>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        function renderLeaderboard() {
-            const container = document.getElementById('leaderboard');
-            container.innerHTML = '';
-            const sorted = [...GameState.teams].sort((a, b) => calculateTotalScore(b) - calculateTotalScore(a));
-            sorted.forEach((team, i) => {
-                const score = calculateTotalScore(team);
-                const div = document.createElement('div');
-                div.className = 'leaderboard-item';
-                div.innerHTML = `
-                    <div class="lb-rank">${i + 1}</div>
-                    <span class="lb-name" style="color: ${team.color};">${team.name} ${team.bankrupt ? '💀' : ''}</span>
-                    <span class="lb-score">${score}</span>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        // ==================== TEAM ACTIONS ====================
-        function grantMoney(teamId, amount) {
-            const team = GameState.teams[teamId];
-            team.money += amount;
-            if (team.money < 0) team.money = 0;
-            if (amount > 0) {
-                addLog(`💰 ${team.name} +${amount} vốn`, 'bonus');
-                showToast(`💰 ${team.name} +${amount} vốn`, 'success');
-                playSound('buy');
-            } else {
-                addLog(`💸 ${team.name} ${amount} vốn`, 'event');
-                showToast(`💸 ${team.name} ${amount} vốn`, 'error');
-            }
-            renderAll();
-        }
-
-        function toggleBankrupt(teamId) {
-            const team = GameState.teams[teamId];
-            team.bankrupt = !team.bankrupt;
-            if (team.bankrupt) {
-                addLog(`💀 ${team.name} PHÁ SẢN!`, 'event');
-                showToast(`💀 ${team.name} phá sản!`, 'error');
-                playSound('crisis');
-            } else {
-                addLog(`✅ ${team.name} hồi phục!`, 'buy');
-                showToast(`✅ ${team.name} hồi phục!`, 'success');
-            }
-            renderAll();
-        }
-
-        // ==================== ACTIVITY LOG ====================
-        function addLog(message, type = 'info') {
-            const now = new Date();
-            const time = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-            GameState.logs.unshift({ message, type, time });
-            const container = document.getElementById('activityLog');
-            const entry = document.createElement('div');
-            entry.className = `log-entry ${type}`;
-            entry.innerHTML = `<span class="log-time">${time}</span> ${message}`;
-            container.prepend(entry);
-            while (container.children.length > 50) container.removeChild(container.lastChild);
-        }
-
-        // ==================== THEORY MODAL ====================
-        function showTheoryModal() { showTheoryForPhase(GameState.phase <= 1 ? 1 : 2); }
-        function showTheoryForPhase(phase) {
-            const theory = THEORY[phase];
-            if (!theory) return;
-            document.getElementById('theoryTitle').textContent = theory.title;
-            document.getElementById('theoryContent').innerHTML = theory.content;
-            document.getElementById('theoryModal').classList.add('active');
-        }
-        function closeTheoryModal() { document.getElementById('theoryModal').classList.remove('active'); }
-
-        // ==================== RESULTS ====================
-        function showResults() {
-            stopTimer();
-            showScreen('resultsScreen');
-            playSound('victory');
-
-            const sorted = [...GameState.teams].sort((a, b) => calculateTotalScore(b) - calculateTotalScore(a));
-            const winner = sorted[0];
-
-            document.getElementById('winnerCard').innerHTML = `
-                <div style="font-size: 3rem; margin-bottom: 12px;">👑</div>
-                <h2>${winner.name}</h2>
-                <div class="winner-score">⭐ ${calculateTotalScore(winner)} điểm</div>
-                <div style="color: var(--text-secondary); margin-top: 8px; font-size: 0.95rem;">
-                    Vốn còn lại: 💰${winner.money} | Combo: ${winner.combos.length}
-                </div>
-            `;
-
-            const standings = document.getElementById('finalStandings');
-            standings.innerHTML = '<h3>📊 Bảng xếp hạng cuối cùng</h3>';
-            sorted.forEach((team, i) => {
-                const score = calculateTotalScore(team);
-                const row = document.createElement('div');
-                row.className = 'standing-row';
-                row.innerHTML = `
-                    <div class="sr-rank">${i + 1}</div>
-                    <div class="sr-name" style="color: ${team.color};">
-                        ${team.name} ${team.bankrupt ? '💀' : ''} ${team.combos.includes('digital_transform') ? '🌟 Quốc gia 4.0' : ''}
-                    </div>
-                    <div class="sr-details">
-                        <div class="sr-score">⭐ ${score}</div>
-                        <div class="sr-money">💰 ${team.money} vốn</div>
-                    </div>
-                `;
-                standings.appendChild(row);
-            });
-
-            setTimeout(launchConfetti, 500);
-        }
-
-        function restartGame() {
-            GameState.phase = 0; GameState.teams = []; GameState.globalized = false; GameState.logs = [];
-            stopTimer();
-            document.body.style.background = '';
-            document.getElementById('btnPhase1').disabled = false;
-            document.getElementById('btnGlobalize').disabled = false;
-            document.getElementById('btnPhase3').disabled = false;
-            const btnResults = document.getElementById('btnResults');
-            if (btnResults) btnResults.remove();
-            showScreen('setupScreen');
-            renderTeamInputs();
-        }
-
-        // ==================== KEYBOARD SHORTCUTS ====================
-        document.addEventListener('keydown', (e) => {
-            if (GameState.phase === 0) return;
-            if (e.key === ' ') { e.preventDefault(); toggleTimer(); }
-            if (e.ctrlKey && e.key === '1') { e.preventDefault(); showTheoryForPhase(1); }
-            if (e.ctrlKey && e.key === '2') { e.preventDefault(); showTheoryForPhase(2); }
+        div.innerHTML = `<span class="p-emoji">${p.emoji}</span><div class="p-info"><div class="p-name">${p.name}</div><div class="p-effects">${efHtml}</div></div>`;
+        div.onclick = () => {if(!used) selectPolicy(p.id)};
+        list.appendChild(div);
+    });
+}
+
+function updateApplyBtn(){
+    const btn = document.getElementById('applyBtn');
+    const hint = document.getElementById('hintText');
+    if(state.selectedPolicy && state.selectedZone !== null){
+        btn.disabled = false;
+        const p = (POLICIES[state.era]||[]).find(x=>x.id===state.selectedPolicy);
+        const z = state.zones[state.selectedZone];
+        hint.textContent = `${p?.emoji} ${p?.name} → ${z?.shortName}`;
+    } else if(state.selectedPolicy){
+        btn.disabled = true;
+        hint.textContent = '👆 Bây giờ chọn 1 vùng trên bản đồ';
+    } else {
+        btn.disabled = true;
+        hint.textContent = 'Chọn 1 chính sách → Chọn 1 vùng trên bản đồ';
+    }
+}
+
+// ============================================================
+// INTERACTIONS
+// ============================================================
+function selectPolicy(id){
+    state.selectedPolicy = (state.selectedPolicy === id) ? null : id;
+    renderPolicies();
+    updateApplyBtn();
+}
+
+function selectZone(idx){
+    state.selectedZone = (state.selectedZone === idx) ? null : idx;
+    renderMap();
+    updateApplyBtn();
+}
+
+function applyPolicy(){
+    if(!state.selectedPolicy || state.selectedZone === null) return;
+
+    const policy = (POLICIES[state.era]||[]).find(p=>p.id===state.selectedPolicy);
+    const zone = state.zones[state.selectedZone];
+    if(!policy || !zone) return;
+
+    playSound('place');
+
+    // Apply stat changes
+    const changes = {};
+    Object.entries(policy.effects).forEach(([k,v])=>{
+        if(v===0) return;
+        const oldVal = state.stats[k];
+        state.stats[k] = clamp(state.stats[k]+v, 0, 100);
+        changes[k] = state.stats[k] - oldVal;
+    });
+
+    // Upgrade zone level (max 3)
+    if(zone.level < 3 && (policy.effects.tech > 0 || policy.effects.economy > 0)){
+        zone.level = Math.min(3, zone.level + 1);
+    }
+
+    // Mark policy as used
+    state.usedPolicies.push(policy.id);
+
+    // Animate stats
+    renderStats();
+    showStatChanges(changes);
+
+    // Pulse zone
+    setTimeout(()=>{
+        renderMap();
+        const zoneEls = document.querySelectorAll('.zone');
+        if(zoneEls[state.selectedZone]) zoneEls[state.selectedZone].classList.add('pulse-up');
+    }, 100);
+
+    // Advance turn
+    state.turnsInEra++;
+    state.turn++;
+
+    // Reset selection
+    state.selectedPolicy = null;
+    state.selectedZone = null;
+
+    // Show knowledge popup
+    showKnowledge(policy);
+}
+
+function showStatChanges(changes){
+    Object.entries(changes).forEach(([k,v])=>{
+        if(v===0) return;
+        const valId = k==='economy'?'valEcon':k==='independence'?'valIndep':'valTech';
+        const el = document.getElementById(valId);
+        const span = document.createElement('span');
+        span.className = `stat-change ${v>0?'up':'down'}`;
+        span.textContent = `${v>0?'+':''}${v}`;
+        el.appendChild(span);
+        setTimeout(()=>span.remove(), 700);
+    });
+}
+
+// ============================================================
+// KNOWLEDGE POPUP
+// ============================================================
+function showKnowledge(policy){
+    document.getElementById('knTitle').textContent = `📖 ${policy.name}`;
+    let body = `<div class="kn-text">${policy.knowledge}</div>`;
+    if(policy.quote){
+        body += `<div class="kn-quote">${policy.quote}</div>`;
+    }
+    document.getElementById('knBody').innerHTML = body;
+
+    let efHtml = '';
+    Object.entries(policy.effects).forEach(([k,v])=>{
+        if(v===0) return;
+        const label = k==='economy'?'💰 Kinh tế':k==='independence'?'🛡️ Tự chủ':'⚙️ Công nghệ';
+        efHtml += `<div class="kn-eff ${v>0?'pos':'neg'}">${label} ${v>0?'+':''}${v}</div>`;
+    });
+    document.getElementById('knEffects').innerHTML = efHtml;
+    document.getElementById('knowledgeModal').classList.add('active');
+}
+
+function closeKnowledge(){
+    document.getElementById('knowledgeModal').classList.remove('active');
+    // Check for game over
+    if(checkGameOver()) return;
+    // Check for event
+    if(checkEvent()) return;
+    // Check for era end
+    if(checkEraEnd()) return;
+    // Continue
+    renderAll();
+}
+
+// ============================================================
+// EVENTS
+// ============================================================
+function checkEvent(){
+    const ev = EVENTS.find(e => e.era === state.era && e.afterTurn === state.turnsInEra);
+    if(!ev) return false;
+    state.pendingEvent = ev;
+    showEvent(ev);
+    return true;
+}
+
+function showEvent(ev){
+    playSound('event');
+    document.getElementById('evIcon').textContent = ev.icon;
+    document.getElementById('evYear').textContent = `NĂM ${ev.year}`;
+    document.getElementById('evTitle').textContent = ev.title;
+    document.getElementById('evDesc').textContent = ev.desc;
+
+    let efHtml = '';
+    Object.entries(ev.effects).forEach(([k,v])=>{
+        if(v===0) return;
+        const label = k==='economy'?'💰 Kinh tế':k==='independence'?'🛡️ Tự chủ':'⚙️ Công nghệ';
+        efHtml += `<div class="event-eff ${v>0?'pos':'neg'}">${label} ${v>0?'+':''}${v}</div>`;
+    });
+    document.getElementById('evEffects').innerHTML = efHtml;
+    document.getElementById('eventOverlay').classList.add('active');
+}
+
+function confirmEvent(){
+    const ev = state.pendingEvent;
+    if(!ev) return;
+
+    // Apply effects
+    Object.entries(ev.effects).forEach(([k,v])=>{
+        state.stats[k] = clamp(state.stats[k]+v, 0, 100);
+    });
+    state.pendingEvent = null;
+    document.getElementById('eventOverlay').classList.remove('active');
+
+    renderStats();
+    toast(ev.title + ' — Đã áp dụng!', 'warning');
+
+    // Show event knowledge
+    setTimeout(()=>{
+        document.getElementById('knTitle').textContent = `📖 Bài học từ: ${ev.title}`;
+        document.getElementById('knBody').innerHTML = `<div class="kn-text">${ev.knowledge}</div>`;
+        let efHtml = '';
+        Object.entries(ev.effects).forEach(([k,v])=>{
+            if(v===0) return;
+            const label = k==='economy'?'💰 Kinh tế':k==='independence'?'🛡️ Tự chủ':'⚙️ Công nghệ';
+            efHtml += `<div class="kn-eff ${v>0?'pos':'neg'}">${label} ${v>0?'+':''}${v}</div>`;
         });
-    </script>
+        document.getElementById('knEffects').innerHTML = efHtml;
+        document.getElementById('knowledgeModal').classList.add('active');
+    }, 400);
+}
+
+// ============================================================
+// ERA & GAME FLOW
+// ============================================================
+function checkEraEnd(){
+    const era = ERAS[state.era];
+    if(state.turnsInEra >= era.maxTurns){
+        if(state.era < 3){
+            // Next era
+            setTimeout(()=>{
+                playSound('era');
+                showEraTransition(state.era + 1);
+            }, 300);
+            return true;
+        } else {
+            // Game complete
+            setTimeout(()=> showEnding(), 300);
+            return true;
+        }
+    }
+    return false;
+}
+
+function checkGameOver(){
+    const s = state.stats;
+    if(s.economy <= 0 || s.independence <= 0 || s.tech <= 0){
+        state.gameOver = true;
+        setTimeout(()=> showEnding(), 300);
+        return true;
+    }
+    return false;
+}
+
+// ============================================================
+// ENDING
+// ============================================================
+function showEnding(){
+    const s = state.stats;
+    let endType;
+    if(s.economy <= 10 || s.tech <= 10){
+        endType = 'collapse';
+    } else if(s.independence < 20){
+        endType = 'dependent';
+    } else if(s.economy >= 60 && s.independence >= 50 && s.tech >= 70){
+        endType = 'superpower';
+    } else {
+        endType = 'stable';
+    }
+
+    const end = ENDINGS[endType];
+    document.getElementById('endIcon').textContent = end.icon;
+    document.getElementById('endTitle').textContent = end.title;
+    document.getElementById('endTitle').style.color = end.color;
+    document.getElementById('endSub').textContent = end.sub;
+
+    if(endType === 'superpower') { playSound('victory'); confetti(); }
+    else if(endType === 'collapse' || endType === 'dependent') { playSound('fail'); }
+    else { playSound('era'); }
+
+    // Final stats
+    const fs = document.getElementById('finalStats');
+    fs.innerHTML = [
+        {icon:'💰',label:'Kinh tế',val:s.economy},
+        {icon:'🛡️',label:'Tự chủ',val:s.independence},
+        {icon:'⚙️',label:'Công nghệ',val:s.tech}
+    ].map(x=>{
+        const cls = x.val>=60?'good':x.val>=30?'mid':'bad';
+        return `<div class="final-stat"><div class="fs-icon">${x.icon}</div><div class="fs-label">${x.label}</div><div class="fs-val ${cls}">${x.val}</div></div>`;
+    }).join('');
+
+    // Map result
+    const mr = document.getElementById('mapResult');
+    mr.innerHTML = state.zones.map(z=>{
+        const lv = ZONE_LEVELS[z.level];
+        return `<div class="mr-zone" style="background:${lv.color}22;border:1px solid ${lv.color}44;color:${lv.color}"><span class="mr-icon">${lv.emoji}</span>${z.shortName}<br><small>${lv.name}</small></div>`;
+    }).join('');
+
+    // Theory
+    const th = document.getElementById('endTheory');
+    th.innerHTML = `<h3 style="font-size:.92rem;font-weight:700;margin-bottom:12px">📚 Bài học cốt lõi — Chương 6</h3>` +
+        THEORY_POINTS.map(t=>`<div class="theory-point"><div class="tp-title">${t.title}</div><div class="tp-desc">${t.desc}</div></div>`).join('');
+
+    document.body.style.background = endType==='superpower'?'linear-gradient(135deg,#1a0f2e,#2d1b4e,#1a2744)':'linear-gradient(135deg,#0a0e1a,#1a1a2e,#0a1628)';
+    showScreen('endingScreen');
+}
+
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener('DOMContentLoaded', ()=>{
+    createParticles();
+
+    // Auto-fill room code from URL params (legacy support)
+    const params = new URLSearchParams(location.search);
+    if(params.get('auto')==='1') startGame();
+});
+</script>
 </body>
 </html>
