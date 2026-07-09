@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Đường Đua Công Nghiệp - MLN122</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">MLN122 / Chương 6</p>
+          <h1>Đường Đua Công Nghiệp</h1>
+        </div>
+        <div class="era-badge">
+          <span id="currentYear">1986</span>
+          <strong id="currentEra">Đổi mới</strong>
+        </div>
+      </header>
+
+      <section class="layout">
+        <section id="stage" class="stage" aria-label="Khu vực chơi game">
+          <img class="backdrop" src="./assets/industrial-road-atlas.png" alt="" draggable="false" />
+          <div class="sunwash"></div>
+          <div class="milestones" aria-hidden="true">
+            <i style="left: 0%"><span>1986</span></i>
+            <i style="left: 25%"><span>1995</span></i>
+            <i style="left: 50%"><span>2007</span></i>
+            <i style="left: 75%"><span>2025</span></i>
+          </div>
+          <div class="road"></div>
+          <div id="entities" class="entities"></div>
+          <div id="runner" class="runner" aria-hidden="true">
+            <b class="head"></b>
+            <b class="hair"></b>
+            <b class="body"><em>★</em></b>
+            <b class="arm left"></b>
+            <b class="arm right"></b>
+            <b class="leg left"></b>
+            <b class="leg right"></b>
+            <b class="shoe left"></b>
+            <b class="shoe right"></b>
+          </div>
+
+          <div id="toast" class="toast" hidden></div>
+
+          <div id="startOverlay" class="overlay">
+            <p>1986 → 4.0</p>
+            <h2>Nhấn Space để chạy</h2>
+            <span>Vượt khủng hoảng. Hứng FDI, AI, nhân lực chất lượng cao.</span>
+          </div>
+
+          <div id="checkpointOverlay" class="overlay checkpoint" hidden>
+            <p id="checkpointYear">1986</p>
+            <h2 id="checkpointTitle">Đổi mới</h2>
+            <ul id="checkpointBullets"></ul>
+            <button id="continueButton" type="button">Tiếp tục chạy</button>
+          </div>
+
+          <div id="finishOverlay" class="overlay finish" hidden>
+            <p>Kết quả</p>
+            <h2 id="finishTitle">Bứt tốc</h2>
+            <span id="finishBody"></span>
+            <button id="restartButton" type="button">Chạy lại</button>
+          </div>
+        </section>
+
+        <aside class="side">
+          <section class="score-panel">
+            <span>Điểm phát triển</span>
+            <strong id="score">0</strong>
+          </section>
+
+          <section class="progress-panel">
+            <div class="progress-label">
+              <span>1986</span>
+              <strong id="progressText">0%</strong>
+              <span>2025</span>
+            </div>
+            <div class="progress"><i id="progressBar"></i></div>
+          </section>
+
+          <section class="meters">
+            <div class="meter">
+              <span>Năng lượng</span>
+              <strong id="energy">100</strong>
+              <i><b id="energyBar"></b></i>
+            </div>
+            <div class="meter">
+              <span>Công nghiệp</span>
+              <strong id="industry">35</strong>
+              <i><b id="industryBar"></b></i>
+            </div>
+            <div class="meter">
+              <span>Công nghệ</span>
+              <strong id="technology">18</strong>
+              <i><b id="technologyBar"></b></i>
+            </div>
+            <div class="meter">
+              <span>Tự chủ</span>
+              <strong id="autonomy">42</strong>
+              <i><b id="autonomyBar"></b></i>
+            </div>
+            <div class="meter">
+              <span>Nhân lực</span>
+              <strong id="people">48</strong>
+              <i><b id="peopleBar"></b></i>
+            </div>
+          </section>
+
+          <section class="talk-panel">
+            <span>Điểm dừng thuyết trình</span>
+            <ol>
+              <li><b>1986:</b> Vì sao phải Đổi mới?</li>
+              <li><b>1995:</b> FDI và khu công nghiệp mở đường ra sao?</li>
+              <li><b>2007:</b> WTO, chuỗi cung ứng và sức ép cạnh tranh.</li>
+              <li><b>2025:</b> 4.0, AI, nhân lực CLC, tự chủ công nghệ.</li>
+            </ol>
+          </section>
+        </aside>
+      </section>
+    </main>
+
+    <script src="./game.js"></script>
+  </body>
+</html>
