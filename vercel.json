@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/mln122/",
+      "permanent": false
+    },
+    {
+      "source": "/mln122",
+      "destination": "/mln122/",
+      "permanent": false
+    }
+  ]
+}
