@@ -14,7 +14,7 @@ window.MLN122_CONTENT = {
       kicker: "Thay đổi thể chế để giải phóng sức sản xuất",
       accent: "#a84d12",
       sceneBase: "#e6b56f",
-      artwork: null,
+      artwork: "./assets/era-01-doi-moi-1986-1995.jpg",
       artworkAlt: "Không gian đô thị và sản xuất Việt Nam những năm đầu Đổi mới",
       mission: "Tìm ba chứng cứ giải thích vì sao Đổi mới là điểm mở đầu cần thiết cho tiến trình công nghiệp hóa, hiện đại hóa.",
       hotspots: [
@@ -85,7 +85,7 @@ window.MLN122_CONTENT = {
       kicker: "Gắn chuyển dịch cơ cấu với mở cửa có lộ trình",
       accent: "#1f5f9c",
       sceneBase: "#94b9d6",
-      artwork: null,
+      artwork: "./assets/era-02-tang-toc-1996-2006.jpg",
       artworkAlt: "Khu công nghiệp, cảng và hạ tầng Việt Nam giai đoạn tăng tốc",
       mission: "Xác định cách thị trường, vốn, công nghệ và năng lực cạnh tranh liên kết với tiến trình công nghiệp hóa, hiện đại hóa.",
       hotspots: [
@@ -162,7 +162,7 @@ window.MLN122_CONTENT = {
       kicker: "Cơ hội tăng trưởng đi cùng sức ép nâng chất",
       accent: "#a53d38",
       sceneBase: "#d99588",
-      artwork: null,
+      artwork: "./assets/era-03-hoi-nhap-sau-2007-2020.jpg",
       artworkAlt: "Cảng container và mạng lưới thương mại Việt Nam trong thời kỳ hội nhập sâu",
       mission: "Đối chiếu thành tựu với những giới hạn để kiểm tra nhận định: hội nhập tạo cơ hội nhưng không tự động bảo đảm chất lượng công nghiệp hóa.",
       hotspots: [
@@ -234,7 +234,7 @@ window.MLN122_CONTENT = {
       kicker: "Hiện đại hóa trong bối cảnh 4.0: tự chủ, xanh và giá trị cao",
       accent: "#176b50",
       sceneBase: "#79b99e",
-      artwork: null,
+      artwork: "./assets/era-04-doi-chat-2021-2026.jpg",
       artworkAlt: "Không gian sản xuất công nghệ cao, xanh và hiện đại tại Việt Nam",
       mission: "Phân biệt các điểm nghẽn đang tồn tại với những hướng chuyển đổi của mô hình CNH–HĐH giai đoạn mới.",
       hotspots: [
