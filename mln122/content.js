@@ -760,24 +760,28 @@ window.MLN122_CONTENT = {
   modelComparison: [
     {
       model: "Cổ điển",
+      badge: "Cổ điển — Truyền thống",
       logic: "Khởi đầu từ công nghiệp nhẹ rồi tích lũy để phát triển công nghiệp nặng; tiến trình tuần tự và kéo dài.",
       note: "Tạo tích lũy qua thị trường nhưng có thể mất nhiều thập niên.",
       sourceId: "session24_16"
     },
     {
       model: "Kiểu Liên Xô",
+      badge: "Liên Xô — Truyền thống",
       logic: "Tập trung nguồn lực, ưu tiên công nghiệp nặng để nhanh chóng xây dựng cơ sở vật chất – kỹ thuật.",
       note: "Tăng tốc ngành nền tảng nhưng dễ mất cân đối nếu phân bổ kém hiệu quả.",
       sourceId: "session24_17"
     },
     {
       model: "Nhật Bản và NICs",
+      badge: "Nhật Bản/NICs — Mô hình rút ngắn hướng ngoại",
       logic: "Tận dụng vốn, công nghệ, thị trường quốc tế và vai trò điều phối để rút ngắn quá trình công nghiệp hóa.",
       note: "Hiệu quả phụ thuộc khả năng hấp thụ và năng lực cạnh tranh trong nước.",
       sourceId: "session24_18"
     },
     {
       model: "Việt Nam hiện đại",
+      badge: "Việt Nam — Định hướng hiện đại",
       logic: "Kết hợp kinh tế tri thức, thị trường định hướng XHCN, hội nhập chủ động, tự chủ và phát triển bền vững.",
       note: "Không sao chép một mô hình tuyến tính; trọng tâm là chất lượng và năng lực nội sinh.",
       sourceId: "session25_7"

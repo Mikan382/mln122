@@ -1499,24 +1499,23 @@ body.is-presentation .impact-pill__heading small { font-size: 16px; }
 
 .model-card__header {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
 }
 
-.model-card__header span {
+.model-card__badge {
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 3px 6px;
+  padding: 3px 8px;
   border-radius: 4px;
   background: color-mix(in srgb, var(--era-accent) 14%, var(--paper));
   color: var(--era-accent);
-  font: 800 11px/1 var(--mono);
+  font: 800 11px/1.2 var(--mono);
 }
 
 .model-card__header strong {
   color: var(--ink);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 800;
 }
 

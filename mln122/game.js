@@ -740,12 +740,12 @@
             </div>
           </section>
           <section class="certificate-models">
-            <p class="eyebrow">SO SÁNH CÁC MÔ HÌNH CÔNG NGHIỆP HÓA THẾ GIỚI VS VIỆT NAM</p>
+            <p class="eyebrow">PHÂN TÍCH SỰ KHÁC BIỆT GIỮA CÁC MÔ HÌNH CÔNG NGHIỆP HÓA TRUYỀN THỐNG VÀ HIỆN ĐẠI</p>
             <div class="certificate-models__grid">
-              ${CONTENT.modelComparison.map((m, index) => `
+              ${CONTENT.modelComparison.map((m) => `
                 <article class="model-card ${m.model === "Việt Nam hiện đại" ? "model-card--highlight" : ""}">
                   <div class="model-card__header">
-                    <span>0${index + 1}</span>
+                    <span class="model-card__badge">${escapeHTML(m.badge || m.model)}</span>
                     <strong>${escapeHTML(m.model)}</strong>
                   </div>
                   <p class="model-card__logic">${escapeHTML(m.logic)}</p>
@@ -755,7 +755,7 @@
             </div>
           </section>
           <footer class="strategy-certificate__footer">
-            <p class="certificate-conclusion">Rút ngắn CNH–HĐH chỉ bền vững khi nguồn lực quốc tế được chuyển hóa thành công nghệ, nội lực, giá trị cao và phát triển xanh.</p>
+            <p class="certificate-conclusion"><strong>Điểm khác biệt cốt lõi:</strong> Các mô hình truyền thống đi theo tiến trình tuyến tính hoặc ưu tiên sản lượng bề rộng; trong khi Mô hình CNH–HĐH Hiện đại của Việt Nam gắn liền với kinh tế tri thức, chuyển đổi số, năng lực tự chủ công nghệ, giá trị gia tăng cao và phát triển bền vững.</p>
             <div class="certificate-actions">
               <button class="button button--quiet" type="button" data-action="go-home">Về lộ trình</button>
               <button class="button button--primary" type="button" data-action="confirm-reset-all">Hành trình mới${renderIcon("arrow")}</button>
