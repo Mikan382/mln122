@@ -4,9 +4,9 @@
   const CONTENT = window.MLN122_CONTENT;
   const SIM = window.MLN122_SIMULATOR;
   const STORAGE_KEY = "mln122.diorama.progress.v1";
-  const SCHEMA_VERSION = 5;
+  const SCHEMA_VERSION = 6;
   const PRESENTATION_SECONDS = 25 * 60;
-  const STAGES = ["briefing", "explore", "decision", "consequence", "report"];
+  const STAGES = ["briefing", "explore", "decision", "consequence"];
 
   const root = document.querySelector("#game-root");
   const overlayRoot = document.querySelector("#overlay-root");
@@ -27,6 +27,8 @@
   const view = {
     overlay: null,
     overlayOpener: null,
+    transition: null,
+    motionFrame: null,
     toastTimer: null,
     timer: { remaining: PRESENTATION_SECONDS, running: false, deadline: null, intervalId: null }
   };
@@ -37,6 +39,8 @@
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
+
+  const prefersReducedMotion = () => window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
 
   function emptyPlans() {
     return Object.fromEntries(CONTENT.eras.map((era) => [era.id, {
@@ -102,10 +106,11 @@
     const era = getEra(route.eraId);
     if (!era || !isEraUnlocked(era, candidate)) return { screen: "home", eraId: null, stage: null, advisorId: null };
     const plan = activePlans(candidate)[era.id];
-    let stage = STAGES.includes(route.stage) ? route.stage : "briefing";
+    const migratedStage = route.stage === "report" ? "consequence" : route.stage;
+    let stage = STAGES.includes(migratedStage) ? migratedStage : "briefing";
     if (candidate.mode === "solo" && stage === "decision" && plan.visitedAdvisors.length < era.advisors.length) stage = "explore";
-    if ((stage === "consequence" || stage === "report") && !plan.decisions.length) stage = "decision";
-    if (candidate.mode === "solo" && stage === "decision" && plan.visitedAdvisors.length < era.advisors.length) stage = "explore";
+    if (stage === "decision" && plan.decisions.length) stage = "consequence";
+    if (stage === "consequence" && !plan.decisions.length) stage = "decision";
     const advisorId = stage === "explore" && era.advisors.some((advisor) => advisor.id === route.advisorId)
       ? route.advisorId
       : null;
@@ -115,13 +120,13 @@
   function loadState() {
     try {
       const raw = JSON.parse(localStorage.getItem(STORAGE_KEY));
-      if (!raw || raw.schemaVersion !== SCHEMA_VERSION || raw.contentVersion !== CONTENT.version) return defaultState();
+      if (!raw || typeof raw !== "object") return defaultState();
       const candidate = defaultState();
       candidate.mode = raw.mode === "presentation" ? "presentation" : "solo";
       CONTENT.eras.forEach((era) => { candidate.plans[era.id] = validPlan(raw.plans?.[era.id], era); });
       CONTENT.eras.forEach((era) => { candidate.presentationPlans[era.id] = validPlan(raw.presentationPlans?.[era.id], era); });
-      candidate.startedAt = Number(raw.startedAt || Date.now());
-      candidate.updatedAt = Number(raw.updatedAt || Date.now());
+      candidate.startedAt = Number.isFinite(Number(raw.startedAt)) ? Number(raw.startedAt) : Date.now();
+      candidate.updatedAt = Number.isFinite(Number(raw.updatedAt)) ? Number(raw.updatedAt) : Date.now();
       candidate.route = validRoute(raw.route, candidate);
       return candidate;
     } catch (_error) {
@@ -135,6 +140,9 @@
     state.updatedAt = Date.now();
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (_error) { /* Game vẫn chạy nếu storage bị chặn. */ }
   }
+
+  // Ghi lại ngay state đã chuẩn hóa để lần tải sau không phải đi qua schema cũ.
+  persist();
 
   function completedCount() {
     const plans = activePlans();
@@ -202,16 +210,44 @@
       const next = root.querySelector(".advisor-hotspot:not(.is-visited)") || root.querySelector('[data-stage="decision"]');
       next?.focus({ preventScroll: true });
     });
-    showToast(plan.visitedAdvisors.length === era.advisors.length ? "Đã đủ ba góc nhìn. Bàn quyết định đã mở." : "Đã ghi nhận góc nhìn.");
+    if (plan.visitedAdvisors.length < era.advisors.length) showToast("Đã ghi nhận góc nhìn.");
   }
 
   function choosePolicy(era, choiceId) {
+    if (view.transition) return;
+    const plan = activePlans()[era.id];
+    if (plan.decisions.length) {
+      navigate({ screen: "era", eraId: era.id, stage: "consequence", advisorId: null });
+      return;
+    }
     const dilemma = getDilemma(era);
     const choice = dilemma?.choices.find((item) => item.id === choiceId);
     if (!choice) return;
-    if (state.mode === "solo" && activePlans()[era.id].visitedAdvisors.length < era.advisors.length) return;
-    activePlans()[era.id].decisions = [{ dilemmaId: dilemma.id, choiceId: choice.id }];
-    navigate({ screen: "era", eraId: era.id, stage: "consequence", advisorId: null });
+
+    const transition = { eraId: era.id, choiceId: choice.id, timeoutId: null };
+    view.transition = transition;
+    const decisionStage = root.querySelector(".decision-stage");
+    decisionStage?.classList.add("is-committing");
+    decisionStage?.setAttribute("aria-busy", "true");
+    root.querySelectorAll(".policy-option").forEach((option) => {
+      const selected = option.dataset.choiceId === choice.id;
+      option.classList.add(selected ? "is-selected" : "is-receding");
+      option.disabled = true;
+      option.setAttribute("aria-disabled", "true");
+    });
+
+    const commit = () => {
+      if (view.transition !== transition) return;
+      const routeStillMatches = state.route.screen === "era"
+        && state.route.stage === "decision"
+        && state.route.eraId === era.id;
+      view.transition = null;
+      if (!routeStillMatches) return;
+      plan.decisions = [{ dilemmaId: dilemma.id, choiceId: choice.id }];
+      navigate({ screen: "era", eraId: era.id, stage: "consequence", advisorId: null });
+    };
+
+    transition.timeoutId = window.setTimeout(commit, prefersReducedMotion() ? 0 : 560);
   }
 
   function commitEra(era) {
@@ -223,19 +259,8 @@
     else navigate({ screen: "final", eraId: null, stage: null, advisorId: null });
   }
 
-  function resetEra(era) {
-    if (!era) return;
-    const plans = activePlans();
-    plans[era.id] = { visitedAdvisors: [], decisions: [], completed: false };
-    CONTENT.eras.slice(era.order + 1).forEach((later) => {
-      plans[later.id] = { visitedAdvisors: [], decisions: [], completed: false };
-    });
-    closeOverlay(false);
-    navigate({ screen: "era", eraId: era.id, stage: "briefing", advisorId: null });
-    showToast("Đã mở lại chặng để bạn thử một hướng khác.");
-  }
-
   function dispatch(action, payload = {}) {
+    if (view.transition) return;
     const era = getEra(payload.eraId || state.route.eraId);
     switch (action) {
       case "go-home": navigate({ screen: "home", eraId: null, stage: null, advisorId: null }); break;
@@ -244,15 +269,18 @@
         if (era && isEraUnlocked(era)) {
           if (state.mode === "presentation") ensurePresentationHistory(era);
           const plan = activePlans()[era.id];
-          const stage = plan.completed ? "report" : plan.decisions.length ? "consequence" : plan.visitedAdvisors.length ? "explore" : "briefing";
+          const stage = plan.decisions.length ? "consequence" : plan.visitedAdvisors.length ? "explore" : "briefing";
           navigate({ screen: "era", eraId: era.id, stage, advisorId: null });
         }
         break;
       case "set-stage":
         if (era && STAGES.includes(payload.stage)) {
           const plan = activePlans()[era.id];
-          if (payload.stage === "decision" && state.mode === "solo" && plan.visitedAdvisors.length < era.advisors.length) break;
-          if ((payload.stage === "consequence" || payload.stage === "report") && !plan.decisions.length) break;
+          if (payload.stage === "decision" && plan.decisions.length) {
+            navigate({ screen: "era", eraId: era.id, stage: "consequence", advisorId: null });
+            break;
+          }
+          if (payload.stage === "consequence" && !plan.decisions.length) break;
           navigate({ screen: "era", eraId: era.id, stage: payload.stage, advisorId: null });
         }
         break;
@@ -273,8 +301,6 @@
       case "open-sources": openOverlay("sources"); break;
       case "open-help": openOverlay("help"); break;
       case "open-presenter": openOverlay("presenter"); break;
-      case "confirm-reset-era": openOverlay("reset-era", { eraId: era?.id }); break;
-      case "reset-era": resetEra(era); break;
       case "confirm-reset-all": openOverlay("reset-all"); break;
       case "reset-all":
         stopTimer();
@@ -318,6 +344,10 @@
   }
 
   function render() {
+    if (view.motionFrame) {
+      window.cancelAnimationFrame(view.motionFrame);
+      view.motionFrame = null;
+    }
     const simulation = currentSimulation();
     const era = getEra(state.route.eraId);
     document.body.classList.toggle("is-presentation", state.mode === "presentation");
@@ -331,13 +361,14 @@
         ? renderFinal(simulation)
         : renderHome();
     renderOverlay();
+    if (state.route.stage === "consequence" || state.route.screen === "final") hydrateMetricMotion();
   }
 
   function updateTopbar(era) {
     const count = completedCount();
     const plans = activePlans();
     const progress = era ? Math.max(count, era.order + (plans[era.id].completed ? 1 : 0.35)) : count;
-    routeLabel.textContent = era ? `${era.period} · ${stageName(state.route.stage)}` : state.route.screen === "final" ? "Báo cáo hành trình" : "Mở đầu";
+    routeLabel.textContent = era ? `${era.period} · ${stageName(state.route.stage)}` : state.route.screen === "final" ? "Chứng nhận chiến lược" : "Mở đầu";
     routeCount.textContent = `${count} / ${CONTENT.eras.length}`;
     routeProgress.style.width = `${Math.min(100, (progress / CONTENT.eras.length) * 100)}%`;
     routeProgressbar?.setAttribute("aria-valuenow", String(count));
@@ -346,7 +377,7 @@
   }
 
   function stageName(stage) {
-    return ({ briefing: "Hồ sơ", explore: "Gặp cố vấn", decision: "Quyết định", consequence: "Hệ quả", report: "Ghi nhớ" })[stage] || "Hành trình";
+    return ({ briefing: "Hồ sơ", explore: "Gặp cố vấn", decision: "Quyết định", consequence: "Hệ quả" })[stage] || "Hành trình";
   }
 
   function renderHome() {
@@ -413,7 +444,6 @@
     if (state.route.stage === "explore") return renderExplore(era);
     if (state.route.stage === "decision") return renderDecision(era);
     if (state.route.stage === "consequence") return renderConsequence(era, simulation);
-    if (state.route.stage === "report") return renderReport(era);
     return renderBriefing(era);
   }
 
@@ -430,7 +460,10 @@
             ${briefing.points.map((point, index) => `<li><span>0${index + 1}</span><div><small>${escapeHTML(point.label)}</small><strong>${escapeHTML(point.title)}</strong><p>${escapeHTML(point.text)}</p></div></li>`).join("")}
           </ol>
           <div class="remember-line">${renderIcon("bookmark")}<p><span>Cần nhớ</span>${escapeHTML(briefing.remember)}</p></div>
-          <button class="button button--primary" type="button" data-action="set-stage" data-stage="explore" data-era-id="${era.id}">Vào hiện trường${renderIcon("arrow")}</button>
+          <div class="briefing-actions" style="display:flex;gap:12px;margin-top:auto;">
+            <button class="button button--primary" type="button" data-action="set-stage" data-stage="explore" data-era-id="${era.id}">Gặp cố vấn (Tùy chọn)${renderIcon("arrow")}</button>
+            <button class="button button--quiet" type="button" data-action="set-stage" data-stage="decision" data-era-id="${era.id}">Vào thẳng bàn quyết định</button>
+          </div>
         </article>
       </div>`;
   }
@@ -450,8 +483,8 @@
           </div>
           ${era.advisors.map((advisor, index) => renderHotspot(advisor, era, plan, index)).join("")}
           <div class="explore-footer">
-            <p>${state.mode === "presentation" ? "Người trình bày có thể chọn một góc nhìn tiêu biểu hoặc mở ngay bàn quyết định." : plan.visitedAdvisors.length === 3 ? "Bạn đã có đủ dữ kiện để bước vào bàn quyết định." : "Chọn một nhân vật trên bối cảnh để nghe góc nhìn của họ."}</p>
-            <button class="button button--primary" type="button" data-action="set-stage" data-stage="decision" data-era-id="${era.id}" ${plan.visitedAdvisors.length === 3 || state.mode === "presentation" ? "" : "disabled"}>Mở bàn quyết định${renderIcon("arrow")}</button>
+            <p>Bạn có thể tham khảo 3 góc nhìn cố vấn (tùy chọn) hoặc bấm mở bàn quyết định bất kỳ lúc nào.</p>
+            <button class="button button--primary" type="button" data-action="set-stage" data-stage="decision" data-era-id="${era.id}">Mở bàn quyết định${renderIcon("arrow")}</button>
           </div>
         </div>
         ${selected ? renderAdvisorPanel(selected, era, plan) : ""}
@@ -528,102 +561,216 @@
   function renderConsequence(era, simulation) {
     const choice = selectedChoice(era);
     if (!choice) return renderDecision(era);
-    const result = simulation.eraResults[era.id]?.decisionResults?.[0];
-    const impact = result || SIM.previewChoice(choice, simulation.metrics);
+    const eraResult = simulation.eraResults[era.id];
+    const result = eraResult?.decisionResults?.[0];
+    const baselineGauges = simulation.history[0]?.gauges || SIM.getGauges(CONTENT.initialMetrics);
+    const beforeGauges = eraResult?.beforeGauges || SIM.getGauges(result?.before || simulation.metrics);
+    const afterGauges = eraResult?.afterGauges || SIM.getGauges(result?.after || simulation.metrics);
+    const gaugeDeltas = eraResult?.gaugeDeltas || result?.gaugeDeltas || {};
     const verdicts = {
       recommended: ["Phù hợp nhất", "strong"],
       conditional: ["Hợp lý có điều kiện", "conditional"],
       risky: ["Rủi ro cao", "risky"]
     };
     const [label, tone] = verdicts[choice.verdict] || [choice.verdictLabel, "conditional"];
+    const lesson = getDilemma(era).lesson || era.briefing.remember;
+    const nextLabel = era.order === CONTENT.eras.length - 1
+      ? "Xem chứng nhận"
+      : "Sang kỷ nguyên tiếp";
     return `
       <div class="consequence-stage" data-outcome="${choice.verdict}" data-choice="${choice.id}">
-        <div class="consequence-world" role="img" aria-label="${escapeHTML(era.artworkAlt)}">
-          <div class="world-grid"></div><div class="world-route route-a"></div><div class="world-route route-b"></div><div class="world-node node-a"></div><div class="world-node node-b"></div><div class="world-node node-c"></div>
+        <div class="consequence-world">
+          <p class="sr-only">${escapeHTML(era.artworkAlt)}</p>
           <div class="world-caption"><span>Thế giới vừa thay đổi</span><strong>${escapeHTML(choice.worldChange)}</strong></div>
         </div>
         <article class="consequence-card">
-          <div class="verdict verdict--${tone}">${renderIcon(tone === "strong" ? "check" : tone === "risky" ? "warning" : "balance")} ${escapeHTML(label)}</div>
+          <div class="verdict-stamp verdict-stamp--${tone}" aria-label="Đánh giá: ${escapeHTML(label)}">
+            ${renderIcon(tone === "strong" ? "check" : tone === "risky" ? "warning" : "balance")}
+            <span><small>Đánh giá</small><strong>${escapeHTML(label)}</strong></span>
+          </div>
           <p class="eyebrow">HỆ QUẢ CHÍNH SÁCH</p>
           <h2 data-page-title tabindex="-1">${escapeHTML(choice.title)}</h2>
           <p class="consequence-card__outcome">${escapeHTML(choice.outcome)}</p>
-          <div class="feedback-grid">
-            <div><span>Vì sao?</span><p>${escapeHTML(choice.rationale)}</p></div>
-            <div><span>Luận điểm vận dụng</span><p>${escapeHTML(getDilemma(era).lesson || era.briefing.remember)}</p></div>
+          ${renderCumulativeImpact(beforeGauges, afterGauges, gaugeDeltas, baselineGauges)}
+          <div class="consequence-takeaway">
+            ${renderIcon("bookmark")}
+            <p><span>Ghi nhớ 10 giây</span><strong>${escapeHTML(lesson)}</strong></p>
           </div>
-          ${renderImpactPills(impact.gaugeDeltas)}
           <div class="consequence-card__actions">
-            <button class="button button--quiet" type="button" data-action="set-stage" data-stage="decision" data-era-id="${era.id}">Chọn lại</button>
-            <button class="button button--primary" type="button" data-action="set-stage" data-stage="report" data-era-id="${era.id}">Ghi nhớ chặng${renderIcon("arrow")}</button>
+            <button class="button button--primary" type="button" data-action="commit-era" data-era-id="${era.id}">${nextLabel}${renderIcon("arrow")}</button>
           </div>
         </article>
       </div>`;
   }
 
-  function renderImpactPills(deltas = {}) {
-    const labels = { production: "Sản xuất", connection: "Kết nối", resilience: "Nội lực" };
-    return `<div class="impact-pills">${Object.entries(labels).map(([key, label]) => {
-      const value = Number(deltas[key] || 0);
-      return `<span class="impact-pill impact-pill--${value > 0 ? "up" : value < 0 ? "down" : "flat"}"><small>${label}</small><strong>${SIM.arrowFor(value)}</strong></span>`;
+  function gaugeDefinitions() {
+    return [
+      { key: "production", label: "Sản xuất", icon: "factory" },
+      { key: "connection", label: "Hội nhập", icon: "globe" },
+      { key: "resilience", label: "Nội lực", icon: "strategy" }
+    ];
+  }
+
+  function renderCumulativeImpact(beforeGauges, afterGauges, deltas, baselineGauges) {
+    return `<div class="impact-pills cumulative-impact" aria-label="Tác động tích lũy của quyết định">${gaugeDefinitions().map(({ key, label, icon }) => {
+      const before = Number(beforeGauges[key] || 0);
+      const after = Number(afterGauges[key] || 0);
+      const delta = Number(deltas[key] ?? after - before);
+      const cumulative = after - Number(baselineGauges[key] || 0);
+      const tone = delta > 0 ? "up" : delta < 0 ? "down" : "flat";
+      return `<section class="impact-pill cumulative-impact__item impact-pill--${tone}" data-pillar="${key}" aria-label="${label}: từ ${before} thành ${after}; chặng này ${formatImpactValue(delta)}; tích lũy ${formatImpactValue(cumulative)}">
+        <div class="impact-pill__heading">
+          <span class="cumulative-impact__icon">${renderIcon(icon)}</span>
+          <small>${label}</small>
+          <span>${SIM.arrowFor(delta)}</span>
+        </div>
+        <div class="cumulative-impact__values" aria-hidden="true">
+          <span><small>Trước</small><strong>${before}</strong></span>
+          <i>→</i>
+          <span><small>Sau</small><strong data-count-from="${before}" data-count-to="${after}">${after}</strong></span>
+        </div>
+        <div class="cumulative-impact__journey">
+          <span>Chặng này <strong>${formatImpactValue(delta)}</strong></span>
+          <span>Từ 1986 <strong>${formatImpactValue(cumulative)}</strong></span>
+        </div>
+        <span class="impact-pill__float" aria-hidden="true">${formatImpactValue(delta)}</span>
+        <span class="impact-pill__meter" aria-hidden="true"><i style="--impact-size:${Math.max(0, Math.min(100, after))}%"></i></span>
+      </section>`;
     }).join("")}</div>`;
   }
 
-  function renderReport(era) {
-    const choice = selectedChoice(era);
-    const plan = activePlans()[era.id];
-    const items = [
-      ["Thành tựu", era.report.achievement, "achievement"],
-      ["Giới hạn", era.report.limitation, "limitation"],
-      ["Luận điểm", era.report.thesis, "thesis"]
-    ];
-    return `
-      <div class="report-stage">
-        <div class="report-stamp"><span>${era.number}</span><small>${era.period}</small><strong>ĐÃ GHI NHẬN</strong></div>
-        <article class="report-sheet">
-          <p class="eyebrow">BÁO CÁO CHẶNG · ${era.period}</p>
-          <h2 data-page-title tabindex="-1">Ba điều cần mang theo</h2>
-          <p class="report-sheet__lead">Lựa chọn của bạn: <strong>${escapeHTML(choice?.title || "Chưa chọn")}</strong>. Dù chọn hướng nào, chặng này cần được chốt bằng ba ý sau.</p>
-          <div class="report-points">
-            ${items.map(([label, text, icon], index) => `<section><span>0${index + 1}</span>${renderIcon(icon)}<small>${label}</small><p>${escapeHTML(text)}</p></section>`).join("")}
-          </div>
-          <details class="report-recall">${renderIcon("bookmark")}<summary><span>Tự kiểm tra</span><p>${escapeHTML(era.checkpoint.question)}</p><small>Nhấn để đối chiếu đáp án</small></summary><strong>${escapeHTML(era.checkpoint.options[era.checkpoint.answer])}</strong></details>
-          <div class="report-actions">
-            <button class="text-button" type="button" data-action="confirm-reset-era" data-era-id="${era.id}">Chơi lại chặng</button>
-            <button class="button button--primary" type="button" data-action="commit-era" data-era-id="${era.id}">${era.order === CONTENT.eras.length - 1 ? "Xem báo cáo cuối" : "Sang kỷ nguyên tiếp"}${renderIcon("arrow")}</button>
-          </div>
-          ${plan.completed ? '<p class="report-complete">Chặng này đã được lưu vào hành trình.</p>' : ""}
-        </article>
-      </div>`;
+  function formatImpactValue(value) {
+    const rounded = Math.round(Number(value) * 10) / 10;
+    if (!rounded) return "±0";
+    return rounded > 0 ? `+${rounded}` : `−${Math.abs(rounded)}`;
+  }
+
+  function hydrateMetricMotion() {
+    const counters = [...root.querySelectorAll("[data-count-to]")];
+    if (!counters.length) return;
+    const finish = () => counters.forEach((counter) => {
+      counter.textContent = formatCounterValue(counter, Number(counter.dataset.countTo));
+    });
+    if (prefersReducedMotion()) {
+      finish();
+      return;
+    }
+
+    counters.forEach((counter) => {
+      counter.textContent = formatCounterValue(counter, Number(counter.dataset.countFrom || 0));
+    });
+    const startedAt = window.performance.now();
+    const duration = 720;
+    const tick = (now) => {
+      const progress = Math.min(1, (now - startedAt) / duration);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      counters.forEach((counter) => {
+        const from = Number(counter.dataset.countFrom || 0);
+        const target = Number(counter.dataset.countTo);
+        const current = Math.round((from + (target - from) * eased) * 10) / 10;
+        counter.textContent = formatCounterValue(counter, current);
+      });
+      if (progress < 1) view.motionFrame = window.requestAnimationFrame(tick);
+      else {
+        finish();
+        view.motionFrame = null;
+      }
+    };
+    view.motionFrame = window.requestAnimationFrame(tick);
+  }
+
+  function formatCounterValue(counter, value) {
+    return counter.dataset.countFormat === "delta"
+      ? formatImpactValue(value)
+      : String(Math.round(value * 10) / 10);
   }
 
   function renderFinal(simulation) {
     const profile = SIM.getProfile(CONTENT, simulation);
     const choices = CONTENT.eras.map((era) => ({ era, choice: selectedChoice(era) })).filter((item) => item.choice);
+    const baselineGauges = simulation.history[0]?.gauges || SIM.getGauges(CONTENT.initialMetrics);
     return `
       <section class="final-screen">
-        <header class="final-hero">
-          <p class="eyebrow">HỒ SƠ HÀNH TRÌNH · NHÓM 7</p>
-          <h1 data-page-title tabindex="-1">${escapeHTML(profile.title)}</h1>
-          <p>${escapeHTML(profile.description)}</p>
-          <span>${escapeHTML(profile.eyebrow)}</span>
+        <article class="strategy-certificate">
+          <header class="strategy-certificate__header">
+            <div class="strategy-certificate__identity">
+              <p class="eyebrow">CHỨNG NHẬN CHIẾN LƯỢC · ${escapeHTML(profile.eyebrow)}</p>
+              <h1 data-page-title tabindex="-1">${escapeHTML(profile.title)}</h1>
+              <p>${escapeHTML(profile.description)}</p>
+            </div>
+            <div class="strategy-certificate__seal" aria-label="Nhóm 7">
+              <span>07</span>
+              <small>NHÓM</small>
+            </div>
+          </header>
+          ${renderCertificatePillars(baselineGauges, simulation.gauges)}
+          ${renderCertificateTurningPoints(choices)}
+          <section class="certificate-summary">
+            <p class="eyebrow">TỔNG KẾT BÀI HỌC CHƯƠNG 6</p>
+            <div class="certificate-summary__grid">
+              <article>
+                <div class="certificate-summary__header-line">
+                  <span>01</span>
+                  <strong>Thể chế là tiền đề</strong>
+                </div>
+                <p>Đổi mới cơ chế tháo gỡ điểm nghẽn và giải phóng mọi nguồn lực sản xuất xã hội.</p>
+              </article>
+              <article>
+                <div class="certificate-summary__header-line">
+                  <span>02</span>
+                  <strong>Nội lực là quyết định</strong>
+                </div>
+                <p>Nguồn lực bên ngoài chỉ phát huy hiệu quả khi có năng lực nội tại để hấp thụ.</p>
+              </article>
+              <article>
+                <div class="certificate-summary__header-line">
+                  <span>03</span>
+                  <strong>Đổi mới mô hình</strong>
+                </div>
+                <p>CNH–HĐH hướng tới tự chủ công nghệ, giá trị cao và phát triển bền vững.</p>
+              </article>
+            </div>
+          </section>
+          <footer class="strategy-certificate__footer">
+            <p class="certificate-conclusion">Rút ngắn CNH–HĐH chỉ bền vững khi nguồn lực quốc tế được chuyển hóa thành công nghệ, nội lực, giá trị cao và phát triển xanh.</p>
+            <div class="certificate-actions">
+              <button class="button button--quiet" type="button" data-action="go-home">Về lộ trình</button>
+              <button class="button button--primary" type="button" data-action="confirm-reset-all">Hành trình mới${renderIcon("arrow")}</button>
+            </div>
+          </footer>
+        </article>
+      </section>`;
+  }
+
+  function renderCertificatePillars(baselineGauges, finalGauges) {
+    return `<section class="certificate-pillars" aria-label="Ba trụ cột tích lũy sau 40 năm">
+      ${gaugeDefinitions().map(({ key, label, icon }) => {
+        const baseline = Number(baselineGauges[key] || 0);
+        const value = Number(finalGauges[key] || 0);
+        const delta = value - baseline;
+        const tone = delta > 0 ? "up" : delta < 0 ? "down" : "flat";
+        return `<article class="certificate-pillar certificate-pillar--${tone}" data-pillar="${key}" aria-label="${label}: ${value} điểm, thay đổi ${formatImpactValue(delta)} từ mốc đầu">
+          <div class="certificate-pillar__label">${renderIcon(icon)}<span>${label}</span></div>
+          <strong class="certificate-pillar__value" data-count-from="${baseline}" data-count-to="${value}">${value}</strong>
+          <div class="certificate-pillar__delta"><span>Mốc 1986 · ${baseline}</span><strong>${formatImpactValue(delta)}</strong></div>
+          <span class="certificate-pillar__meter" aria-hidden="true"><i style="--pillar-value:${Math.max(0, Math.min(100, value))}%"></i></span>
+        </article>`;
+      }).join("")}
+    </section>`;
+  }
+
+  function renderCertificateTurningPoints(choices) {
+    return `
+      <section class="certificate-route" aria-labelledby="certificate-route-title">
+        <header>
+          <p class="eyebrow">BỐN BƯỚC NGOẶT ĐÃ GHI DẤU</p>
+          <h2 id="certificate-route-title">Lộ trình chính sách của bạn</h2>
         </header>
-        <div class="final-route">
-          ${choices.map(({ era, choice }) => `<article style="--item-accent:${era.accent}"><small>${era.period}</small><strong>${escapeHTML(choice.title)}</strong><p>${escapeHTML(choice.worldChange)}</p></article>`).join("")}
-        </div>
-        <section class="model-comparison">
-          <div class="model-comparison__heading"><p class="eyebrow">BỐN LOGIC CÔNG NGHIỆP HÓA</p><h2>Điểm khác nằm ở cách huy động nguồn lực và rút ngắn quá trình.</h2></div>
-          <div class="model-comparison__grid">
-            ${CONTENT.modelComparison.map((item, index) => `<article><span>0${index + 1}</span><strong>${escapeHTML(item.model)}</strong><p>${escapeHTML(item.logic)}</p></article>`).join("")}
-          </div>
-        </section>
-        <div class="final-thesis">
-          <p class="eyebrow">KẾT LUẬN CHƯƠNG 6</p>
-          <h2>Rút ngắn không có nghĩa là bỏ qua điều kiện.</h2>
-          <p>Việt Nam kết hợp nguồn lực trong nước với nguồn lực quốc tế, đồng thời phải chuyển chúng thành công nghệ, năng lực tự chủ, giá trị cao và phát triển bền vững.</p>
-        </div>
-        <div class="final-actions">
-          <button class="button button--quiet" type="button" data-action="go-home">Về lộ trình</button>
-          <button class="button button--primary" type="button" data-action="confirm-reset-all">Chơi một hành trình khác${renderIcon("arrow")}</button>
+        <div class="certificate-turning-points">
+          ${choices.map(({ era, choice }) => `<article class="certificate-turning-point" style="--item-accent:${era.accent}">
+            <small>${escapeHTML(era.period)}</small>
+            <strong>${escapeHTML(choice.title)}</strong>
+          </article>`).join("")}
         </div>
       </section>`;
   }
@@ -654,10 +801,11 @@
     return `<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">${paths[name] || paths.strategy}</svg>`;
   }
 
-  function openOverlay(type, payload = {}) {
+  function openOverlay(type) {
     view.overlayOpener = document.activeElement;
-    view.overlay = { type, payload };
+    view.overlay = { type };
     if (appShell) appShell.inert = true;
+    document.body.classList.add("has-overlay");
     renderOverlay();
     requestAnimationFrame(() => overlayRoot.querySelector("button, [href]")?.focus());
   }
@@ -666,19 +814,31 @@
     view.overlay = null;
     overlayRoot.innerHTML = "";
     if (appShell) appShell.inert = false;
+    document.body.classList.remove("has-overlay");
     if (restoreFocus) view.overlayOpener?.focus?.();
   }
 
   function renderOverlay() {
     if (!view.overlay) { overlayRoot.innerHTML = ""; return; }
-    const { type, payload } = view.overlay;
+    const { type } = view.overlay;
     let body = "";
     if (type === "sources") body = renderSources();
     if (type === "help") body = renderHelp();
     if (type === "presenter") body = renderPresenter();
-    if (type === "reset-era") body = `<div class="dialog dialog--small"><p class="eyebrow">CHƠI LẠI CHẶNG</p><h2>Mở lại từ hồ sơ?</h2><p>Lựa chọn của chặng này và các chặng phía sau sẽ được xóa.</p><div class="dialog__actions"><button class="button button--quiet" data-action="close-overlay">Hủy</button><button class="button button--danger" data-action="reset-era" data-era-id="${payload.eraId}">Mở lại</button></div></div>`;
     if (type === "reset-all") body = `<div class="dialog dialog--small"><p class="eyebrow">HÀNH TRÌNH MỚI</p><h2>Xóa tiến trình hiện tại?</h2><p>Bốn lựa chọn đã lưu trên thiết bị này sẽ được đặt lại.</p><div class="dialog__actions"><button class="button button--quiet" data-action="close-overlay">Hủy</button><button class="button button--danger" data-action="reset-all">Đặt lại</button></div></div>`;
-    overlayRoot.innerHTML = `<div class="overlay" data-action="close-overlay"><div class="overlay__surface" role="dialog" aria-modal="true" onclick="event.stopPropagation()"><button class="overlay__close" type="button" data-action="close-overlay" aria-label="Đóng">×</button>${body}</div></div>`;
+    const labels = {
+      sources: "Nguồn và minh bạch sử dụng AI",
+      help: "Cách chơi",
+      presenter: "Kịch bản trình bày",
+      "reset-all": "Xác nhận tạo hành trình mới"
+    };
+    overlayRoot.innerHTML = `<div class="overlay">
+      <div class="overlay__backdrop" data-action="close-overlay" aria-hidden="true"></div>
+      <div class="overlay__surface overlay__surface--${type}" role="dialog" aria-modal="true" aria-label="${labels[type] || "Hộp thoại"}">
+        <button class="overlay__close" type="button" data-action="close-overlay" aria-label="Đóng hộp thoại">×</button>
+        <div class="overlay__viewport" tabindex="0">${body}</div>
+      </div>
+    </div>`;
   }
 
   function renderSources() {
@@ -690,11 +850,11 @@
   }
 
   function renderHelp() {
-    return `<div class="dialog"><p class="eyebrow">CÁCH CHƠI</p><h2>Mỗi kỷ nguyên có năm nhịp</h2><ol class="help-flow"><li><span>01</span><div><strong>Đọc hồ sơ</strong><p>Nắm ba ý lý thuyết trước khi bị hỏi.</p></div></li><li><span>02</span><div><strong>Gặp ba cố vấn</strong><p>Click từng nhân vật để thu thập ba góc nhìn.</p></div></li><li><span>03</span><div><strong>Chọn một chiến lược</strong><p>Ba phương án đều có lý do, nhưng mức phù hợp khác nhau.</p></div></li><li><span>04</span><div><strong>Xem hệ quả</strong><p>Thế giới và ba tác động chỉ xuất hiện sau lựa chọn.</p></div></li><li><span>05</span><div><strong>Ghi nhớ</strong><p>Chốt thành tựu, giới hạn và luận điểm của chặng.</p></div></li></ol><p class="dialog__note">Phím tắt: <kbd>A</kbd>–<kbd>C</kbd> hoặc <kbd>1</kbd>–<kbd>3</kbd> chọn phương án · <kbd>F</kbd> toàn màn hình · <kbd>P</kbd> kịch bản trình bày · <kbd>Esc</kbd> đóng hộp thoại.</p></div>`;
+    return `<div class="dialog dialog--help"><p class="eyebrow">CÁCH CHƠI</p><h2>Bốn nhịp, một quyết định</h2><ol class="help-flow"><li><span>01</span><div><strong>Đọc hồ sơ</strong><p>Nắm ba ý lý thuyết cốt lõi.</p></div></li><li><span>02</span><div><strong>Gặp cố vấn</strong><p>Thu thập đủ ba góc nhìn.</p></div></li><li><span>03</span><div><strong>Chọn chiến lược</strong><p>Cân nhắc kỹ: lựa chọn sẽ được khóa.</p></div></li><li><span>04</span><div><strong>Gánh hệ quả</strong><p>Theo dõi ba trụ cột tích lũy rồi sang kỷ nguyên tiếp.</p></div></li></ol><p class="dialog__note"><kbd>1</kbd>–<kbd>3</kbd> chọn nhanh · <kbd>Esc</kbd> đóng hộp thoại.</p></div>`;
   }
 
   function renderPresenter() {
-    return `<div class="dialog dialog--wide presenter-dialog"><p class="eyebrow">KỊCH BẢN 25 PHÚT · 4 THÀNH VIÊN</p><div class="presenter-clock"><strong>${formatTime(view.timer.remaining)}</strong><div><button class="button button--primary" data-action="timer-toggle">${view.timer.running ? "Tạm dừng" : "Bắt đầu"}</button><button class="button button--quiet" data-action="timer-reset">Đặt lại</button></div></div><div class="presenter-runbook">${CONTENT.presentationStages.map((stage) => `<article><span>${escapeHTML(stage.time)}</span><strong>${escapeHTML(stage.member)}</strong><div><h3>${escapeHTML(stage.title)}</h3><p>${escapeHTML(stage.instruction)}</p></div></article>`).join("")}</div><div class="presenter-jumps">${CONTENT.eras.map((era) => `<button class="button button--quiet" data-action="jump-era" data-era-id="${era.id}">${era.number} · ${era.period}</button>`).join("")}<button class="button button--primary" data-action="load-demo">Báo cáo dự phòng${renderIcon("arrow")}</button></div></div>`;
+    return `<div class="dialog dialog--wide presenter-dialog"><p class="eyebrow">KỊCH BẢN 25 PHÚT · 4 THÀNH VIÊN</p><div class="presenter-clock"><strong data-presenter-time>${formatTime(view.timer.remaining)}</strong><div><button class="button button--primary" data-action="timer-toggle" aria-pressed="${view.timer.running}">${view.timer.running ? "Tạm dừng" : "Bắt đầu"}</button><button class="button button--quiet" data-action="timer-reset">Đặt lại</button></div></div><div class="presenter-runbook">${CONTENT.presentationStages.map((stage) => `<article><span>${escapeHTML(stage.time)}</span><strong>${escapeHTML(stage.member)}</strong><div><h3>${escapeHTML(stage.title)}</h3><p>${escapeHTML(stage.instruction)}</p></div></article>`).join("")}</div><div class="presenter-jumps">${CONTENT.eras.map((era) => `<button class="button button--quiet" data-action="jump-era" data-era-id="${era.id}">${era.number} · ${era.period}</button>`).join("")}<button class="button button--primary" data-action="load-demo">Báo cáo dự phòng${renderIcon("arrow")}</button></div></div>`;
   }
 
   function formatTime(seconds) {
@@ -709,21 +869,24 @@
     }
     miniTime.textContent = formatTime(view.timer.remaining);
     if (view.overlay?.type === "presenter") {
-      const clock = overlayRoot.querySelector(".presenter-clock strong");
+      const clock = overlayRoot.querySelector("[data-presenter-time]");
       if (clock) clock.textContent = formatTime(view.timer.remaining);
+      const toggle = overlayRoot.querySelector('[data-action="timer-toggle"]');
+      if (toggle) {
+        toggle.textContent = view.timer.running ? "Tạm dừng" : "Bắt đầu";
+        toggle.setAttribute("aria-pressed", String(view.timer.running));
+      }
     }
   }
 
   function toggleTimer() {
-    const focusAction = document.activeElement?.dataset?.action;
     if (view.timer.running) stopTimer();
     else {
       view.timer.running = true;
       view.timer.deadline = Date.now() + view.timer.remaining * 1000;
       view.timer.intervalId = window.setInterval(syncTimer, 250);
+      syncTimer();
     }
-    renderOverlay();
-    if (focusAction) overlayRoot.querySelector(`[data-action="${focusAction}"]`)?.focus();
   }
 
   function stopTimer() {
@@ -735,12 +898,9 @@
   }
 
   function resetTimer() {
-    const focusAction = document.activeElement?.dataset?.action;
     stopTimer();
     view.timer.remaining = PRESENTATION_SECONDS;
     syncTimer();
-    renderOverlay();
-    if (focusAction) overlayRoot.querySelector(`[data-action="${focusAction}"]`)?.focus();
   }
 
   function toggleFullscreen() {
@@ -780,6 +940,7 @@
       return;
     }
     if (view.overlay) return;
+    if (view.transition) return;
     if (event.target.matches("input, textarea, select")) return;
     if (event.key.toLowerCase() === "f") toggleFullscreen();
     if (event.key.toLowerCase() === "p") openOverlay("presenter");

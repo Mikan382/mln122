@@ -67,12 +67,12 @@ window.MLN122_CONTENT = {
         sourceIds: ["moit_1986_2006", "asean_membership"]
       },
       briefing: {
-        objective: "Tạo điều kiện để nguồn lực xã hội vận động, đồng thời phục hồi sản xuất và chuẩn bị mở cửa.",
+        objective: "Khơi thông nguồn lực, phục hồi sản xuất và chuẩn bị năng lực cho mở cửa.",
         points: [
           {
             label: "Điểm xuất phát",
             title: "Cơ chế cũ tạo điểm nghẽn",
-            text: "Phân bổ hành chính kéo dài làm sản xuất thiếu động lực và nguồn lực khó lưu chuyển."
+            text: "Phân bổ hành chính kéo dài làm sản xuất thiếu động lực, nguồn lực khó lưu chuyển."
           },
           {
             label: "Bước ngoặt",
@@ -81,8 +81,8 @@ window.MLN122_CONTENT = {
           },
           {
             label: "Thách thức",
-            title: "Nội lực vẫn còn mỏng",
-            text: "Hạ tầng, công nghệ và sức cạnh tranh chưa thể tăng ngay chỉ nhờ thay đổi cơ chế."
+            title: "Nội lực còn mỏng",
+            text: "Hạ tầng, công nghệ và sức cạnh tranh chưa thể tăng ngay sau đổi mới thể chế."
           }
         ],
         causal: [
@@ -130,8 +130,8 @@ window.MLN122_CONTENT = {
       dilemmas: [
         {
           id: "dm-01",
-          prompt: "Đầu Đổi mới, ưu tiên nào tạo nền cho CNH–HĐH?",
-          context: "Cơ chế vừa mở, sản xuất thiếu vốn và năng lực cạnh tranh còn yếu.",
+          prompt: "Đầu Đổi mới, ưu tiên nào tạo nền CNH–HĐH?",
+          context: "Cơ chế vừa mở; sản xuất thiếu vốn, sức cạnh tranh yếu.",
           sourceIds: ["session24_14", "session26_3", "session27_9", "moit_1986_2006"],
           choices: [
             {
@@ -139,13 +139,13 @@ window.MLN122_CONTENT = {
               advisorId: "dm-the-che",
               tag: "Thể chế làm nền",
               title: "Cải cách đồng bộ",
-              summary: "Khơi thông phân bổ, phục hồi sản xuất thiết yếu và mở cửa theo lộ trình.",
+              summary: "Cải cách phân bổ, phục hồi sản xuất thiết yếu và mở cửa theo lộ trình.",
               effects: { structure: 5, technology: 2, integration: 3, autonomy: 5, sustainability: 1 },
               outcome: "Nguồn lực được giải phóng và hấp thụ tốt hơn; tốc độ tăng ban đầu vừa phải nhưng nền tảng cân bằng.",
               verdict: "recommended",
               verdictLabel: "Phù hợp nhất",
               rationale: "Bối cảnh điểm xuất phát thấp đòi hỏi thể chế đi trước để đầu tư và mở cửa chuyển thành năng lực thực.",
-              worldChange: "Chợ và xưởng cùng sáng đèn; đường vận chuyển mở dần, khu dân cư ổn định hơn."
+              worldChange: "Chợ và xưởng sáng đèn; giao thông mở dần, khu dân cư ổn định hơn."
             },
             {
               id: "dm-production-first",
@@ -154,11 +154,11 @@ window.MLN122_CONTENT = {
               title: "Sản xuất đi trước",
               summary: "Dồn vốn cho hạ tầng, máy móc và hàng hóa thiết yếu để phục hồi nhanh.",
               effects: { structure: 7, technology: 4, integration: 0, autonomy: 2, sustainability: -3 },
-              outcome: "Sản lượng và hạ tầng tăng rõ, nhưng đầu tư dễ dàn trải khi cơ chế điều phối chưa theo kịp.",
+              outcome: "Sản lượng, hạ tầng tăng rõ; đầu tư dễ dàn trải khi cơ chế điều phối chưa theo kịp.",
               verdict: "conditional",
               verdictLabel: "Hợp lý có điều kiện",
               rationale: "Phục hồi sản xuất là cần thiết, nhưng chỉ hiệu quả bền khi cách phân bổ nguồn lực đồng thời được đổi mới.",
-              worldChange: "Nhà máy hoạt động mạnh và đường mới xuất hiện; khói bụi cùng các công trình dang dở cũng tăng."
+              worldChange: "Nhà máy và đường mới xuất hiện; khói bụi, công trình dang dở cũng tăng."
             },
             {
               id: "dm-open-fast",
@@ -167,11 +167,11 @@ window.MLN122_CONTENT = {
               title: "Mở cửa thật nhanh",
               summary: "Ưu tiên thị trường, vốn và công nghệ bên ngoài để rút ngắn quá trình.",
               effects: { structure: 3, technology: 3, integration: 8, autonomy: -6, sustainability: -1 },
-              outcome: "Giao thương tăng nhanh, nhưng doanh nghiệp trong nước chịu sức ép lớn và khả năng phụ thuộc gia tăng.",
+              outcome: "Giao thương tăng nhanh; doanh nghiệp nội địa chịu sức ép lớn và nguy cơ lệ thuộc tăng.",
               verdict: "risky",
               verdictLabel: "Tăng nhanh, rủi ro cao",
               rationale: "Ngộ nhận thường gặp là mở cửa tự động tạo hiện đại hóa; hiệu quả còn phụ thuộc năng lực hấp thụ trong nước.",
-              worldChange: "Cảng và tuyến hàng hóa đông lên; biển hiệu ngoại xuất hiện nhanh trong khi nhiều xưởng nhỏ tối đèn."
+              worldChange: "Cảng đông lên, biển hiệu ngoại xuất hiện; nhiều xưởng nhỏ tối đèn."
             }
           ]
         }
@@ -211,22 +211,22 @@ window.MLN122_CONTENT = {
         sourceIds: ["moit_1986_2006", "session25_7"]
       },
       briefing: {
-        objective: "Kết hợp hạ tầng, vốn–công nghệ bên ngoài và sức cạnh tranh trong nước để tạo năng lực hấp thụ.",
+        objective: "Kết hợp hạ tầng, vốn–công nghệ ngoài và doanh nghiệp nội địa để nâng năng lực hấp thụ.",
         points: [
           {
             label: "Động lực",
-            title: "Hạ tầng và đầu tư tăng",
-            text: "Khu công nghiệp, logistics và dòng vốn mới mở rộng nhanh năng lực sản xuất."
+            title: "Hạ tầng mở rộng",
+            text: "Khu công nghiệp, logistics và dòng vốn mới nâng nhanh năng lực sản xuất."
           },
           {
             label: "Cơ hội",
-            title: "Tiếp cận vốn và công nghệ",
-            text: "Hội nhập giúp bổ sung nguồn lực mà tích lũy trong nước chưa đáp ứng đủ."
+            title: "Tiếp cận vốn, công nghệ",
+            text: "Hội nhập bổ sung nguồn lực mà tích lũy trong nước chưa đáp ứng đủ."
           },
           {
             label: "Điểm nghẽn",
-            title: "Khả năng hấp thụ còn yếu",
-            text: "Doanh nghiệp nội địa khó tiếp nhận công nghệ và tham gia sâu vào chuỗi cung ứng."
+            title: "Hấp thụ còn yếu",
+            text: "Doanh nghiệp nội địa khó nhận công nghệ và tham gia sâu chuỗi cung ứng."
           }
         ],
         causal: [
@@ -274,8 +274,8 @@ window.MLN122_CONTENT = {
       dilemmas: [
         {
           id: "tt-01",
-          prompt: "Tăng tốc bằng cách nào để nguồn lực ngoài trở thành nội lực?",
-          context: "Đầu tư và khu công nghiệp tăng, nhưng doanh nghiệp trong nước còn khó tham gia chuỗi.",
+          prompt: "Làm sao biến nguồn lực ngoài thành nội lực?",
+          context: "Đầu tư và khu công nghiệp tăng, nhưng doanh nghiệp nội địa khó tham gia chuỗi.",
           sourceIds: ["session25_6", "session27_8", "session28_5", "session29_9"],
           choices: [
             {
@@ -285,11 +285,11 @@ window.MLN122_CONTENT = {
               title: "Liên kết để hấp thụ",
               summary: "Gắn dự án đầu tư với nhà cung ứng nội địa, quản trị và chuyển giao công nghệ.",
               effects: { structure: 4, technology: 7, integration: 5, autonomy: 7, sustainability: 2 },
-              outcome: "Quy mô tăng vừa phải nhưng công nghệ lan tỏa tốt hơn, doanh nghiệp nội địa dần tham gia sâu vào chuỗi.",
+              outcome: "Quy mô tăng vừa phải; công nghệ lan tỏa tốt hơn, doanh nghiệp nội địa tham gia sâu hơn.",
               verdict: "recommended",
               verdictLabel: "Phù hợp nhất",
               rationale: "Chiến lược này kết hợp nguồn lực quốc tế với năng lực cạnh tranh trong nước, đúng điểm nghẽn của giai đoạn.",
-              worldChange: "Nhà máy lớn kết nối với mạng xưởng vệ tinh; tuyến logistics sáng liền mạch thay vì các cụm tách biệt."
+              worldChange: "Nhà máy lớn nối mạng xưởng vệ tinh; logistics liền mạch thay cho các cụm tách biệt."
             },
             {
               id: "tt-infrastructure-push",
@@ -298,11 +298,11 @@ window.MLN122_CONTENT = {
               title: "Dồn lực hạ tầng",
               summary: "Ưu tiên đường, cảng và khu công nghiệp trọng điểm để tăng năng lực nhanh.",
               effects: { structure: 8, technology: 3, integration: 0, autonomy: 8, sustainability: -4 },
-              outcome: "Sản xuất và logistics tăng mạnh, nhưng vốn tập trung cao và hiệu quả lan tỏa phụ thuộc quản trị đầu tư.",
+              outcome: "Sản xuất, logistics tăng mạnh; hiệu quả lan tỏa vẫn phụ thuộc năng lực quản trị đầu tư.",
               verdict: "conditional",
               verdictLabel: "Hợp lý có điều kiện",
               rationale: "Hạ tầng là điều kiện cần, nhưng chưa đủ nếu doanh nghiệp nội địa không được nâng sức và kết nối.",
-              worldChange: "Cảng, cầu và khu công nghiệp mọc nhanh; một số vùng sáng rực trong khi vùng khác phát triển chậm."
+              worldChange: "Cảng, cầu và khu công nghiệp mọc nhanh; chênh lệch phát triển giữa các vùng rõ hơn."
             },
             {
               id: "tt-fdi-volume",
@@ -311,11 +311,11 @@ window.MLN122_CONTENT = {
               title: "Ưu đãi đầu tư đại trà",
               summary: "Giảm điều kiện để thu hút thật nhiều vốn, nhà máy và đơn hàng xuất khẩu.",
               effects: { structure: 5, technology: 5, integration: 8, autonomy: -7, sustainability: -3 },
-              outcome: "Nhà máy và xuất khẩu tăng nhanh, nhưng giá trị nội địa thấp và nguy cơ hình thành ốc đảo sản xuất.",
+              outcome: "Nhà máy, xuất khẩu tăng nhanh; giá trị nội địa thấp và nguy cơ hình thành ốc đảo sản xuất.",
               verdict: "risky",
               verdictLabel: "Tăng nhanh, rủi ro cao",
               rationale: "Quy mô đầu tư không tự động tạo chuyển giao; thiếu điều kiện liên kết làm độ mở tăng nhanh hơn nội lực.",
-              worldChange: "Nhiều nhà máy lớn sáng đèn cạnh cảng; khu doanh nghiệp nội địa vẫn thưa và ít đường kết nối."
+              worldChange: "Nhà máy lớn sáng đèn cạnh cảng; khu doanh nghiệp nội địa vẫn thưa và ít kết nối."
             }
           ]
         }
@@ -355,22 +355,22 @@ window.MLN122_CONTENT = {
         sourceIds: ["wto_vietnam", "session27_5", "session29_7"]
       },
       briefing: {
-        objective: "Chuyển độ mở thị trường thành giá trị nội địa, năng lực cạnh tranh và vị trí cao hơn trong chuỗi giá trị.",
+        objective: "Biến độ mở thành giá trị nội địa, sức cạnh tranh và vị trí cao hơn trong chuỗi.",
         points: [
           {
             label: "Thành tựu",
-            title: "Thị trường mở rộng mạnh",
-            text: "Xuất khẩu, đầu tư và liên kết kinh tế quốc tế tạo thêm động lực cho sản xuất."
+            title: "Thị trường mở rộng",
+            text: "Xuất khẩu, đầu tư và liên kết quốc tế tạo thêm động lực sản xuất."
           },
           {
             label: "Sức ép",
-            title: "Cạnh tranh trở nên trực tiếp",
-            text: "Doanh nghiệp phải thực thi cam kết và đáp ứng chuẩn mực ngay trên thị trường trong nước."
+            title: "Cạnh tranh trực tiếp",
+            text: "Doanh nghiệp phải thực thi cam kết, đáp ứng chuẩn mực ngay trong nước."
           },
           {
             label: "Giới hạn",
-            title: "Giá trị nội địa còn mỏng",
-            text: "Công nghiệp hỗ trợ và vị trí trong chuỗi chưa tăng tương xứng với độ mở."
+            title: "Giá trị nội địa mỏng",
+            text: "Công nghiệp hỗ trợ và vị trí trong chuỗi chưa tăng tương xứng độ mở."
           }
         ],
         causal: [
@@ -378,7 +378,7 @@ window.MLN122_CONTENT = {
           "Nâng chuẩn → doanh nghiệp giữ được thị trường",
           "Liên kết nội địa → độ mở chuyển thành tự chủ"
         ],
-        remember: "Hội nhập không tự động tạo hiện đại hóa; năng lực cạnh tranh quyết định phần giá trị giữ lại."
+        remember: "Độ mở không tự tạo hiện đại hóa; năng lực cạnh tranh quyết định giá trị giữ lại."
       },
       advisors: [
         {
@@ -418,7 +418,7 @@ window.MLN122_CONTENT = {
       dilemmas: [
         {
           id: "hn-01",
-          prompt: "Sau WTO, chiến lược nào biến độ mở thành năng lực tự chủ?",
+          prompt: "Sau WTO, làm sao biến độ mở thành tự chủ?",
           context: "Xuất khẩu tăng nhanh, nhưng giá trị nội địa và công nghiệp hỗ trợ chưa theo kịp.",
           sourceIds: ["wto_vietnam", "session27_5", "session29_7", "session29_9", "session29_10"],
           choices: [
@@ -429,11 +429,11 @@ window.MLN122_CONTENT = {
               title: "Mở cửa gắn nội lực",
               summary: "Thực thi cam kết, phát triển công nghiệp hỗ trợ và kết nối doanh nghiệp nội địa.",
               effects: { structure: 5, technology: 6, integration: 7, autonomy: 8, sustainability: 2 },
-              outcome: "Thị trường bên ngoài kéo năng lực trong nước đi lên; tốc độ không cực đại nhưng giá trị giữ lại cao hơn.",
+              outcome: "Thị trường ngoài kéo năng lực trong nước đi lên; tốc độ vừa phải nhưng giá trị giữ lại cao hơn.",
               verdict: "recommended",
               verdictLabel: "Phù hợp nhất",
               rationale: "Phương án giải quyết đúng khoảng cách giữa độ mở cao và liên kết nội địa còn mỏng của giai đoạn.",
-              worldChange: "Cảng nối với mạng nhà cung ứng trong nước; linh kiện di chuyển giữa nhiều xưởng trước khi xuất khẩu."
+              worldChange: "Cảng nối mạng nhà cung ứng nội địa; linh kiện qua nhiều xưởng trước khi xuất khẩu."
             },
             {
               id: "hn-quality-first",
@@ -442,11 +442,11 @@ window.MLN122_CONTENT = {
               title: "Nâng chuẩn trước",
               summary: "Ưu tiên công nghệ, chất lượng và môi trường trước khi tăng mạnh sản lượng.",
               effects: { structure: -2, technology: 7, integration: 4, autonomy: 4, sustainability: 7 },
-              outcome: "Doanh nghiệp đạt nền tảng cạnh tranh bền hơn, nhưng chi phí thích nghi cao và cơ hội thị trường được khai thác chậm.",
+              outcome: "Nền tảng cạnh tranh bền hơn; chi phí thích nghi cao làm cơ hội thị trường được khai thác chậm.",
               verdict: "conditional",
               verdictLabel: "Hợp lý có điều kiện",
               rationale: "Nâng chuẩn là đúng, nhưng cần lộ trình và hỗ trợ để không loại quá nhanh doanh nghiệp nhỏ khỏi thị trường.",
-              worldChange: "Phòng kiểm định và dây chuyền sạch xuất hiện; một số xưởng nhỏ tạm tối đèn để nâng cấp."
+              worldChange: "Phòng kiểm định, dây chuyền sạch xuất hiện; một số xưởng tạm dừng để nâng cấp."
             },
             {
               id: "hn-export-volume",
@@ -455,11 +455,11 @@ window.MLN122_CONTENT = {
               title: "Xuất khẩu tăng tốc",
               summary: "Dùng lợi thế chi phí và đơn hàng lớn để mở rộng sản lượng thật nhanh.",
               effects: { structure: 7, technology: 2, integration: 9, autonomy: -7, sustainability: -4 },
-              outcome: "Kim ngạch và quy mô tăng mạnh, nhưng giá trị nội địa mỏng làm nguy cơ gia công và phụ thuộc kéo dài.",
+              outcome: "Kim ngạch, quy mô tăng mạnh; giá trị nội địa mỏng làm gia công và phụ thuộc kéo dài.",
               verdict: "risky",
               verdictLabel: "Tăng nhanh, rủi ro cao",
               rationale: "Ngộ nhận nằm ở việc đồng nhất tăng xuất khẩu với tăng năng lực nội sinh và vị trí trong chuỗi giá trị.",
-              worldChange: "Tàu hàng rời cảng liên tục; nhà máy lắp ráp mở rộng nhưng các mắt xích nội địa vẫn đứt đoạn."
+              worldChange: "Tàu hàng rời cảng liên tục; lắp ráp mở rộng nhưng mắt xích nội địa còn đứt đoạn."
             }
           ]
         }
@@ -499,22 +499,22 @@ window.MLN122_CONTENT = {
         sourceIds: ["resolution29", "session25_7", "session26_3"]
       },
       briefing: {
-        objective: "Chuyển từ mở rộng quy mô sang làm chủ công nghệ, giá trị cao và phát triển bền vững.",
+        objective: "Chuyển từ tăng quy mô sang làm chủ công nghệ, giá trị cao và phát triển xanh.",
         points: [
           {
             label: "Yêu cầu mới",
-            title: "Không thể chỉ tăng sản lượng",
-            text: "Cạnh tranh chuyển sang công nghệ, thiết kế, quản trị và khả năng đáp ứng tiêu chuẩn mới."
+            title: "Không chỉ tăng sản lượng",
+            text: "Cạnh tranh chuyển sang công nghệ, thiết kế, quản trị và tiêu chuẩn mới."
           },
           {
             label: "Cơ hội",
-            title: "Rút ngắn bằng công nghệ mới",
-            text: "Hiện đại hóa sản xuất và quản trị có thể tạo bước nhảy nếu gắn với đổi mới cơ cấu."
+            title: "Rút ngắn bằng công nghệ",
+            text: "Hiện đại hóa sản xuất, quản trị có thể tạo bước nhảy khi gắn với đổi mới cơ cấu."
           },
           {
             label: "Thách thức",
-            title: "Tự chủ và xanh cùng lúc",
-            text: "Mua giải pháp chưa đồng nghĩa làm chủ; chuyển đổi xanh còn tạo chi phí ngắn hạn lớn."
+            title: "Tự chủ và xanh",
+            text: "Mua giải pháp chưa phải làm chủ; chuyển đổi xanh còn tạo chi phí ngắn hạn."
           }
         ],
         causal: [
@@ -562,7 +562,7 @@ window.MLN122_CONTENT = {
       dilemmas: [
         {
           id: "mh-01",
-          prompt: "Ưu tiên nào giúp Việt Nam thực sự đổi chất mô hình?",
+          prompt: "Ưu tiên nào thực sự đổi chất mô hình?",
           context: "Giá trị nội địa còn hạn chế, trong khi công nghệ và chuẩn xanh thay đổi nhanh.",
           sourceIds: ["session25_7", "session26_3", "resolution29", "green_growth_1658"],
           choices: [
@@ -573,11 +573,11 @@ window.MLN122_CONTENT = {
               title: "Làm chủ giá trị cao",
               summary: "Tập trung nghiên cứu, thiết kế và năng lực tổ chức sản xuất trong nước.",
               effects: { structure: 4, technology: 9, integration: 4, autonomy: 9, sustainability: 8 },
-              outcome: "Năng lực nội sinh và vị trí trong chuỗi tăng rõ; kết quả chậm nhưng tạo nền cho hiện đại hóa dài hạn.",
+              outcome: "Năng lực nội sinh, vị trí trong chuỗi tăng; kết quả chậm nhưng tạo nền hiện đại hóa dài hạn.",
               verdict: "recommended",
               verdictLabel: "Phù hợp nhất",
               rationale: "Chuyển từ gia công sang nghiên cứu, thiết kế và làm chủ công nghệ đáp ứng trực tiếp yêu cầu đổi chất mô hình.",
-              worldChange: "Trung tâm thiết kế sáng lên cạnh nhà máy; sản phẩm hoàn chỉnh mang dấu ấn nghiên cứu trong nước."
+              worldChange: "Trung tâm thiết kế sáng cạnh nhà máy; sản phẩm hoàn chỉnh mang dấu ấn nghiên cứu nội địa."
             },
             {
               id: "mh-green-lead",
@@ -586,24 +586,24 @@ window.MLN122_CONTENT = {
               title: "Xanh hóa đi trước",
               summary: "Đầu tư sớm vào hiệu quả tài nguyên và chuỗi giá trị carbon thấp.",
               effects: { structure: -3, technology: 5, integration: 5, autonomy: 3, sustainability: 10 },
-              outcome: "Tiêu chuẩn và vị thế thị trường tăng mạnh, nhưng chi phí cao có thể làm chậm mở rộng sản xuất ngắn hạn.",
+              outcome: "Tiêu chuẩn, vị thế thị trường tăng; chi phí cao có thể làm chậm sản xuất ngắn hạn.",
               verdict: "conditional",
               verdictLabel: "Hợp lý có điều kiện",
               rationale: "Chuyển đổi xanh là tất yếu, nhưng phải đi cùng năng lực công nghệ và lộ trình tài chính phù hợp.",
-              worldChange: "Mái nhà máy phủ năng lượng sạch, dòng sông trong hơn; một số dây chuyền tạm dừng để nâng cấp."
+              worldChange: "Nhà máy dùng năng lượng sạch, dòng sông trong hơn; một số dây chuyền dừng để nâng cấp."
             },
             {
               id: "mh-digital-coverage",
               advisorId: "mh-hien-dai-hoa",
               tag: "Tăng tốc vận hành",
               title: "Phủ số hóa diện rộng",
-              summary: "Mua nhanh nền tảng và thiết bị để số hóa đồng loạt các nhà máy.",
+              summary: "Mua nền tảng và thiết bị để số hóa đồng loạt các nhà máy.",
               effects: { structure: 8, technology: 8, integration: 3, autonomy: -6, sustainability: 0 },
-              outcome: "Vận hành tăng tốc và hình ảnh hiện đại rõ rệt, nhưng quy trình cũ cùng phụ thuộc giải pháp ngoài vẫn tồn tại.",
+              outcome: "Vận hành tăng tốc, vẻ ngoài hiện đại; quy trình cũ và lệ thuộc giải pháp ngoại vẫn tồn tại.",
               verdict: "risky",
               verdictLabel: "Nhanh nhưng chưa sâu",
               rationale: "Ngộ nhận thường gặp là đồng nhất số hóa thiết bị với chuyển đổi toàn diện về cơ cấu, quản trị và năng lực làm chủ.",
-              worldChange: "Màn hình số phủ kín dây chuyền; nhịp máy tăng nhanh nhưng trung tâm điều khiển vẫn phụ thuộc kết nối bên ngoài."
+              worldChange: "Màn hình số phủ dây chuyền; nhịp máy tăng nhưng điều khiển vẫn phụ thuộc kết nối ngoài."
             }
           ]
         }
@@ -795,7 +795,7 @@ window.MLN122_CONTENT = {
     verified: [
       "Luận điểm được đối chiếu với bài giảng Session 24–29 và nguồn chính thống liệt kê trong game.",
       "Nhóm chịu trách nhiệm chọn luận điểm, biên tập, kiểm chứng và trình bày sản phẩm cuối.",
-      "Các con số trên năm trục chỉ là bước mô phỏng tương đối, không phải dữ liệu kinh tế thực."
+      "Điểm số trên ba trụ cột chỉ là mô phỏng tương đối, không phải dữ liệu kinh tế thực."
     ]
   },
 
