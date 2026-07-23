@@ -739,6 +739,21 @@
               </article>
             </div>
           </section>
+          <section class="certificate-models">
+            <p class="eyebrow">SO SÁNH CÁC MÔ HÌNH CÔNG NGHIỆP HÓA THẾ GIỚI VS VIỆT NAM</p>
+            <div class="certificate-models__grid">
+              ${CONTENT.modelComparison.map((m, index) => `
+                <article class="model-card ${m.model === "Việt Nam hiện đại" ? "model-card--highlight" : ""}">
+                  <div class="model-card__header">
+                    <span>0${index + 1}</span>
+                    <strong>${escapeHTML(m.model)}</strong>
+                  </div>
+                  <p class="model-card__logic">${escapeHTML(m.logic)}</p>
+                  <small class="model-card__note">${escapeHTML(m.note)}</small>
+                </article>
+              `).join("")}
+            </div>
+          </section>
           <footer class="strategy-certificate__footer">
             <p class="certificate-conclusion">Rút ngắn CNH–HĐH chỉ bền vững khi nguồn lực quốc tế được chuyển hóa thành công nghệ, nội lực, giá trị cao và phát triển xanh.</p>
             <div class="certificate-actions">

@@ -1466,6 +1466,75 @@ body.is-presentation .impact-pill__heading small { font-size: 16px; }
   .consequence-card__actions .button { width: 100%; }
 }
 
+.certificate-models {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper-deep);
+}
+
+.certificate-models__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.model-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--paper);
+}
+
+.model-card--highlight {
+  border: 2px solid var(--era-accent);
+  background: color-mix(in srgb, var(--era-accent) 6%, var(--paper));
+}
+
+.model-card__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.model-card__header span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 6px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--era-accent) 14%, var(--paper));
+  color: var(--era-accent);
+  font: 800 11px/1 var(--mono);
+}
+
+.model-card__header strong {
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.model-card__logic {
+  margin: 0;
+  color: var(--ink);
+  font-size: 13.5px;
+  line-height: 1.42;
+}
+
+.model-card__note {
+  margin-top: auto;
+  color: var(--ink-soft);
+  font-size: 12px;
+  line-height: 1.35;
+  font-style: italic;
+}
+
 .certificate-summary {
   display: flex;
   flex-direction: column;
