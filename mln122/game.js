@@ -302,6 +302,14 @@
       case "open-help": openOverlay("help"); break;
       case "open-presenter": openOverlay("presenter"); break;
       case "confirm-reset-all": openOverlay("reset-all"); break;
+      case "open-knowledge": if (era) openOverlay({ type: "knowledge", eraId: era.id }); break;
+      case "open-takeaway": if (era) openOverlay({ type: "takeaway", eraId: era.id }); break;
+      case "check-answer":
+        if (view.overlay?.type === "takeaway") {
+          view.overlay.selectedAnswer = Number(payload.answerIndex);
+          renderOverlay();
+        }
+        break;
       case "reset-all":
         stopTimer();
         view.timer.remaining = PRESENTATION_SECONDS;
@@ -460,7 +468,8 @@
             ${briefing.points.map((point, index) => `<li><span>0${index + 1}</span><div><small>${escapeHTML(point.label)}</small><strong>${escapeHTML(point.title)}</strong><p>${escapeHTML(point.text)}</p></div></li>`).join("")}
           </ol>
           <div class="remember-line">${renderIcon("bookmark")}<p><span>Cần nhớ</span>${escapeHTML(briefing.remember)}</p></div>
-          <div class="briefing-actions" style="display:flex;gap:12px;margin-top:auto;">
+          <div class="briefing-actions" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:auto;">
+            <button class="button button--accent" type="button" data-action="open-knowledge" data-era-id="${era.id}">${renderIcon("bookmark")} Kiến thức</button>
             <button class="button button--primary" type="button" data-action="set-stage" data-stage="explore" data-era-id="${era.id}">Gặp cố vấn (Tùy chọn)${renderIcon("arrow")}</button>
             <button class="button button--quiet" type="button" data-action="set-stage" data-stage="decision" data-era-id="${era.id}">Vào thẳng bàn quyết định</button>
           </div>
@@ -484,7 +493,10 @@
           ${era.advisors.map((advisor, index) => renderHotspot(advisor, era, plan, index)).join("")}
           <div class="explore-footer">
             <p>Bạn có thể tham khảo 3 góc nhìn cố vấn (tùy chọn) hoặc bấm mở bàn quyết định bất kỳ lúc nào.</p>
-            <button class="button button--primary" type="button" data-action="set-stage" data-stage="decision" data-era-id="${era.id}">Mở bàn quyết định${renderIcon("arrow")}</button>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <button class="button button--accent" type="button" data-action="open-knowledge" data-era-id="${era.id}">${renderIcon("bookmark")} Kiến thức</button>
+              <button class="button button--primary" type="button" data-action="set-stage" data-stage="decision" data-era-id="${era.id}">Mở bàn quyết định${renderIcon("arrow")}</button>
+            </div>
           </div>
         </div>
         ${selected ? renderAdvisorPanel(selected, era, plan) : ""}
@@ -597,6 +609,7 @@
             <p><span>Ghi nhớ 10 giây</span><strong>${escapeHTML(lesson)}</strong></p>
           </div>
           <div class="consequence-card__actions">
+            <button class="button button--accent" type="button" data-action="open-takeaway" data-era-id="${era.id}">${renderIcon("bookmark")} Ghi nhớ</button>
             <button class="button button--primary" type="button" data-action="commit-era" data-era-id="${era.id}">${nextLabel}${renderIcon("arrow")}</button>
           </div>
         </article>
@@ -801,9 +814,9 @@
     return `<svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true">${paths[name] || paths.strategy}</svg>`;
   }
 
-  function openOverlay(type) {
+  function openOverlay(typeOrObj) {
     view.overlayOpener = document.activeElement;
-    view.overlay = { type };
+    view.overlay = typeof typeOrObj === "string" ? { type: typeOrObj } : typeOrObj;
     if (appShell) appShell.inert = true;
     document.body.classList.add("has-overlay");
     renderOverlay();
@@ -821,15 +834,20 @@
   function renderOverlay() {
     if (!view.overlay) { overlayRoot.innerHTML = ""; return; }
     const { type } = view.overlay;
+    const overlayEra = getEra(view.overlay.eraId);
     let body = "";
     if (type === "sources") body = renderSources();
     if (type === "help") body = renderHelp();
     if (type === "presenter") body = renderPresenter();
+    if (type === "knowledge" && overlayEra) body = renderKnowledge(overlayEra);
+    if (type === "takeaway" && overlayEra) body = renderTakeaway(overlayEra);
     if (type === "reset-all") body = `<div class="dialog dialog--small"><p class="eyebrow">HÀNH TRÌNH MỚI</p><h2>Xóa tiến trình hiện tại?</h2><p>Bốn lựa chọn đã lưu trên thiết bị này sẽ được đặt lại.</p><div class="dialog__actions"><button class="button button--quiet" data-action="close-overlay">Hủy</button><button class="button button--danger" data-action="reset-all">Đặt lại</button></div></div>`;
     const labels = {
       sources: "Nguồn và minh bạch sử dụng AI",
       help: "Cách chơi",
       presenter: "Kịch bản trình bày",
+      knowledge: "Kiến thức lý thuyết",
+      takeaway: "Ghi nhớ và tổng kết",
       "reset-all": "Xác nhận tạo hành trình mới"
     };
     overlayRoot.innerHTML = `<div class="overlay">
@@ -837,6 +855,66 @@
       <div class="overlay__surface overlay__surface--${type}" role="dialog" aria-modal="true" aria-label="${labels[type] || "Hộp thoại"}">
         <button class="overlay__close" type="button" data-action="close-overlay" aria-label="Đóng hộp thoại">×</button>
         <div class="overlay__viewport" tabindex="0">${body}</div>
+      </div>
+    </div>`;
+  }
+  function renderKnowledge(era) {
+    const k = era.knowledge;
+    if (!k) return "";
+    return `<div class="dialog dialog--knowledge">
+      <header class="dialog-header">
+        <p class="eyebrow">📚 KIẾN THỨC NỀN TẢNG · KỶ NGUYÊN ${era.number}</p>
+        <h2 data-page-title tabindex="-1">${escapeHTML(k.title)}</h2>
+      </header>
+      <section class="knowledge-concepts">
+        ${k.concepts.map((c) => `
+          <article class="knowledge-concept-card">
+            <div class="knowledge-concept-card__header">
+              <span class="knowledge-concept-card__badge">Khái niệm</span>
+              <strong>${escapeHTML(c.term)}</strong>
+            </div>
+            <p>${escapeHTML(c.definition)}</p>
+          </article>
+        `).join("")}
+      </section>
+      <section class="knowledge-context-box">
+        <p class="eyebrow">📜 BỐI CẢNH LỊCH SỬ</p>
+        <p>${escapeHTML(k.context)}</p>
+      </section>
+      <div class="knowledge-thesis-card">
+        <div class="knowledge-thesis-card__icon">${renderIcon("bookmark")}</div>
+        <div class="knowledge-thesis-card__content">
+          <small>LUẬN ĐIỂM TRỌNG TÂM</small>
+          <strong>${escapeHTML(k.thesis)}</strong>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  function renderTakeaway(era) {
+    const report = era.report;
+    if (!report) return "";
+    return `<div class="dialog dialog--takeaway">
+      <header class="dialog-header">
+        <p class="eyebrow">💡 TỔNG KẾT & GHI NHỚ · KỶ NGUYÊN ${era.number}</p>
+        <h2 data-page-title tabindex="-1">Tổng kết ${escapeHTML(era.title)} (${escapeHTML(era.period)})</h2>
+      </header>
+      <div class="takeaway-grid">
+        <article class="takeaway-card takeaway-card--achievement">
+          <div class="takeaway-card__tag">🟢 THÀNH TỰU NỔI BẬT</div>
+          <p>${escapeHTML(report.achievement)}</p>
+        </article>
+        <article class="takeaway-card takeaway-card--limitation">
+          <div class="takeaway-card__tag">🟡 HẠN CHẾ & THÁCH THỨC</div>
+          <p>${escapeHTML(report.limitation)}</p>
+        </article>
+      </div>
+      <div class="knowledge-thesis-card">
+        <div class="knowledge-thesis-card__icon">${renderIcon("bookmark")}</div>
+        <div class="knowledge-thesis-card__content">
+          <small>BÀI HỌC LÝ LUẬN CỐT LÕI</small>
+          <strong>${escapeHTML(report.thesis)}</strong>
+        </div>
       </div>
     </div>`;
   }
@@ -922,7 +1000,8 @@
       eraId: trigger.dataset.eraId,
       advisorId: trigger.dataset.advisorId,
       choiceId: trigger.dataset.choiceId,
-      stage: trigger.dataset.stage
+      stage: trigger.dataset.stage,
+      answerIndex: trigger.dataset.answerIndex
     };
     dispatch(trigger.dataset.action, payload);
   });

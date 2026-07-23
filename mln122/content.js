@@ -66,6 +66,29 @@ window.MLN122_CONTENT = {
         text: "Đại hội VI khởi xướng Đổi mới và từng bước tháo gỡ cơ chế bao cấp. Ngày 28/7/1995, Việt Nam gia nhập ASEAN.",
         sourceIds: ["moit_1986_2006", "asean_membership"]
       },
+      knowledge: {
+        title: "CNH–HĐH và vai trò tiền đề của Đổi mới thể chế",
+        concepts: [
+          {
+            term: "Công nghiệp hóa",
+            definition: "Quá trình chuyển đổi căn bản, toàn diện các hoạt động sản xuất kinh doanh, dịch vụ và quản lý kinh tế – xã hội từ sử dụng sức lao động thủ công là chính sang sử dụng phương tiện, phương pháp tiên tiến, hiện đại nhằm tạo ra năng suất lao động xã hội cao.",
+            sourceId: "session24_14"
+          },
+          {
+            term: "Hiện đại hóa",
+            definition: "Quá trình ứng dụng và trang bị những thành tựu khoa học và công nghệ tiên tiến, hiện đại vào mọi lĩnh vực của đời sống xã hội.",
+            sourceId: "session25_6"
+          },
+          {
+            term: "Quan hệ sản xuất phù hợp",
+            definition: "Khi cơ chế phân bổ nguồn lực, hình thức sở hữu và quản lý được đổi mới đồng bộ, tạo động lực để lực lượng sản xuất phát triển.",
+            sourceId: "session26_3"
+          }
+        ],
+        context: "Trước 1986, cơ chế kế hoạch hóa tập trung bao cấp kéo dài khiến sản xuất trì trệ, lạm phát phi mã, hàng hóa khan hiếm. Đại hội VI (12/1986) đề ra đường lối Đổi mới, chuyển sang kinh tế hàng hóa nhiều thành phần, tháo gỡ cơ chế cũ và mở đường cho CNH–HĐH.",
+        thesis: "Đổi mới thể chế kinh tế là tiền đề của CNH–HĐH: chỉ khi quan hệ sản xuất được điều chỉnh phù hợp thì lực lượng sản xuất mới được giải phóng và phát huy.",
+        sourceIds: ["session24_14", "session25_6", "session26_3", "moit_1986_2006"]
+      },
       briefing: {
         objective: "Khơi thông nguồn lực, phục hồi sản xuất và chuẩn bị năng lực cho mở cửa.",
         points: [
@@ -209,6 +232,29 @@ window.MLN122_CONTENT = {
         title: "Bước vào thời kỳ đẩy mạnh CNH–HĐH",
         text: "Từ năm 1996, trọng tâm chuyển sang đẩy mạnh CNH–HĐH trong kinh tế thị trường và chuẩn bị năng lực cho hội nhập sâu hơn.",
         sourceIds: ["moit_1986_2006", "session25_7"]
+      },
+      knowledge: {
+        title: "Nội dung CNH–HĐH và năng lực hấp thụ nguồn lực",
+        concepts: [
+          {
+            term: "Nội dung CNH–HĐH",
+            definition: "Tạo lập các điều kiện, tiền đề cần thiết về con người, khoa học–công nghệ, cơ sở vật chất kỹ thuật, cơ cấu kinh tế và quan hệ sản xuất phù hợp để chuyển đổi căn bản nền sản xuất xã hội.",
+            sourceId: "session26_3"
+          },
+          {
+            term: "Lực lượng sản xuất",
+            definition: "Bao gồm tư liệu sản xuất (công cụ, đối tượng lao động) và người lao động với tri thức, kỹ năng của họ; CNH–HĐH hướng tới phát triển đồng bộ cả hai yếu tố này.",
+            sourceId: "session26_3"
+          },
+          {
+            term: "Năng lực hấp thụ",
+            definition: "Khả năng tiếp nhận, chuyển hóa và phát huy hiệu quả nguồn vốn, công nghệ, phương thức quản lý từ bên ngoài thành năng lực sản xuất thực sự trong nước.",
+            sourceId: "session27_9"
+          }
+        ],
+        context: "Từ 1996, Việt Nam bước vào giai đoạn đẩy mạnh CNH–HĐH: khu công nghiệp mở rộng, FDI gia tăng, hạ tầng logistics phát triển. Tuy nhiên, doanh nghiệp nội địa vẫn khó tham gia sâu vào chuỗi cung ứng do công nghệ và quản trị chưa đáp ứng.",
+        thesis: "Nguồn lực bên ngoài (vốn, công nghệ, thị trường) chỉ phát huy hiệu quả bền vững khi được chuyển hóa bằng năng lực hấp thụ bên trong — bao gồm thể chế, nhân lực và liên kết doanh nghiệp nội địa.",
+        sourceIds: ["session25_6", "session25_7", "session26_3", "session27_8", "session27_9"]
       },
       briefing: {
         objective: "Kết hợp hạ tầng, vốn–công nghệ ngoài và doanh nghiệp nội địa để nâng năng lực hấp thụ.",
@@ -354,6 +400,29 @@ window.MLN122_CONTENT = {
         text: "Ngày 11/1/2007, Việt Nam trở thành thành viên WTO. Cơ hội thị trường mở rộng đồng thời sức ép cạnh tranh trở nên trực tiếp hơn.",
         sourceIds: ["wto_vietnam", "session27_5", "session29_7"]
       },
+      knowledge: {
+        title: "Hội nhập kinh tế quốc tế và tự chủ trong CNH–HĐH",
+        concepts: [
+          {
+            term: "Hội nhập kinh tế quốc tế",
+            definition: "Quá trình quốc gia thực hiện mở cửa, tham gia các tổ chức kinh tế quốc tế, thực hiện tự do hóa thương mại và đầu tư theo các cam kết song phương và đa phương.",
+            sourceId: "session27_5"
+          },
+          {
+            term: "Tác động tích cực",
+            definition: "Mở rộng thị trường, thu hút vốn–công nghệ, thúc đẩy chuyển dịch cơ cấu kinh tế, tạo động lực cải cách thể chế và nâng cao năng lực cạnh tranh.",
+            sourceId: "session28_5"
+          },
+          {
+            term: "Tác động tiêu cực",
+            definition: "Gia tăng sức ép cạnh tranh, nguy cơ phụ thuộc kinh tế, phân phối lợi ích không đồng đều, thách thức chủ quyền kinh tế quốc gia.",
+            sourceId: "session28_6"
+          }
+        ],
+        context: "Gia nhập WTO (1/2007) mở ra thị trường rộng lớn nhưng cũng đặt doanh nghiệp Việt Nam vào cạnh tranh trực tiếp toàn cầu. Xuất khẩu tăng nhanh song tỷ trọng gia công vẫn lớn, công nghiệp hỗ trợ và giá trị nội địa chưa theo kịp.",
+        thesis: "Hội nhập không tự động tạo hiện đại hóa hay tự chủ; hiệu quả phụ thuộc vào thể chế, năng lực cạnh tranh và mức độ doanh nghiệp nội địa tham gia sâu vào chuỗi giá trị.",
+        sourceIds: ["session27_5", "session28_5", "session28_6", "session29_7", "session29_9", "session29_10"]
+      },
       briefing: {
         objective: "Biến độ mở thành giá trị nội địa, sức cạnh tranh và vị trí cao hơn trong chuỗi.",
         points: [
@@ -497,6 +566,29 @@ window.MLN122_CONTENT = {
         title: "Nghị quyết 29-NQ/TW năm 2022",
         text: "Định hướng mới đặt khoa học–công nghệ, đổi mới sáng tạo, năng lực tự chủ, giá trị cao và phát triển xanh vào trung tâm.",
         sourceIds: ["resolution29", "session25_7", "session26_3"]
+      },
+      knowledge: {
+        title: "Mô hình CNH–HĐH kiểu mới: Tri thức, tự chủ và bền vững",
+        concepts: [
+          {
+            term: "CNH–HĐH kiểu mới",
+            definition: "Dựa trên nền tảng khoa học–công nghệ và đổi mới sáng tạo; gắn với kinh tế tri thức, chuyển đổi số, phát triển kinh tế xanh, kinh tế tuần hoàn và phát triển bền vững.",
+            sourceId: "session25_7"
+          },
+          {
+            term: "So sánh: CNH truyền thống vs hiện đại",
+            definition: "Truyền thống: tuần tự, dựa vào tài nguyên, ưu tiên sản lượng. Hiện đại: rút ngắn, dựa vào tri thức–công nghệ, ưu tiên giá trị cao, tự chủ và bền vững.",
+            sourceId: "session25_7"
+          },
+          {
+            term: "Nghị quyết 29-NQ/TW (2022)",
+            definition: "Định hướng CNH–HĐH đến 2030 tầm nhìn 2045: lấy khoa học–công nghệ, đổi mới sáng tạo và nguồn nhân lực chất lượng cao làm động lực; ưu tiên tự chủ công nghệ, giá trị gia tăng cao và phát triển xanh.",
+            sourceId: "resolution29"
+          }
+        ],
+        context: "Từ 2021, Việt Nam đối mặt yêu cầu chuyển đổi mô hình: cạnh tranh toàn cầu không còn chỉ dựa vào chi phí thấp mà dịch chuyển sang công nghệ, thiết kế, quản trị và tiêu chuẩn xanh. Nghị quyết 29-NQ/TW đánh dấu bước ngoặt chiến lược.",
+        thesis: "CNH–HĐH hiện đại không phải phủ thêm thiết bị số lên quy trình cũ, mà là chuyển đổi toàn diện dựa trên tri thức, năng lực tự chủ công nghệ, giá trị cao và phát triển bền vững.",
+        sourceIds: ["session25_7", "session26_3", "resolution29", "green_growth_1658"]
       },
       briefing: {
         objective: "Chuyển từ tăng quy mô sang làm chủ công nghệ, giá trị cao và phát triển xanh.",
