@@ -456,41 +456,61 @@ body:not(.is-presentation) .presenter-button svg { margin: auto; }
   overflow: auto;
 }
 
+.briefing-sheet .eyebrow {
+  margin-bottom: 6px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+}
+
 .briefing-sheet h2 {
   max-width: 920px;
   margin-bottom: 10px;
-  font-size: clamp(38px, 3.5vw, 58px);
-  letter-spacing: -0.04em;
-  line-height: 1.02;
+  color: var(--ink);
+  font-size: clamp(34px, 3.2vw, 52px);
+  letter-spacing: -0.035em;
+  line-height: 1.08;
 }
 
-.briefing-sheet__objective { max-width: 65ch; margin-bottom: 14px; color: var(--ink-soft); font-size: 20px; font-weight: 600; line-height: 1.42; }
-.theory-points { display: grid; width: min(100%, 880px); margin: 0 0 12px; padding: 0; border-block: 1px solid var(--line); list-style: none; }
-.theory-points li { position: relative; display: grid; grid-template-columns: 42px 1fr; align-items: center; gap: 12px; padding: 10px 4px; border-bottom: 1px solid var(--line); }
-.theory-points li:last-child { border-bottom: 0; }
-.theory-points li > span { color: var(--era-accent); font: 800 16px/1 var(--mono); }
-.theory-points li > span::after { display: block; width: 20px; height: 3px; margin-top: 8px; background: var(--era-accent); content: ""; }
-.theory-points small { display: none; }
-.theory-points strong { display: block; margin-bottom: 2px; font: 800 19px/1.25 var(--display); }
-.theory-points p { margin: 0; color: var(--ink-soft); font-size: 17px; line-height: 1.38; }
+.briefing-sheet__objective {
+  max-width: 65ch;
+  margin-bottom: 14px;
+  color: var(--ink-soft);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.45;
+}
 
-.remember-line {
+.theory-points {
   display: grid;
-  width: 100%;
+  width: min(100%, 880px);
+  margin: 0 0 16px;
+  padding: 0;
+  border-block: 1px solid var(--line);
+  list-style: none;
+}
+
+.theory-points li {
+  position: relative;
+  display: grid;
   grid-template-columns: 42px 1fr;
   align-items: center;
-  gap: 13px;
-  margin-bottom: 16px;
-  padding: 13px 15px;
-  border: 1px solid color-mix(in srgb, var(--era-accent) 45%, var(--line));
-  border-radius: 10px;
-  background: color-mix(in srgb, var(--era-accent) 7%, white);
+  gap: 12px;
+  padding: 12px 4px;
+  border-bottom: 1px solid var(--line);
 }
+.theory-points li:last-child { border-bottom: 0; }
+.theory-points li > span { color: var(--era-accent); font: 800 16px/1 var(--mono); }
+.theory-points strong { display: block; margin-bottom: 2px; font: 800 18px/1.25 var(--display); }
+.theory-points p { margin: 0; color: var(--ink-soft); font-size: 15.5px; line-height: 1.4; }
 
-.remember-line > .ui-icon { width: 34px; height: 34px; color: var(--era-accent); }
-.remember-line p { margin: 0; color: var(--ink); font-size: 18px; font-weight: 700; line-height: 1.38; }
-.remember-line p span { display: block; margin-bottom: 3px; color: var(--era-accent); font-size: 14px; font-weight: 800; text-transform: uppercase; }
-.briefing-sheet > .button { margin-top: auto; }
+.briefing-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  width: 100%;
+  margin-top: auto;
+  padding-top: 14px;
+}
 
 /* Living diorama */
 .explore-stage { position: relative; }

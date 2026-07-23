@@ -465,10 +465,9 @@
           <h2 data-page-title tabindex="-1">${escapeHTML(era.milestone.title)}</h2>
           <p class="briefing-sheet__objective">${escapeHTML(briefing.objective)}</p>
           <ol class="theory-points">
-            ${briefing.points.map((point, index) => `<li><span>0${index + 1}</span><div><small>${escapeHTML(point.label)}</small><strong>${escapeHTML(point.title)}</strong><p>${escapeHTML(point.text)}</p></div></li>`).join("")}
+            ${briefing.points.map((point, index) => `<li><span>0${index + 1}</span><div><strong>${escapeHTML(point.title)}</strong><p>${escapeHTML(point.text)}</p></div></li>`).join("")}
           </ol>
-          <div class="remember-line">${renderIcon("bookmark")}<p><span>Cần nhớ</span>${escapeHTML(briefing.remember)}</p></div>
-          <div class="briefing-actions" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:auto;">
+          <div class="briefing-actions">
             <button class="button button--accent" type="button" data-action="open-knowledge" data-era-id="${era.id}">${renderIcon("bookmark")} Kiến thức</button>
             <button class="button button--primary" type="button" data-action="set-stage" data-stage="explore" data-era-id="${era.id}">Gặp cố vấn (Tùy chọn)${renderIcon("arrow")}</button>
             <button class="button button--quiet" type="button" data-action="set-stage" data-stage="decision" data-era-id="${era.id}">Vào thẳng bàn quyết định</button>
@@ -604,10 +603,6 @@
           <h2 data-page-title tabindex="-1">${escapeHTML(choice.title)}</h2>
           <p class="consequence-card__outcome">${escapeHTML(choice.outcome)}</p>
           ${renderCumulativeImpact(beforeGauges, afterGauges, gaugeDeltas, baselineGauges)}
-          <div class="consequence-takeaway">
-            ${renderIcon("bookmark")}
-            <p><span>Ghi nhớ 10 giây</span><strong>${escapeHTML(lesson)}</strong></p>
-          </div>
           <div class="consequence-card__actions">
             <button class="button button--accent" type="button" data-action="open-takeaway" data-era-id="${era.id}">${renderIcon("bookmark")} Ghi nhớ</button>
             <button class="button button--primary" type="button" data-action="commit-era" data-era-id="${era.id}">${nextLabel}${renderIcon("arrow")}</button>
